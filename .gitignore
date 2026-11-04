@@ -1,23 +1,84 @@
+
 # Build outputs
 dist/
 .astro/
+.next/
+.nuxt/
+.output/
+.svelte-kit/
+.vuepress/dist/
+.cache/
+.parcel-cache/
+.turbo/
 
 # Dependencies
 node_modules/
+jspm_packages/
+bower_components/
+web_modules/
 
 # Environment variables & secrets
 .env
 .env.*
 !.env.example
 
-# Logs
+# Logs and diagnostic files
+logs/
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+report.*.*.*.*.json
+
+# Runtime and coverage
+pids/
+*.pid
+*.seed
+*.pid.lock
+coverage/
+.nyc_output/
+*.lcov
+
+# Caches
+.npm/
+.eslintcache
+.stylelintcache
+.parcel-cache/
+.vite/
+.pnpm-store/
+.grunt/
+.fusebox/
+.firebase/
+.dynamodb/
+.serverless/
+.docusaurus/
+.turbo/
+
+# TypeScript
+*.tsbuildinfo
 
 # System & Editor files
 .DS_Store
 Thumbs.db
 .vscode/
 .idea/
+.vscode-test/
+
+# Yarn
+.yarn-integrity
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# Other
+*.tgz
+.lock-wscript
+lib-cov/
+build/Release/
+.tern-port
+.cache/
