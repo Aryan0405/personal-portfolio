@@ -1,0 +1,275 @@
+---
+// BeautyAdvisorExhibit.astro - Semantic Search, Hybrid Re-Ranking & Apriori Bundling
+---
+
+<div class="exhibit-wrapper" id="beauty-advisor-exhibit">
+  <div class="exhibit-header">
+    <div>
+      <span class="exhibit-tag font-mono">EXHIBIT 1.1: RETRIEVAL &amp; RE-RANKING PIPELINE</span>
+      <h3 class="exhibit-title">FAISS Cosine Similarity + Hybrid Linear Scoring</h3>
+    </div>
+    <div class="font-mono text-xs status-note">
+      <span class="status-dot completed"></span> Sub-15ms In-Memory Vector Search
+    </div>
+  </div>
+
+  <div class="sr-only">
+    Diagram and metrics showing the AI Beauty Advisor search pipeline. Queries are embedded and matched against 1,472 product vectors in FAISS, re-ranked using 0.90 similarity, 0.075 keyword match, and 0.025 filter match, achieving P95 retrieval latency of 13.0 ms.
+  </div>
+
+  <!-- Pipeline Architecture Graphic -->
+  <div class="pipeline-flow font-mono">
+    <div class="pipe-step">
+      <span class="step-num">01</span>
+      <span class="step-title">Query Embedding</span>
+      <span class="step-desc">all-MiniLM-L6-v2 vector</span>
+    </div>
+    <div class="pipe-arrow" aria-hidden="true">→</div>
+    <div class="pipe-step">
+      <span class="step-num">02</span>
+      <span class="step-title">FAISS IndexFlatIP</span>
+      <span class="step-desc">1,472 items, Cosine top-K</span>
+    </div>
+    <div class="pipe-arrow" aria-hidden="true">→</div>
+    <div class="pipe-step highlight-step">
+      <span class="step-num">03</span>
+      <span class="step-title">Hybrid Re-Ranking</span>
+      <span class="step-desc">0.90*Sim + 0.075*KW + 0.025*F</span>
+    </div>
+    <div class="pipe-arrow" aria-hidden="true">→</div>
+    <div class="pipe-step">
+      <span class="step-num">04</span>
+      <span class="step-title">Gemini 2.5 Flash</span>
+      <span class="step-desc">Single structured JSON call</span>
+    </div>
+  </div>
+
+  <!-- Real Measured Evaluation Metrics -->
+  <div class="eval-metrics-grid font-mono">
+    <div class="eval-box">
+      <span class="e-label">P50 RETRIEVAL LATENCY</span>
+      <span class="e-val">9.5 ms</span>
+      <span class="e-ctx">Measured over 20 test queries</span>
+    </div>
+    <div class="eval-box">
+      <span class="e-label">P95 RETRIEVAL LATENCY</span>
+      <span class="e-val alert">13.0 ms</span>
+      <span class="e-ctx">Well within 150 ms SLA budget</span>
+    </div>
+    <div class="eval-box">
+      <span class="e-label">PRECISION@5 RELEVANCE</span>
+      <span class="e-val">66.0%</span>
+      <span class="e-ctx">Category + skin-type intersection</span>
+    </div>
+  </div>
+
+  <!-- Apriori Routine Bundle Simulation -->
+  <div class="apriori-preview font-mono">
+    <span class="apriori-title">PRE-MINED APRIORI ROUTINE PAIRINGS (LIFT &gt; 1.2):</span>
+    <div class="rule-pairs">
+      <div class="rule-pair">
+        <span class="cat-source">Primary: Cleanser</span>
+        <span class="rule-arrow" aria-hidden="true">⇄</span>
+        <span class="cat-target">Bundle: Treatment + Moisturizer (Lift: 1.34)</span>
+      </div>
+      <div class="rule-pair">
+        <span class="cat-source">Primary: Face Mask</span>
+        <span class="rule-arrow" aria-hidden="true">⇄</span>
+        <span class="cat-target">Bundle: Moisturizer (Lift: 1.28)</span>
+      </div>
+      <div class="rule-pair">
+        <span class="cat-source">Primary: Sun Protect</span>
+        <span class="rule-arrow" aria-hidden="true">⇄</span>
+        <span class="cat-target">Standalone (No qualifying rules, returns empty array)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .exhibit-wrapper {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    padding: var(--space-6);
+    border-radius: var(--radius-sm);
+    margin: var(--space-6) 0 var(--space-8);
+  }
+
+  .exhibit-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--space-4);
+  }
+
+  @media (min-width: 768px) {
+    .exhibit-header {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+  }
+
+  .exhibit-tag {
+    font-size: var(--text-xs);
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+
+  .exhibit-title {
+    font-size: var(--text-xl);
+    margin-top: 2px;
+  }
+
+  .status-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--color-ink-muted);
+  }
+
+  .pipeline-flow {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+    margin: var(--space-4) 0;
+  }
+
+  @media (min-width: 768px) {
+    .pipeline-flow {
+      grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+      align-items: center;
+    }
+  }
+
+  .pipe-step {
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border);
+    padding: var(--space-3);
+    border-radius: var(--radius-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .pipe-step.highlight-step {
+    border-color: var(--color-accent);
+    background: var(--color-accent-subtle);
+  }
+
+  .step-num {
+    font-size: 10px;
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+
+  .step-title {
+    font-size: var(--text-xs);
+    font-weight: 700;
+    color: var(--color-ink-primary);
+  }
+
+  .step-desc {
+    font-size: 10px;
+    color: var(--color-ink-muted);
+  }
+
+  .pipe-arrow {
+    text-align: center;
+    color: var(--color-ink-muted);
+    font-size: 14px;
+  }
+
+  .eval-metrics-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+    margin: var(--space-4) 0;
+  }
+
+  @media (min-width: 640px) {
+    .eval-metrics-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .eval-box {
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border);
+    padding: var(--space-3);
+    border-radius: var(--radius-sm);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .e-label {
+    font-size: 10px;
+    color: var(--color-ink-muted);
+    letter-spacing: 0.05em;
+  }
+
+  .e-val {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--color-ink-primary);
+    margin: 2px 0;
+  }
+
+  .e-val.alert {
+    color: var(--color-status-deployed);
+  }
+
+  .e-ctx {
+    font-size: 10px;
+    color: var(--color-ink-secondary);
+  }
+
+  .apriori-preview {
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border);
+    padding: var(--space-4);
+    border-radius: var(--radius-sm);
+    margin-top: var(--space-4);
+  }
+
+  .apriori-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--color-ink-primary);
+    display: block;
+    margin-bottom: var(--space-2);
+  }
+
+  .rule-pairs {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    font-size: 11px;
+  }
+
+  .rule-pair {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-1) var(--space-2);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+  }
+
+  .cat-source {
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+
+  .rule-arrow {
+    color: var(--color-ink-muted);
+  }
+
+  .cat-target {
+    color: var(--color-ink-secondary);
+  }
+</style>

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#FBF9F5" />
+  
+  <!-- Outer border -->
+  <rect x="40" y="40" width="1120" height="550" fill="#FFFFFF" stroke="#E2DBD0" stroke-width="2" />
+  
+  <!-- Header strip -->
+  <line x1="40" y1="120" x2="1160" y2="120" stroke="#E2DBD0" stroke-width="1.5" />
+  
+  <!-- Top meta -->
+  <text x="80" y="90" font-family="'JetBrains Mono', monospace" font-size="16" font-weight="600" fill="#6B665E" letter-spacing="1">ARYAN ASHOK // PORTFOLIO</text>
+  <text x="750" y="90" font-family="'JetBrains Mono', monospace" font-size="16" font-weight="500" fill="#6B665E">SDBI MUMBAI // B.SC. DATA SCIENCE</text>
+  <circle cx="1115" cy="85" r="6" fill="#B93822" />
+
+  <!-- Main Title & Role -->
+  <text x="80" y="220" font-family="'Newsreader', Georgia, serif" font-size="64" font-weight="700" fill="#181715">Data Science &amp; AI / ML Developer</text>
+  
+  <text x="80" y="280" font-family="'Instrument Sans', sans-serif" font-size="24" fill="#4A463F">
+    Machine learning systems, statistical modeling, and data-intensive software engineering.
+  </text>
+  
+  <!-- Divider -->
+  <line x1="80" y1="340" x2="1120" y2="340" stroke="#E2DBD0" stroke-width="1" />
+  
+  <!-- Project highlights grid -->
+  <!-- Col 1 -->
+  <rect x="80" y="375" width="320" height="150" fill="#FBF9F5" stroke="#E2DBD0" stroke-width="1" />
+  <text x="105" y="415" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="600" fill="#B93822">01 // AI BEAUTY ADVISOR</text>
+  <text x="105" y="450" font-family="'Instrument Sans', sans-serif" font-size="16" fill="#181715" font-weight="600">FAISS &amp; Gemini Recommender</text>
+  <text x="105" y="485" font-family="'JetBrains Mono', monospace" font-size="14" fill="#6B665E">P95: 13.0ms | Precision: 66%</text>
+
+  <!-- Col 2 -->
+  <rect x="440" y="375" width="320" height="150" fill="#FBF9F5" stroke="#E2DBD0" stroke-width="1" />
+  <text x="465" y="415" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="600" fill="#B93822">02 // CREDIT RISK SCORECARD</text>
+  <text x="465" y="450" font-family="'Instrument Sans', sans-serif" font-size="16" fill="#181715" font-weight="600">WoE vs. XGBoost Challenger</text>
+  <text x="465" y="485" font-family="'JetBrains Mono', monospace" font-size="14" fill="#6B665E">Scorecard AUC: 0.7188 (PDO=20)</text>
+
+  <!-- Col 3 -->
+  <rect x="800" y="375" width="320" height="150" fill="#FBF9F5" stroke="#E2DBD0" stroke-width="1" />
+  <text x="825" y="415" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="600" fill="#B93822">03 // FRAUD DETECTION</text>
+  <text x="825" y="450" font-family="'Instrument Sans', sans-serif" font-size="16" fill="#181715" font-weight="600">XGBoost &amp; SHAP Failure Analysis</text>
+  <text x="825" y="485" font-family="'JetBrains Mono', monospace" font-size="14" fill="#6B665E">PR-AUC: 0.79 | 0.03% False Alarm</text>
+</svg>

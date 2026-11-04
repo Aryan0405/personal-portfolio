@@ -1,0 +1,20 @@
+{
+  "lastFetched": "2026-11-04T08:50:00Z",
+  "repos": {
+    "ai-beauty-advisor": {
+      "primaryLanguage": "Python"
+    },
+    "credit_scorecard": {
+      "primaryLanguage": "Python"
+    },
+    "credit-card-fraud-detection": {
+      "primaryLanguage": "Python"
+    },
+    "nse-stock-explorer": {
+      "primaryLanguage": "Python"
+    },
+    "MetroPT3-Clustering": {
+      "primaryLanguage": "Python"
+    }
+  }
+}

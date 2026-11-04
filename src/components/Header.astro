@@ -1,0 +1,195 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+import { contactDetails } from '../data/projects';
+---
+
+<header class="site-header">
+  <div class="container header-container">
+    <div class="brand-block">
+      <a href="/" class="brand-link" aria-label="Aryan Ashok Portfolio Homepage">
+        <span class="brand-name">Aryan Ashok</span>
+        <span class="brand-role font-mono">// Data Science &amp; AI/ML</span>
+      </a>
+    </div>
+
+    <nav class="site-nav" aria-label="Primary navigation">
+      <ul class="nav-list">
+        <li><a href="/#projects" class="nav-link">Projects</a></li>
+        <li><a href="/#skills" class="nav-link">Skills</a></li>
+        <li><a href="/#education" class="nav-link">Education</a></li>
+        <li><a href="/#contact" class="nav-link">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <button 
+        type="button" 
+        class="cmd-trigger-btn font-mono" 
+        aria-label="Open command menu palette (Cmd+K)"
+        title="Open command palette (Cmd+K)"
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <span class="cmd-text">Cmd+K</span>
+      </button>
+
+      <a 
+        href={contactDetails.github} 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        class="header-github-link font-mono" 
+        aria-label="Visit Aryan's GitHub Profile"
+      >
+        GitHub ↗
+      </a>
+
+      <ThemeToggle />
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background-color: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+    z-index: 1000;
+    backdrop-filter: blur(8px);
+    transition: background-color 200ms ease, border-color 200ms ease;
+  }
+
+  .header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 54px;
+    gap: var(--space-4);
+  }
+
+  .brand-block {
+    display: flex;
+    align-items: center;
+  }
+
+  .brand-link {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    text-decoration: none;
+    color: var(--color-ink-primary);
+  }
+
+  .brand-name {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .brand-role {
+    font-size: 11px;
+    color: var(--color-ink-muted);
+    display: none;
+  }
+
+  @media (min-width: 640px) {
+    .brand-role {
+      display: inline-block;
+    }
+  }
+
+  .site-nav {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .site-nav {
+      display: block;
+    }
+  }
+
+  .nav-list {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    list-style: none;
+  }
+
+  .nav-link {
+    font-size: var(--text-sm);
+    color: var(--color-ink-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    padding: var(--space-2) 0;
+    transition: color 150ms ease;
+  }
+
+  .nav-link:hover {
+    color: var(--color-accent);
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .cmd-trigger-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 38px;
+    min-height: 38px;
+    padding: 0 var(--space-3);
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-ink-secondary);
+    font-size: 11px;
+    font-weight: 500;
+    transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+  }
+
+  .cmd-trigger-btn:hover {
+    background: var(--color-surface-hover);
+    color: var(--color-ink-primary);
+    border-color: var(--color-border-strong);
+  }
+
+  .cmd-text {
+    display: none;
+  }
+
+  @media (min-width: 480px) {
+    .cmd-text {
+      display: inline-block;
+    }
+  }
+
+  .header-github-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 38px;
+    min-height: 38px;
+    padding: 0 var(--space-3);
+    background: var(--color-ink-primary);
+    color: var(--color-bg);
+    border: 1px solid var(--color-ink-primary);
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
+  }
+
+  .header-github-link:hover {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #FFFFFF;
+  }
+</style>

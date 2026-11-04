@@ -1,0 +1,17 @@
+{
+  "name": "aryan-portfolio",
+  "version": "1.0.0",
+  "description": "Aryan - Personal Developer Portfolio (Data Science & AI/ML)",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@observablehq/plot": "^0.6.18",
+    "astro": "^7.4.5",
+    "d3": "^7.9.2"
+  }
+}

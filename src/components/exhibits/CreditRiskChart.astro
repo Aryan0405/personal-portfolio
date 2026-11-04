@@ -1,0 +1,439 @@
+---
+// CreditRiskChart.astro - Interactive Kolmogorov-Smirnov (KS) Curve & Scorecard Simulator
+// Built with clean accessible SVG and vanilla TypeScript for optimal performance and zero bundle bloat
+
+const scoreData = [
+  { score: 350, pctPop: 2, cumGood: 0.5, cumBad: 8.2, defaultRate: 80.4, approvalRate: 98.0 },
+  { score: 400, pctPop: 5, cumGood: 1.8, cumBad: 18.5, defaultRate: 67.2, approvalRate: 93.0 },
+  { score: 450, pctPop: 8, cumGood: 4.2, cumBad: 31.0, defaultRate: 59.5, approvalRate: 85.0 },
+  { score: 500, pctPop: 12, cumGood: 8.5, cumBad: 46.2, defaultRate: 52.1, approvalRate: 73.0 },
+  { score: 550, pctPop: 15, cumGood: 15.0, cumBad: 61.8, defaultRate: 41.2, approvalRate: 58.0 },
+  { score: 600, pctPop: 18, cumGood: 24.5, cumBad: 76.0, defaultRate: 31.0, approvalRate: 40.0 },
+  { score: 640, pctPop: 14, cumGood: 35.4, cumBad: 88.0, defaultRate: 20.2, approvalRate: 26.0 }, // Optimal KS = 52.6%
+  { score: 700, pctPop: 12, cumGood: 58.2, cumBad: 94.5, defaultRate: 11.5, approvalRate: 14.0 },
+  { score: 750, pctPop: 9, cumGood: 80.0, cumBad: 98.2, defaultRate: 4.8, approvalRate: 5.0 },
+  { score: 800, pctPop: 5, cumGood: 95.0, cumBad: 99.8, defaultRate: 1.2, approvalRate: 1.0 },
+  { score: 850, pctPop: 2, cumGood: 100.0, cumBad: 100.0, defaultRate: 0.2, approvalRate: 0.0 }
+];
+
+const optimalCutoff = scoreData.find(d => d.score === 640)!;
+---
+
+<div class="ks-chart-wrapper" id="ks-chart-component">
+  <div class="chart-header">
+    <div>
+      <span class="chart-tag font-mono">EXHIBIT 1.1: MODEL DISCRIMINATION</span>
+      <h3 class="chart-title">Kolmogorov-Smirnov (KS) Separation Curve</h3>
+    </div>
+    <div class="legend-pills font-mono">
+      <span class="legend-pill good"><span class="pill-dot good"></span> Cumulative Non-Defaulters (Good)</span>
+      <span class="legend-pill bad"><span class="pill-dot bad"></span> Cumulative Defaulters (Bad)</span>
+      <span class="legend-pill ks"><span class="pill-dot ks"></span> Optimal Cutoff (KS = 52.6%)</span>
+    </div>
+  </div>
+
+  <!-- Screen reader summary (Antislop R-39) -->
+  <div class="sr-only">
+    Interactive credit risk discrimination chart rendering score bands from 350 to 850.
+    At the optimal cutoff score of 640, the Kolmogorov-Smirnov statistic reaches 52.6% maximum divergence,
+    achieving a default rate of 20.2% on an approval rate of 26.0%.
+  </div>
+
+  <!-- Interactive SVG Canvas -->
+  <div class="canvas-container" role="region" aria-label="Interactive Credit Risk Chart">
+    <svg viewBox="0 0 700 360" width="100%" height="auto" class="ks-svg" id="ks-svg-elem">
+      <defs>
+        <linearGradient id="badGradient" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#B93822" stop-opacity="0.25" />
+          <stop offset="100%" stop-color="#B93822" stop-opacity="0.0" />
+        </linearGradient>
+      </defs>
+
+      <!-- Grid lines -->
+      <line x1="50" y1="40" x2="660" y2="40" stroke="var(--color-border)" stroke-dasharray="3,3" />
+      <line x1="50" y1="105" x2="660" y2="105" stroke="var(--color-border)" stroke-dasharray="3,3" />
+      <line x1="50" y1="170" x2="660" y2="170" stroke="var(--color-border)" stroke-dasharray="3,3" />
+      <line x1="50" y1="235" x2="660" y2="235" stroke="var(--color-border)" stroke-dasharray="3,3" />
+      <line x1="50" y1="300" x2="660" y2="300" stroke="var(--color-border-strong)" stroke-width="1.5" />
+
+      <!-- Y Axis Labels -->
+      <text x="40" y="44" class="axis-label" text-anchor="end">100%</text>
+      <text x="40" y="109" class="axis-label" text-anchor="end">75%</text>
+      <text x="40" y="174" class="axis-label" text-anchor="end">50%</text>
+      <text x="40" y="239" class="axis-label" text-anchor="end">25%</text>
+      <text x="40" y="304" class="axis-label" text-anchor="end">0%</text>
+
+      <!-- Divergence Area between bad and good -->
+      <polygon points="
+        50,300 
+        111,279 172,252 233,219 294,180 355,139 404,71 477,54 538,45 599,41 660,40
+        660,40 599,53 538,92 477,148 404,208 355,261 294,278 233,289 172,295 111,299 50,300" 
+        fill="url(#badGradient)" />
+
+      <!-- Bad Curve (Defaulters) -->
+      <path d="M 50,279 L 111,252 L 172,219 L 233,180 L 294,139 L 355,102 L 404,71 L 477,54 L 538,45 L 599,41 L 660,40" 
+        fill="none" stroke="#B93822" stroke-width="2.5" />
+
+      <!-- Good Curve (Non-Defaulters) -->
+      <path d="M 50,299 L 111,295 L 172,289 L 233,278 L 294,261 L 355,236 L 404,208 L 477,148 L 538,92 L 599,53 L 660,40" 
+        fill="none" stroke="#4A463F" stroke-width="2.5" />
+
+      <!-- KS Max Divergence Line at score 640 (x = 404) -->
+      <line x1="404" y1="71" x2="404" y2="208" stroke="#B93822" stroke-width="2" stroke-dasharray="4,2" />
+      <circle cx="404" cy="71" r="5" fill="#B93822" />
+      <circle cx="404" cy="208" r="5" fill="#4A463F" />
+      
+      <!-- Label at KS point -->
+      <text x="412" y="145" class="divergence-label font-mono" fill="#B93822" font-weight="600">
+        Max KS: 52.6% (Cutoff 640)
+      </text>
+
+      <!-- X Axis Markers & Labels -->
+      <text x="50" y="325" class="axis-label" text-anchor="middle">350</text>
+      <text x="172" y="325" class="axis-label" text-anchor="middle">450</text>
+      <text x="294" y="325" class="axis-label" text-anchor="middle">550</text>
+      <text x="404" y="325" class="axis-label" text-anchor="middle" font-weight="700" fill="#B93822">640*</text>
+      <text x="538" y="325" class="axis-label" text-anchor="middle">750</text>
+      <text x="660" y="325" class="axis-label" text-anchor="middle">850</text>
+      <text x="355" y="350" class="axis-title" text-anchor="middle">Credit Score Band (Points)</text>
+    </svg>
+  </div>
+
+  <!-- Interactive Inspector Panel -->
+  <div class="interactive-inspector">
+    <div class="inspector-controls">
+      <label for="score-slider" class="font-mono inspector-label">
+        SIMULATE DECISION THRESHOLD:
+        <span id="score-display" class="highlight-val">640 Points</span>
+      </label>
+      <input 
+        type="range" 
+        id="score-slider" 
+        min="350" 
+        max="850" 
+        step="10" 
+        value="640" 
+        class="custom-slider"
+        aria-label="Select Credit Score Cutoff to evaluate metrics"
+      />
+    </div>
+
+    <div class="metrics-grid font-mono">
+      <div class="metric-box">
+        <span class="m-label">APPROVAL RATE</span>
+        <span class="m-val" id="val-approval">26.0%</span>
+        <span class="m-sub">Portfolio Volume</span>
+      </div>
+      <div class="metric-box">
+        <span class="m-label">CUMULATIVE DEFAULT</span>
+        <span class="m-val alert" id="val-default">20.2%</span>
+        <span class="m-sub">Bad Rate at Cutoff</span>
+      </div>
+      <div class="metric-box">
+        <span class="m-label">KS SEPARATION</span>
+        <span class="m-val" id="val-ks">52.6%</span>
+        <span class="m-sub">Good vs Bad Divergence</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Accessible Table Alternative (Antislop R-39) -->
+  <details class="accessible-data-details">
+    <summary class="font-mono">View raw scorecard calibration table</summary>
+    <div class="table-scroll-wrapper">
+      <table class="data-table font-mono">
+        <thead>
+          <tr>
+            <th scope="col">Score Band</th>
+            <th scope="col">Pop Share</th>
+            <th scope="col">Cum. Good</th>
+            <th scope="col">Cum. Bad</th>
+            <th scope="col">Default Rate</th>
+            <th scope="col">Approval Rate</th>
+          </tr>
+        </thead>
+        <tbody>
+          {scoreData.map(row => (
+            <tr class={row.score === 640 ? 'highlight-row' : ''}>
+              <td>{row.score}{row.score === 640 ? ' (Optimal)' : ''}</td>
+              <td>{row.pctPop}%</td>
+              <td>{row.cumGood}%</td>
+              <td>{row.cumBad}%</td>
+              <td>{row.defaultRate}%</td>
+              <td>{row.approvalRate}%</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </details>
+</div>
+
+<script>
+  // Client-side interactive simulator
+  const slider = document.getElementById('score-slider') as HTMLInputElement | null;
+  const scoreDisplay = document.getElementById('score-display');
+  const valApproval = document.getElementById('val-approval');
+  const valDefault = document.getElementById('val-default');
+  const valKs = document.getElementById('val-ks');
+
+  const modelLookup = [
+    { score: 350, approval: '98.0%', defRate: '80.4%', ks: '7.7%' },
+    { score: 400, approval: '93.0%', defRate: '67.2%', ks: '16.7%' },
+    { score: 450, approval: '85.0%', defRate: '59.5%', ks: '26.8%' },
+    { score: 500, approval: '73.0%', defRate: '52.1%', ks: '37.7%' },
+    { score: 550, approval: '58.0%', defRate: '41.2%', ks: '46.8%' },
+    { score: 600, approval: '40.0%', defRate: '31.0%', ks: '51.5%' },
+    { score: 640, approval: '26.0%', defRate: '20.2%', ks: '52.6%' },
+    { score: 700, approval: '14.0%', defRate: '11.5%', ks: '36.3%' },
+    { score: 750, approval: '5.0%', defRate: '4.8%', ks: '18.2%' },
+    { score: 800, approval: '1.0%', defRate: '1.2%', ks: '4.8%' },
+    { score: 850, approval: '0.2%', defRate: '0.2%', ks: '0.0%' }
+  ];
+
+  if (slider && scoreDisplay && valApproval && valDefault && valKs) {
+    slider.addEventListener('input', (e) => {
+      const target = e.target as HTMLInputElement;
+      const targetScore = parseInt(target.value, 10);
+      scoreDisplay.textContent = `${targetScore} Points`;
+
+      // Find closest band
+      let closest = modelLookup[0];
+      let minDiff = Math.abs(modelLookup[0].score - targetScore);
+      for (const item of modelLookup) {
+        const diff = Math.abs(item.score - targetScore);
+        if (diff < minDiff) {
+          minDiff = diff;
+          closest = item;
+        }
+      }
+
+      valApproval.textContent = closest.approval;
+      valDefault.textContent = closest.defRate;
+      valKs.textContent = closest.ks;
+    });
+  }
+</script>
+
+<style>
+  .ks-chart-wrapper {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    padding: var(--space-6);
+    border-radius: var(--radius-sm);
+    margin-top: var(--space-6);
+    margin-bottom: var(--space-8);
+  }
+
+  .chart-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--space-4);
+  }
+
+  @media (min-width: 768px) {
+    .chart-header {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+  }
+
+  .chart-tag {
+    font-size: var(--text-xs);
+    color: var(--color-accent);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  .chart-title {
+    font-size: var(--text-xl);
+    margin-top: 2px;
+  }
+
+  .legend-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    font-size: var(--text-xs);
+  }
+
+  .legend-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 8px;
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-ink-secondary);
+  }
+
+  .pill-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .pill-dot.good { background-color: #4A463F; }
+  .pill-dot.bad { background-color: #B93822; }
+  .pill-dot.ks { background-color: #B93822; outline: 1px solid #B93822; outline-offset: 1px; }
+
+  .canvas-container {
+    width: 100%;
+    margin: var(--space-4) 0;
+  }
+
+  .ks-svg {
+    display: block;
+    overflow: visible;
+  }
+
+  .axis-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    fill: var(--color-ink-muted);
+  }
+
+  .axis-title {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    fill: var(--color-ink-secondary);
+    font-weight: 500;
+  }
+
+  .divergence-label {
+    font-size: 11px;
+  }
+
+  /* Interactive Inspector */
+  .interactive-inspector {
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border);
+    padding: var(--space-4);
+    border-radius: var(--radius-sm);
+    margin-top: var(--space-4);
+  }
+
+  .inspector-controls {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  .inspector-label {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--color-ink-primary);
+  }
+
+  .highlight-val {
+    color: var(--color-accent);
+    margin-left: var(--space-2);
+  }
+
+  .custom-slider {
+    width: 100%;
+    height: 6px;
+    background: var(--color-border-strong);
+    border-radius: 3px;
+    outline: none;
+    accent-color: var(--color-accent);
+  }
+
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: var(--space-3);
+  }
+
+  @media (min-width: 640px) {
+    .metrics-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .metric-box {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    padding: var(--space-3);
+    border-radius: var(--radius-sm);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .m-label {
+    font-size: 10px;
+    color: var(--color-ink-muted);
+    letter-spacing: 0.05em;
+  }
+
+  .m-val {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--color-ink-primary);
+    margin: 2px 0;
+  }
+
+  .m-val.alert {
+    color: var(--color-accent);
+  }
+
+  .m-sub {
+    font-size: 11px;
+    color: var(--color-ink-secondary);
+  }
+
+  /* Accessible details table */
+  .accessible-data-details {
+    margin-top: var(--space-4);
+  }
+
+  .accessible-data-details summary {
+    font-size: var(--text-xs);
+    color: var(--color-ink-secondary);
+    padding: var(--space-2) 0;
+    cursor: pointer;
+  }
+
+  .accessible-data-details summary:hover {
+    color: var(--color-accent);
+  }
+
+  .table-scroll-wrapper {
+    overflow-x: auto;
+    margin-top: var(--space-2);
+  }
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-xs);
+    text-align: right;
+  }
+
+  .data-table th, .data-table td {
+    padding: var(--space-2) var(--space-3);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .data-table th:first-child, .data-table td:first-child {
+    text-align: left;
+  }
+
+  .data-table th {
+    background: var(--color-surface-subtle);
+    color: var(--color-ink-primary);
+    font-weight: 600;
+  }
+
+  .data-table tr.highlight-row {
+    background: var(--color-accent-subtle);
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+</style>

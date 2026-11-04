@@ -1,0 +1,615 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { projects, technicalSkills, academicRecord, contactDetails } from '../data/projects';
+---
+
+<BaseLayout
+  title="Aryan Ashok | Data Science & AI/ML Developer"
+  description="Personal portfolio of Aryan Ashok, a Data Science & AI/ML developer in Mumbai. Building semantic search systems, credit risk scorecards, fraud detection models, and financial data tools."
+>
+  <!-- Hero Section -->
+  <section class="hero-section" aria-labelledby="hero-title">
+    <div class="container hero-container">
+      <div class="hero-masthead">
+        <div class="meta-tag font-mono">
+          <span class="status-indicator"></span>
+          <span>AVAILABLE FOR SUMMER 2026 INTERNSHIPS</span>
+        </div>
+
+        <h1 id="hero-title" class="hero-headline">
+          Aryan Ashok
+          <span class="headline-sub">Data Science &amp; AI / ML Developer.</span>
+        </h1>
+
+        <p class="hero-summary">
+          Second-year undergraduate studying Data Science &amp; Business Analytics at SDBI, Mumbai. 
+          Focused on building reproducible machine learning systems, statistical models, and data-intensive software architectures.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-primary font-mono">
+            Explore Selected Work ↓
+          </a>
+          <a href={contactDetails.github} target="_blank" rel="noopener noreferrer" class="btn btn-secondary font-mono">
+            GitHub Profile ↗
+          </a>
+          <a href={contactDetails.linkedin} target="_blank" rel="noopener noreferrer" class="btn btn-secondary font-mono">
+            LinkedIn Profile ↗
+          </a>
+          <button type="button" class="btn btn-ghost font-mono copy-email-action" data-email={contactDetails.email}>
+            Copy Email Address
+          </button>
+        </div>
+
+        <!-- Quick Status Ledger -->
+        <div class="quick-ledger font-mono">
+          <div class="ledger-cell">
+            <span class="cell-label">LOCATION</span>
+            <span class="cell-val">Mumbai, India</span>
+          </div>
+          <div class="ledger-cell">
+            <span class="cell-label">INSTITUTION</span>
+            <span class="cell-val">SDBI (Year 2)</span>
+          </div>
+          <div class="ledger-cell">
+            <span class="cell-label">DEGREE</span>
+            <span class="cell-val">B.Sc. Data Science</span>
+          </div>
+          <div class="ledger-cell">
+            <span class="cell-label">FOCUS</span>
+            <span class="cell-val">ML Systems &amp; Analytics</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 01 // Selected Projects Section -->
+  <section id="projects" class="projects-section" aria-labelledby="projects-heading">
+    <div class="container">
+      <div class="section-header">
+        <div class="header-left">
+          <span class="section-tag font-mono">01 // PRODUCTION WORK &amp; EXPERIMENTS</span>
+          <h2 id="projects-heading" class="section-title">Selected Projects</h2>
+        </div>
+        <p class="section-intro">
+          Production applications, statistical pipelines, and empirical evaluations across semantic search, credit risk, fraud detection, and market data.
+        </p>
+      </div>
+
+      <div class="projects-grid">
+        {projects.map((project) => (
+          <ProjectCard project={project} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 // Technical Index Section -->
+  <section id="skills" class="skills-section" aria-labelledby="skills-heading">
+    <div class="container">
+      <div class="section-header">
+        <div class="header-left">
+          <span class="section-tag font-mono">02 // CAPABILITIES &amp; SYSTEMS</span>
+          <h2 id="skills-heading" class="section-title">Technical Competencies</h2>
+        </div>
+        <p class="section-intro">
+          Core engineering and analytical toolkit. Organized by operational workflow rather than arbitrary percentage bars.
+        </p>
+      </div>
+
+      <div class="skills-grid">
+        {technicalSkills.map((cat, idx) => (
+          <div class="skill-category-card">
+            <div class="cat-header">
+              <span class="cat-number font-mono">0{idx + 1}</span>
+              <h3 class="cat-title">{cat.category}</h3>
+            </div>
+            <p class="cat-desc">{cat.description}</p>
+            <div class="cat-skills font-mono">
+              {cat.skills.map(s => (
+                <span class="skill-tag">{s}</span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 // Education & Academic Context Section -->
+  <section id="education" class="education-section" aria-labelledby="education-heading">
+    <div class="container">
+      <div class="section-header">
+        <div class="header-left">
+          <span class="section-tag font-mono">03 // INSTITUTIONAL BACKGROUND</span>
+          <h2 id="education-heading" class="section-title">Academic Record</h2>
+        </div>
+        <p class="section-intro">
+          Current degree coursework and foundational training in quantitative methods and computer science.
+        </p>
+      </div>
+
+      <div class="academic-card">
+        <div class="academic-header">
+          <div>
+            <h3 class="academic-inst">{academicRecord.institution}</h3>
+            <span class="academic-degree font-mono">{academicRecord.degree}</span>
+          </div>
+          <span class="academic-period font-mono">{academicRecord.period}</span>
+        </div>
+
+        <p class="academic-focus">
+          {academicRecord.focus}
+        </p>
+
+        <div class="coursework-block">
+          <span class="cw-title font-mono">KEY COURSEWORK &amp; FOUNDATIONS:</span>
+          <div class="cw-grid font-mono">
+            {academicRecord.coursework.map(c => (
+              <div class="cw-item">
+                <span class="bullet" aria-hidden="true">•</span>
+                <span>{c}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 // Contact & Dispatch Section -->
+  <section id="contact" class="contact-section" aria-labelledby="contact-heading">
+    <div class="container">
+      <div class="contact-card">
+        <div class="contact-header">
+          <span class="section-tag font-mono">04 // DISPATCH &amp; CONTACT</span>
+          <h2 id="contact-heading" class="contact-title">Let Us Connect</h2>
+          <p class="contact-desc">
+            Currently interviewing for summer 2026 data science, machine learning, and quantitative analytics internships. 
+            Direct communication is preferred.
+          </p>
+        </div>
+
+        <div class="contact-links-grid font-mono">
+          <div class="contact-link-box">
+            <span class="c-label">DIRECT EMAIL</span>
+            <span class="c-val">{contactDetails.email}</span>
+            <button type="button" class="btn-copy-email copy-email-action" data-email={contactDetails.email}>
+              Copy Email to Clipboard
+            </button>
+          </div>
+
+          <div class="contact-link-box">
+            <span class="c-label">SOURCE REPOSITORIES</span>
+            <span class="c-val">github.com/Aryan0405</span>
+            <a href={contactDetails.github} target="_blank" rel="noopener noreferrer" class="c-action-link">
+              Explore Repositories ↗
+            </a>
+          </div>
+
+          <div class="contact-link-box">
+            <span class="c-label">PROFESSIONAL NETWORK</span>
+            <span class="c-val">linkedin.com/in/aryan-ashok</span>
+            <a href={contactDetails.linkedin} target="_blank" rel="noopener noreferrer" class="c-action-link">
+              Connect on LinkedIn ↗
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  function initCopyButtons() {
+    const copyBtns = document.querySelectorAll('.copy-email-action');
+    copyBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const email = btn.getAttribute('data-email') || 'aryan.ashok0405@gmail.com';
+        navigator.clipboard.writeText(email).then(() => {
+          window.dispatchEvent(new CustomEvent('show-toast', { detail: { message: 'Email copied to clipboard.' } }));
+        });
+      });
+    });
+  }
+
+  initCopyButtons();
+  document.addEventListener('astro:after-swap', initCopyButtons);
+</script>
+
+<style>
+  /* Hero Section */
+  .hero-section {
+    padding: var(--space-12) 0 var(--space-16);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .hero-masthead {
+    max-width: 820px;
+  }
+
+  .meta-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: var(--text-xs);
+    color: var(--color-accent);
+    font-weight: 600;
+    margin-bottom: var(--space-4);
+    letter-spacing: 0.05em;
+  }
+
+  .status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--color-status-deployed);
+  }
+
+  .hero-headline {
+    font-size: var(--text-hero);
+    line-height: 1.15;
+    margin-bottom: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .headline-sub {
+    font-size: var(--text-xl);
+    font-weight: 500;
+    color: var(--color-ink-secondary);
+    display: block;
+  }
+
+  .hero-summary {
+    font-size: var(--text-lg);
+    color: var(--color-ink-secondary);
+    line-height: 1.6;
+    margin-bottom: var(--space-6);
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-bottom: var(--space-8);
+  }
+
+  .quick-ledger {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    padding: var(--space-4);
+    border-radius: var(--radius-sm);
+  }
+
+  @media (min-width: 640px) {
+    .quick-ledger {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .ledger-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .cell-label {
+    font-size: 10px;
+    color: var(--color-ink-muted);
+    letter-spacing: 0.05em;
+  }
+
+  .cell-val {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--color-ink-primary);
+  }
+
+  /* Section Common Headers */
+  .section-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-bottom: var(--space-8);
+  }
+
+  @media (min-width: 768px) {
+    .section-header {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+  }
+
+  .header-left {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .section-tag {
+    font-size: var(--text-xs);
+    color: var(--color-accent);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  .section-title {
+    font-size: var(--text-2xl);
+  }
+
+  .section-intro {
+    font-size: var(--text-sm);
+    color: var(--color-ink-secondary);
+    max-width: 440px;
+    line-height: 1.5;
+  }
+
+  /* Projects Section */
+  .projects-section {
+    padding: var(--space-16) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 768px) {
+    .projects-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* Skills Section */
+  .skills-section {
+    padding: var(--space-16) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 640px) {
+    .skills-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .skill-category-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    padding: var(--space-6);
+    border-radius: var(--radius-sm);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .cat-header {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+    margin-bottom: var(--space-2);
+  }
+
+  .cat-number {
+    font-size: var(--text-xs);
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+
+  .cat-title {
+    font-size: var(--text-lg);
+  }
+
+  .cat-desc {
+    font-size: var(--text-sm);
+    color: var(--color-ink-secondary);
+    margin-bottom: var(--space-4);
+    line-height: 1.5;
+  }
+
+  .cat-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .skill-tag {
+    font-size: 11px;
+    padding: 3px 8px;
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-ink-primary);
+  }
+
+  /* Education Section */
+  .education-section {
+    padding: var(--space-16) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .academic-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    padding: var(--space-8);
+    border-radius: var(--radius-sm);
+  }
+
+  .academic-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--space-4);
+  }
+
+  @media (min-width: 768px) {
+    .academic-header {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+  }
+
+  .academic-inst {
+    font-size: var(--text-xl);
+    margin-bottom: 2px;
+  }
+
+  .academic-degree {
+    font-size: var(--text-sm);
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+
+  .academic-period {
+    font-size: var(--text-xs);
+    color: var(--color-ink-muted);
+  }
+
+  .academic-focus {
+    font-size: var(--text-base);
+    color: var(--color-ink-secondary);
+    margin-bottom: var(--space-6);
+    line-height: 1.6;
+  }
+
+  .coursework-block {
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border);
+    padding: var(--space-4);
+    border-radius: var(--radius-sm);
+  }
+
+  .cw-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--color-ink-primary);
+    display: block;
+    margin-bottom: var(--space-3);
+  }
+
+  .cw-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+    font-size: var(--text-xs);
+  }
+
+  @media (min-width: 640px) {
+    .cw-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .cw-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--color-ink-secondary);
+  }
+
+  .bullet {
+    color: var(--color-accent);
+  }
+
+  /* Contact Section */
+  .contact-section {
+    padding: var(--space-16) 0 var(--space-24);
+  }
+
+  .contact-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border-strong);
+    padding: var(--space-8);
+    border-radius: var(--radius-sm);
+  }
+
+  .contact-header {
+    margin-bottom: var(--space-8);
+    max-width: 640px;
+  }
+
+  .contact-title {
+    font-size: var(--text-hero);
+    margin-top: var(--space-2);
+    margin-bottom: var(--space-3);
+  }
+
+  .contact-desc {
+    font-size: var(--text-base);
+    color: var(--color-ink-secondary);
+    line-height: 1.6;
+  }
+
+  .contact-links-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 768px) {
+    .contact-links-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .contact-link-box {
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border);
+    padding: var(--space-4);
+    border-radius: var(--radius-sm);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .c-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--color-accent);
+    letter-spacing: 0.05em;
+  }
+
+  .c-val {
+    font-size: var(--text-xs);
+    color: var(--color-ink-primary);
+    word-break: break-all;
+    font-weight: 500;
+  }
+
+  .btn-copy-email, .c-action-link {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-accent);
+    background: transparent;
+    border: none;
+    padding: 0;
+    text-align: left;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-top: auto;
+    padding-top: var(--space-2);
+    transition: color 150ms ease;
+  }
+
+  .btn-copy-email:hover, .c-action-link:hover {
+    color: var(--color-ink-primary);
+  }
+</style>

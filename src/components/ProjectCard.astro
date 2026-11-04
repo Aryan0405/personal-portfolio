@@ -1,0 +1,265 @@
+---
+import type { Project } from '../data/projects';
+import githubCache from '../data/github-cache.json';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+
+// Get cached GitHub metadata if available
+const repoKey = project.slug;
+const cachedInfo = (githubCache.repos as Record<string, { stars?: number; primaryLanguage?: string }>)[repoKey];
+---
+
+<article class="project-card" id={`project-${project.slug}`}>
+  <div class="card-header">
+    <div class="meta-row">
+      <span class="domain-tag font-mono">{project.domain}</span>
+      <span class={`badge badge-status font-mono ${project.status.toLowerCase().replace(' ', '-')}`}>
+        <span class={`status-dot ${project.status === 'Deployed' ? 'deployed' : project.status === 'Completed' ? 'completed' : 'progress'}`}></span>
+        {project.status}
+      </span>
+    </div>
+    
+    <h3 class="card-title">
+      <a href={`/work/${project.slug}`} class="title-link">
+        {project.title}
+      </a>
+    </h3>
+    
+    <p class="card-oneliner">
+      {project.oneLiner}
+    </p>
+  </div>
+
+  <div class="card-metrics-block font-mono">
+    <div class="metrics-row">
+      {project.metrics.map(m => (
+        <div class="metric-item">
+          <span class="m-val">{m.value}</span>
+          <span class="m-lbl">{m.label}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <div class="card-tech-list">
+    {project.technologies.map(tech => (
+      <span class="tech-pill font-mono">{tech}</span>
+    ))}
+    {cachedInfo?.stars && (
+      <span class="tech-pill font-mono star-pill" title={`${cachedInfo.stars} GitHub stars`}>
+        ★ {cachedInfo.stars}
+      </span>
+    )}
+  </div>
+
+  <div class="card-actions">
+    <a href={`/work/${project.slug}`} class="btn-read-memo font-mono">
+      <span>Read Case Study</span>
+      <span aria-hidden="true">→</span>
+    </a>
+
+    <div class="external-links">
+      {project.liveUrl && (
+        <a 
+          href={project.liveUrl} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          class="btn-live font-mono"
+          aria-label={`Open live deployment for ${project.title}`}
+        >
+          <span>Live Demo ↗</span>
+        </a>
+      )}
+      
+      <a 
+        href={project.repoUrl} 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        class="btn-repo font-mono"
+        aria-label={`View GitHub repository for ${project.title}`}
+      >
+        <span>GitHub ↗</span>
+      </a>
+    </div>
+  </div>
+</article>
+
+<style>
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: var(--space-6);
+    transition: border-color 150ms ease, box-shadow 150ms ease;
+  }
+
+  .project-card:hover {
+    border-color: var(--color-border-strong);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  }
+
+  .card-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    margin-bottom: var(--space-1);
+  }
+
+  .domain-tag {
+    font-size: var(--text-xs);
+    color: var(--color-accent);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .card-title {
+    font-size: var(--text-xl);
+    line-height: 1.25;
+  }
+
+  .title-link {
+    text-decoration: none;
+    color: var(--color-ink-primary);
+  }
+
+  .title-link:hover {
+    color: var(--color-accent);
+  }
+
+  .card-oneliner {
+    font-size: var(--text-sm);
+    color: var(--color-ink-secondary);
+    line-height: 1.55;
+    margin-top: var(--space-1);
+  }
+
+  .card-metrics-block {
+    margin: var(--space-4) 0;
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: var(--space-3);
+  }
+
+  .metrics-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-2);
+    text-align: center;
+  }
+
+  .metric-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .m-val {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--color-ink-primary);
+  }
+
+  .m-lbl {
+    font-size: 10px;
+    color: var(--color-ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .card-tech-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: var(--space-6);
+  }
+
+  .tech-pill {
+    font-size: 11px;
+    padding: 2px 7px;
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-ink-secondary);
+  }
+
+  .star-pill {
+    color: #9E6A03;
+    border-color: #E6C875;
+    background: #FFFDF5;
+  }
+
+  :global([data-theme="dark"]) .star-pill {
+    background: #242010;
+    color: #F0C040;
+    border-color: #5C4E15;
+  }
+
+  .card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .btn-read-memo {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-ink-primary);
+    text-decoration: none;
+    transition: color 150ms ease, transform 150ms ease;
+  }
+
+  .btn-read-memo:hover {
+    color: var(--color-accent);
+    transform: translateX(2px);
+  }
+
+  .external-links {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .btn-live, .btn-repo {
+    font-size: var(--text-xs);
+    color: var(--color-ink-secondary);
+    text-decoration: none;
+    transition: color 150ms ease;
+  }
+
+  .btn-live {
+    color: var(--color-status-deployed);
+    font-weight: 600;
+  }
+
+  .btn-live:hover {
+    color: #144926;
+    text-decoration: underline;
+  }
+
+  .btn-repo:hover {
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+</style>

@@ -1,0 +1,245 @@
+---
+// FraudDetectionExhibit.astro - Benchmark Comparison & Failure Analysis Taxonomy
+---
+
+<div class="exhibit-wrapper" id="fraud-detection-exhibit">
+  <div class="exhibit-header">
+    <div>
+      <span class="exhibit-tag font-mono">EXHIBIT 3.1: MODEL EVALUATION &amp; BENCHMARK</span>
+      <h3 class="exhibit-title">PR-AUC &amp; Precision-Recall Benchmark on 56,746 Test Transactions</h3>
+    </div>
+    <div class="font-mono text-xs status-note">
+      <a href="https://credit-card-fraud-detection-aryan0405.streamlit.app/" target="_blank" rel="noopener noreferrer" class="live-pill">
+        <span class="status-dot deployed"></span> View Live Streamlit App ↗
+      </a>
+    </div>
+  </div>
+
+  <div class="sr-only">
+    Benchmark comparison table across Logistic Regression, Main XGBoost with class weighting, and FLAML tuned XGBoost on 56,746 transactions with 95 frauds. The main XGBoost model achieves 0.79 PR-AUC with 18 false positives and 23 false negatives.
+  </div>
+
+  <!-- Real Measured Benchmark Table -->
+  <div class="table-container font-mono">
+    <table class="benchmark-table">
+      <thead>
+        <tr>
+          <th scope="col">Model Architecture</th>
+          <th scope="col">Decision Cutoff</th>
+          <th scope="col">Precision</th>
+          <th scope="col">Recall</th>
+          <th scope="col">F1 Score</th>
+          <th scope="col">PR-AUC</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Logistic Regression (Baseline)</td>
+          <td>0.50</td>
+          <td>0.85</td>
+          <td>0.59</td>
+          <td>0.70</td>
+          <td>0.69</td>
+        </tr>
+        <tr class="main-row">
+          <td><strong>XGBoost (Main Model with Scale Weight)</strong></td>
+          <td>0.50</td>
+          <td>0.80</td>
+          <td>0.76</td>
+          <td>0.78</td>
+          <td><strong>0.79</strong></td>
+        </tr>
+        <tr>
+          <td>FLAML-Tuned XGBoost (AutoML Ceiling)</td>
+          <td>0.2222*</td>
+          <td>0.96</td>
+          <td>0.77</td>
+          <td>0.85</td>
+          <td>0.82</td>
+        </tr>
+      </tbody>
+    </table>
+    <span class="table-footnote">*Note from repository: FLAML threshold was selected by maximizing F1 on the test set; in practice at threshold 0.5 it yields precision 0.99, recall 0.75.</span>
+  </div>
+
+  <!-- Failure Analysis Taxonomy Breakdown -->
+  <div class="failure-analysis-box font-mono">
+    <span class="fa-title">SHAP-BASED FAILURE ANALYSIS TAXONOMY (41 TOTAL ERRORS ACROSS 56,746 SAMPLES):</span>
+    <div class="failure-grid">
+      <div class="failure-card">
+        <div class="fc-head">
+          <span class="fc-type">TYPE 1: BORDERLINE CASES</span>
+          <span class="fc-fix">[Addressable via Threshold Slider]</span>
+        </div>
+        <p class="fc-desc">
+          Transactions hovering directly around the 0.5 decision boundary (probabilities between 0.40 and 0.60). 
+          These can be controlled interactively in the Streamlit application to favor recall over precision depending on fraud risk tolerance.
+        </p>
+      </div>
+      <div class="failure-card alert-card">
+        <div class="fc-head">
+          <span class="fc-type alert-text">TYPE 2: CONFIDENT MISSES</span>
+          <span class="fc-fix alert-text">[Feature Blindness / Anonymized PCA Overlap]</span>
+        </div>
+        <p class="fc-desc">
+          Transactions where anonymized PCA components (V1-V28) completely overlap with legitimate spending distributions. 
+          Cannot be fixed by threshold tuning alone; requires raw behavioral transaction metadata.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .exhibit-wrapper {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    padding: var(--space-6);
+    border-radius: var(--radius-sm);
+    margin: var(--space-6) 0 var(--space-8);
+  }
+
+  .exhibit-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--space-4);
+  }
+
+  @media (min-width: 768px) {
+    .exhibit-header {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+  }
+
+  .exhibit-tag {
+    font-size: var(--text-xs);
+    color: var(--color-accent);
+    font-weight: 700;
+  }
+
+  .exhibit-title {
+    font-size: var(--text-xl);
+    margin-top: 2px;
+  }
+
+  .live-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--color-status-deployed);
+    text-decoration: underline;
+    font-weight: 600;
+  }
+
+  .table-container {
+    overflow-x: auto;
+    margin: var(--space-4) 0;
+  }
+
+  .benchmark-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-xs);
+    text-align: right;
+  }
+
+  .benchmark-table th, .benchmark-table td {
+    padding: var(--space-2) var(--space-3);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .benchmark-table th:first-child, .benchmark-table td:first-child {
+    text-align: left;
+  }
+
+  .benchmark-table th {
+    background: var(--color-surface-subtle);
+    color: var(--color-ink-primary);
+    font-weight: 600;
+  }
+
+  .main-row {
+    background: var(--color-surface-subtle);
+    border-left: 3px solid var(--color-accent);
+    color: var(--color-ink-primary);
+  }
+
+  .table-footnote {
+    font-size: 10px;
+    color: var(--color-ink-muted);
+    display: block;
+    margin-top: var(--space-2);
+  }
+
+  .failure-analysis-box {
+    background: var(--color-surface-subtle);
+    border: 1px solid var(--color-border);
+    padding: var(--space-4);
+    border-radius: var(--radius-sm);
+    margin-top: var(--space-4);
+  }
+
+  .fa-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--color-ink-primary);
+    display: block;
+    margin-bottom: var(--space-3);
+  }
+
+  .failure-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+
+  @media (min-width: 640px) {
+    .failure-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .failure-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    padding: var(--space-3);
+    border-radius: var(--radius-sm);
+  }
+
+  .failure-card.alert-card {
+    border-color: var(--color-border-strong);
+  }
+
+  .fc-head {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: var(--space-2);
+  }
+
+  .fc-type {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--color-ink-primary);
+  }
+
+  .fc-fix {
+    font-size: 10px;
+    color: var(--color-status-deployed);
+  }
+
+  .alert-text {
+    color: var(--color-accent) !important;
+  }
+
+  .fc-desc {
+    font-size: 11px;
+    color: var(--color-ink-secondary);
+    line-height: 1.5;
+  }
+</style>
