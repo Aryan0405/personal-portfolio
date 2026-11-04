@@ -101,5 +101,5 @@ npm run preview
 
 - **Aryan Ashok**
 - Email: [aryan.ashok0405@gmail.com](mailto:aryan.ashok0405@gmail.com)
-- GitHub: [@Aryan0405](https://github.com/Aryan0405/)
+- GitHub: [@Aryan0405](https://github.com/Aryan0405)
 - LinkedIn: [aryan-ashok](https://www.linkedin.com/in/aryan-ashok/)
