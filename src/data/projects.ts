@@ -263,7 +263,7 @@ export const technicalSkills = [
   {
     category: 'Data Engineering & Vector Systems',
     description: 'Constructing high-throughput processing pipelines, vector search, and structured storage.',
-    skills: ['Python', 'Pandas', 'NumPy', 'FAISS Vector Search', 'Redis Caching', 'SQLite', 'DuckDB', 'YFinance']
+    skills: ['Python', 'Pandas', 'NumPy', 'FAISS Vector Search', 'Redis Caching', 'SQLite', 'YFinance']
   },
   {
     category: 'Backend & Intelligent Systems',
@@ -273,7 +273,7 @@ export const technicalSkills = [
   {
     category: 'Exploratory Analytics & Visualization',
     description: 'Creating accessible, publication-grade analytical graphics and interactive dashboards.',
-    skills: ['Observable Plot', 'Plotly', 'Power BI', 'Matplotlib & Seaborn', 'PCA Analysis', 'Jupyter Lab']
+    skills: ['Plotly', 'Power BI', 'Matplotlib & Seaborn', 'PCA Analysis', 'Jupyter Lab']
   }
 ];
 
