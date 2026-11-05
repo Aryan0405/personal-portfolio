@@ -24,20 +24,6 @@ import { contactDetails } from '../data/projects';
     <div class="header-actions">
       <button 
         type="button" 
-        class="mobile-menu-toggle font-mono" 
-        aria-label="Open navigation menu"
-        aria-expanded="false"
-        aria-controls="mobile-nav"
-      >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <line x1="3" y1="12" x2="21" y2="12"></line>
-          <line x1="3" y1="6" x2="21" y2="6"></line>
-          <line x1="3" y1="18" x2="21" y2="18"></line>
-        </svg>
-      </button>
-
-      <button 
-        type="button" 
         class="cmd-trigger-btn font-mono" 
         aria-label="Open command menu palette"
         title="Open command palette"
@@ -61,26 +47,6 @@ import { contactDetails } from '../data/projects';
 
       <ThemeToggle />
     </div>
-
-    <!-- Mobile navigation overlay -->
-    <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation">
-      <div class="mobile-nav-header">
-        <span class="mobile-nav-title">Menu</span>
-        <button type="button" class="mobile-menu-close" aria-label="Close navigation menu" aria-controls="mobile-nav">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-      </div>
-      <ul class="mobile-nav-list">
-        <li><a href="/#projects" class="mobile-nav-link">Projects</a></li>
-        <li><a href="/#skills" class="mobile-nav-link">Skills</a></li>
-        <li><a href="/#education" class="mobile-nav-link">Education</a></li>
-        <li><a href="/#contact" class="mobile-nav-link">Contact</a></li>
-      </ul>
-    </nav>
-    <div class="mobile-nav-backdrop" aria-hidden="true"></div>
   </div>
 </header>
 
@@ -175,19 +141,6 @@ import { contactDetails } from '../data/projects';
     gap: var(--space-2);
   }
 
-  @media (max-width: 639px) {
-    .header-actions {
-      gap: var(--space-1);
-    }
-    .cmd-trigger-btn {
-      padding: 0 var(--space-2);
-    }
-    .header-github-link {
-      padding: 0 var(--space-2);
-      font-size: 10px;
-    }
-  }
-
   .cmd-trigger-btn {
     display: inline-flex;
     align-items: center;
@@ -242,144 +195,6 @@ import { contactDetails } from '../data/projects';
     border-color: var(--color-accent);
     color: #FFFFFF;
   }
-
-  /* Mobile menu toggle */
-  .mobile-menu-toggle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 38px;
-    height: 38px;
-    min-height: 38px;
-    background: var(--color-surface-subtle);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm);
-    color: var(--color-ink-secondary);
-    padding: 0;
-    transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
-  }
-
-  .mobile-menu-toggle:hover {
-    background: var(--color-surface-hover);
-    color: var(--color-ink-primary);
-    border-color: var(--color-border-strong);
-  }
-
-  .mobile-menu-toggle[aria-expanded="true"] {
-    background: var(--color-surface-hover);
-    border-color: var(--color-border-strong);
-  }
-
-  /* Mobile navigation overlay */
-  .mobile-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    z-index: 2000;
-    display: none;
-    flex-direction: column;
-    background: var(--color-surface);
-    width: 100%;
-    max-width: 280px;
-    padding: var(--space-6);
-    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.08);
-    overflow-y: auto;
-  }
-
-  .mobile-nav.open {
-    display: flex;
-  }
-
-  .mobile-nav-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--space-8);
-    padding-bottom: var(--space-4);
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  .mobile-nav-title {
-    font-family: var(--font-display);
-    font-size: var(--text-lg);
-    font-weight: 700;
-    color: var(--color-ink-primary);
-    letter-spacing: -0.01em;
-  }
-
-  .mobile-menu-close {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    background: transparent;
-    border: none;
-    color: var(--color-ink-secondary);
-    padding: 0;
-    cursor: pointer;
-  }
-
-  .mobile-menu-close:hover {
-    color: var(--color-ink-primary);
-  }
-
-  .mobile-nav-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    padding: 0;
-    margin: 0;
-    flex: 1;
-  }
-
-  .mobile-nav-link {
-    display: block;
-    font-size: var(--text-lg);
-    font-weight: 500;
-    color: var(--color-ink-primary);
-    text-decoration: none;
-    padding: var(--space-3) 0;
-    border-bottom: 1px solid var(--color-border);
-    transition: color 150ms ease, padding-left 150ms ease;
-  }
-
-  .mobile-nav-link:hover {
-    color: var(--color-accent);
-    padding-left: var(--space-3);
-  }
-
-  /* Hide mobile nav on desktop */
-  @media (min-width: 768px) {
-    .mobile-menu-toggle {
-      display: none;
-    }
-    .mobile-nav {
-      display: none !important;
-    }
-  }
-
-  /* Backdrop for mobile nav */
-  .mobile-nav-backdrop {
-    position: fixed;
-    inset: 0;
-    z-index: 1999;
-    display: none;
-    background: rgba(24, 23, 21, 0.3);
-    backdrop-filter: blur(2px);
-  }
-
-  .mobile-nav-backdrop.open {
-    display: block;
-  }
-
-  @media (min-width: 768px) {
-    .mobile-nav-backdrop {
-      display: none !important;
-    }
-  }
 </style>
 
 <script>
@@ -388,47 +203,5 @@ import { contactDetails } from '../data/projects';
     if (!el) return;
     const isMac = /Mac|iPod|iPhone|iPad/.test(navigator.platform);
     el.textContent = isMac ? '⌘K' : 'Ctrl+K';
-  })();
-</script>
-
-<script>
-  (function initMobileNav() {
-    const toggleBtn = document.querySelector('.mobile-menu-toggle') as HTMLElement | null;
-    const closeBtn = document.querySelector('.mobile-menu-close') as HTMLElement | null;
-    const mobileNav = document.getElementById('mobile-nav') as HTMLElement | null;
-    const backdrop = document.querySelector('.mobile-nav-backdrop') as HTMLElement | null;
-    const navLinks = document.querySelectorAll('.mobile-nav-link');
-
-    if (!toggleBtn || !mobileNav || !closeBtn || !backdrop) return;
-
-    const html = document.documentElement;
-
-    function openNav() {
-      mobileNav!.classList.add('open');
-      backdrop!.classList.add('open');
-      toggleBtn!.setAttribute('aria-expanded', 'true');
-      html.style.overflow = 'hidden';
-    }
-
-    function closeNav() {
-      mobileNav!.classList.remove('open');
-      backdrop!.classList.remove('open');
-      toggleBtn!.setAttribute('aria-expanded', 'false');
-      html.style.overflow = '';
-    }
-
-    toggleBtn.addEventListener('click', openNav);
-    closeBtn.addEventListener('click', closeNav);
-    backdrop.addEventListener('click', closeNav);
-
-    navLinks.forEach(link => {
-      link.addEventListener('click', closeNav);
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && mobileNav.classList.contains('open')) {
-        closeNav();
-      }
-    });
   })();
 </script>
