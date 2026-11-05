@@ -4,6 +4,7 @@ import type { Project } from '../data/projects';
 import BeautyAdvisorExhibit from '../components/exhibits/BeautyAdvisorExhibit.astro';
 import CreditRiskChart from '../components/exhibits/CreditRiskChart.astro';
 import FraudDetectionExhibit from '../components/exhibits/FraudDetectionExhibit.astro';
+import StockVolatilityChart from '../components/exhibits/StockVolatilityChart.astro';
 import MetroClusteringExhibit from '../components/exhibits/MetroClusteringExhibit.astro';
 
 interface Props {
@@ -74,6 +75,7 @@ const { project } = Astro.props;
           {project.exhibitType === 'beauty-advisor' && <BeautyAdvisorExhibit />}
           {project.exhibitType === 'ks-scorecard' && <CreditRiskChart />}
           {project.exhibitType === 'fraud-metrics' && <FraudDetectionExhibit />}
+          {project.exhibitType === 'stock-explorer' && <StockVolatilityChart />}
           {project.exhibitType === 'metro-clusters' && <MetroClusteringExhibit />}
         </section>
       )}
