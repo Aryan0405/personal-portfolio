@@ -281,7 +281,7 @@ export const academicRecord = {
   institution: 'School of Data Science & Business Intelligence (SDBI)',
   location: 'Mumbai, India',
   degree: 'Bachelor of Science in Data Science & Business Analytics',
-  period: '2024 - Present (Second Year Undergraduate)',
+  period: '2025 - Present (Second Year Undergraduate)',
   coursework: [
     'Probability & Statistical Inference',
     'Linear Algebra & Multivariable Calculus',
