@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import { projects, technicalSkills, academicRecord, contactDetails } from '../data/projects';
+import { projects, technicalSkills, academicRecord, contactDetails, availabilityText } from '../data/projects';
 ---
 
 <BaseLayout
@@ -14,7 +14,7 @@ import { projects, technicalSkills, academicRecord, contactDetails } from '../da
       <div class="hero-masthead">
         <div class="meta-tag">
           <span class="status-indicator"></span>
-          <span>Available for Summer 2027 internships</span>
+          <span>{availabilityText}</span>
         </div>
 
         <h1 id="hero-title" class="hero-headline">
@@ -23,8 +23,7 @@ import { projects, technicalSkills, academicRecord, contactDetails } from '../da
         </h1>
 
         <p class="hero-summary">
-          Second-year undergraduate studying Data Science &amp; Business Analytics at SDBI, Mumbai. 
-          Focused on building reproducible machine learning systems, statistical models, and data-intensive software architectures.
+          I build credit-risk and fraud models and write up the trade-offs: a credit scorecard, fraud detection on 284,807 transactions, and sensor clustering on 1.5M sensor records. Public code, live demos where they exist.
         </p>
 
         <div class="hero-actions">
@@ -48,7 +47,7 @@ import { projects, technicalSkills, academicRecord, contactDetails } from '../da
           </div>
           <div class="ledger-cell">
             <span class="cell-label">Institution</span>
-            <span class="cell-val">SDBI (Year 2)</span>
+            <span class="cell-val">SDBI, Mumbai (2025 to 2028)</span>
           </div>
           <div class="ledger-cell">
             <span class="cell-label">Degree</span>
@@ -160,8 +159,7 @@ import { projects, technicalSkills, academicRecord, contactDetails } from '../da
         <div class="contact-header">
           <h2 id="contact-heading" class="contact-title">Let Us Connect</h2>
           <p class="contact-desc">
-            Currently interviewing for summer 2027 data science, machine learning, and quantitative analytics internships. 
-            Direct communication is preferred.
+            {availabilityText}. Open to data science, machine learning and quantitative analytics roles.
           </p>
         </div>
 
@@ -229,7 +227,7 @@ import { projects, technicalSkills, academicRecord, contactDetails } from '../da
     gap: 8px;
     font-size: var(--text-xs);
     color: var(--color-ink-secondary);
-    margin-bottom: var(--space-4);
+    margin-bottom: var(--space-6);
   }
 
   .status-indicator {
@@ -240,9 +238,9 @@ import { projects, technicalSkills, academicRecord, contactDetails } from '../da
   }
 
   .hero-headline {
-    font-size: var(--text-hero);
-    line-height: 1.15;
-    margin-bottom: var(--space-4);
+    font-size: clamp(3rem, 7vw, 5rem);
+    line-height: 1.1;
+    margin-bottom: var(--space-6);
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -260,6 +258,7 @@ import { projects, technicalSkills, academicRecord, contactDetails } from '../da
     color: var(--color-ink-secondary);
     line-height: 1.6;
     margin-bottom: var(--space-6);
+    max-width: 60ch;
   }
 
   .hero-actions {

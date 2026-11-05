@@ -293,11 +293,13 @@ export const academicRecord = {
   focus: 'Focusing on reproducible machine learning pipelines, quantitative modeling, and systems engineering.'
 };
 
+export const availabilityText = 'Available for Summer 2027 internships';
+
 export const contactDetails = {
   name: 'Aryan Ashok',
   location: 'Mumbai, India (IST / UTC+5:30)',
   email: 'aryan.ashok0405@gmail.com',
   github: 'https://github.com/Aryan0405/',
   linkedin: 'https://www.linkedin.com/in/aryan-ashok/',
-  status: 'Open for Summer 2027 Data Science, AI/ML & Software Engineering Opportunities'
+  status: availabilityText
 };
