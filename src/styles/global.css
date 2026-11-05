@@ -378,6 +378,46 @@ code, pre, .font-mono {
   }
 }
 
+/* Ocean wave motion layers */
+.ocean-wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200%;
+  height: 120px;
+  opacity: 0.15;
+  animation: wave-animation infinite linear;
+}
+
+.ocean-wave-1 {
+  animation-duration: 25s;
+  opacity: 0.18;
+}
+
+.ocean-wave-2 {
+  animation-duration: 20s;
+  animation-delay: -5s;
+  opacity: 0.12;
+  height: 100px;
+}
+
+.ocean-wave-3 {
+  animation-duration: 18s;
+  animation-delay: -2s;
+  opacity: 0.08;
+  height: 80px;
+  transform: scaleY(-1);
+}
+
+@keyframes wave-animation {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
 /* Reduced Motion Killswitch (Antislop R-39 / WCAG 2.2) */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
@@ -387,6 +427,9 @@ code, pre, .font-mono {
     scroll-behavior: auto !important;
   }
   .mesh-blob {
+    animation: none !important;
+  }
+  .ocean-wave {
     animation: none !important;
   }
 }
