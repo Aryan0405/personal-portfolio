@@ -37,7 +37,7 @@ const { title, description, image, type } = Astro.props;
         document.documentElement.setAttribute('data-theme', theme);
         document.documentElement.style.colorScheme = theme;
         const m = document.getElementById('theme-color-meta');
-        if (m) m.setAttribute('content', theme === 'dark' ? '#161311' : '#FBF9F5');
+        if (m) m.setAttribute('content', theme === 'dark' ? '#121212' : '#FBF9F5');
       } catch (e) {
         document.documentElement.setAttribute('data-theme', 'light');
         document.documentElement.style.colorScheme = 'light';
