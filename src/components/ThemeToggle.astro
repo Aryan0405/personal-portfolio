@@ -6,7 +6,7 @@
   id="theme-toggle-btn" 
   class="theme-toggle-btn" 
   type="button" 
-  aria-label="Toggle between light paper and dark obsidian themes"
+  aria-label="Switch to dark theme"
   title="Toggle theme (Light / Dark)"
 >
   <span class="theme-icon light-icon" aria-hidden="true">
@@ -34,28 +34,24 @@
     const toggleBtn = document.getElementById('theme-toggle-btn');
     if (!toggleBtn) return;
 
-    // Check saved theme or system preference
-    const savedTheme = localStorage.getItem('theme');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const currentTheme = savedTheme || (prefersDark ? 'dark' : 'light');
-
-    if (currentTheme === 'dark') {
-      document.documentElement.setAttribute('data-theme', 'dark');
-    } else {
-      document.documentElement.removeAttribute('data-theme');
-    }
+    const html = document.documentElement;
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    toggleBtn.setAttribute('aria-label', isDark ? 'Switch to light theme' : 'Switch to dark theme');
 
     toggleBtn.addEventListener('click', () => {
-      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-      const newTheme = isDark ? 'light' : 'dark';
-      
+      const currentlyDark = html.getAttribute('data-theme') === 'dark';
+      const newTheme = currentlyDark ? 'light' : 'dark';
+
       if (newTheme === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'dark');
+        html.setAttribute('data-theme', 'dark');
       } else {
-        document.documentElement.removeAttribute('data-theme');
+        html.removeAttribute('data-theme');
       }
-      
+      html.style.colorScheme = newTheme;
       localStorage.setItem('theme', newTheme);
+      const m = document.getElementById('theme-color-meta');
+      if (m) m.setAttribute('content', newTheme === 'dark' ? '#161311' : '#FBF9F5');
+      toggleBtn.setAttribute('aria-label', newTheme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
     });
   }
 

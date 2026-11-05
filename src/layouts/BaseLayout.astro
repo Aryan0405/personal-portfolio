@@ -28,6 +28,21 @@ const { title, description, image, type } = Astro.props;
         navigation: auto;
       }
     </style>
+
+    <!-- Inline theme script: set data-theme before stylesheets load to avoid flash -->
+    <script is:inline>
+      try {
+        const saved = localStorage.getItem('theme');
+        const theme = saved === 'dark' || saved === 'light' ? saved : 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.style.colorScheme = theme;
+        const m = document.getElementById('theme-color-meta');
+        if (m) m.setAttribute('content', theme === 'dark' ? '#161311' : '#FBF9F5');
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+        document.documentElement.style.colorScheme = 'light';
+      }
+    </script>
   </head>
   <body>
     <!-- Skip to main content link (Antislop R-32, R-39) -->

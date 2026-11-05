@@ -233,7 +233,7 @@ export const projects: Project[] = [
         {
           id: 'windowing-methodology',
           title: '5-Minute Feature Windowing & Cleaning',
-          content: 'Telemetry from 15 sensors was segmented into 5-minute windows described by 36 summary features: mean, standard deviation, minimum, and maximum for 7 continuous sensors, plus mean values for 8 binary signals. Windows with <50% expected readings were dropped, leaving 50,513 complete windows.',
+          content: 'Telemetry from 15 sensors, about 1.5 million readings at roughly 10-second intervals, was segmented into 5-minute windows described by 36 summary features: mean, standard deviation, minimum and maximum for 7 continuous sensors, plus the mean of 8 binary signals. Windows with fewer than half the expected readings were dropped, leaving 50,513.',
           highlight: 'Feature engineering: 1.5 million raw timestamps condensed into 50,513 multivariate statistical windows.'
         },
         {
