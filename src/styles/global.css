@@ -62,26 +62,27 @@
 }
 
 [data-theme="dark"] {
-  --color-bg: #161311;
-  --color-surface: #1D1A17;
-  --color-surface-subtle: #292623;
-  --color-surface-hover: #322D29;
+  /* Midnight Ocean & Terminal Cyan */
+  --color-bg: #0A192F;
+  --color-surface: #112240;
+  --color-surface-subtle: #16264D;
+  --color-surface-hover: #1E3A5F;
   
-  --color-ink-primary: #F5F2EB;
-  --color-ink-secondary: #A8A398;
-  --color-ink-muted: #7E796F;
+  --color-ink-primary: #CCD6F6;
+  --color-ink-secondary: #8892B0;
+  --color-ink-muted: #64748B;
   
-  --color-border: #332F2A;
-  --color-border-strong: #4B4741;
+  --color-border: #1E3A5F;
+  --color-border-strong: #2D3F5F;
   
-  --color-accent: #B93822;
-  --color-accent-subtle: #3A2B24;
-  --color-accent-hover: #962B18;
-  --color-slider-track: #7A746A;
+  --color-accent: #64FFDA;
+  --color-accent-subtle: #0A192F;
+  --color-accent-hover: #7AE2E4;
+  --color-slider-track: #1E3A5F;
 
-  --color-status-deployed: #3EA662;
-  --color-status-complete: #568ECE;
-  --color-status-progress: #E68A2E;
+  --color-status-deployed: #64FFDA;
+  --color-status-complete: #22D3EE;
+  --color-status-progress: #8892B0;
 }
 
 /* CSS Reset & Base Rules */
