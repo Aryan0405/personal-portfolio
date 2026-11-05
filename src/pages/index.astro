@@ -43,19 +43,19 @@ import { projects, technicalSkills, academicRecord, contactDetails } from '../da
         <!-- Quick Status Ledger -->
         <div class="quick-ledger font-mono">
           <div class="ledger-cell">
-            <span class="cell-label">LOCATION</span>
+            <span class="cell-label">Location</span>
             <span class="cell-val">Mumbai, India</span>
           </div>
           <div class="ledger-cell">
-            <span class="cell-label">INSTITUTION</span>
+            <span class="cell-label">Institution</span>
             <span class="cell-val">SDBI (Year 2)</span>
           </div>
           <div class="ledger-cell">
-            <span class="cell-label">DEGREE</span>
+            <span class="cell-label">Degree</span>
             <span class="cell-val">B.Sc. Data Science</span>
           </div>
           <div class="ledger-cell">
-            <span class="cell-label">FOCUS</span>
+            <span class="cell-label">Focus</span>
             <span class="cell-val">ML Systems &amp; Analytics</span>
           </div>
         </div>
@@ -335,6 +335,15 @@ import { projects, technicalSkills, academicRecord, contactDetails } from '../da
 
   .section-title {
     font-size: var(--text-2xl);
+  }
+
+  .section-title::before {
+    content: "";
+    display: block;
+    width: 32px;
+    height: 2px;
+    background: var(--color-accent);
+    margin-bottom: var(--space-2);
   }
 
   .section-intro {

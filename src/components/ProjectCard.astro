@@ -16,7 +16,7 @@ const cachedInfo = (githubCache.repos as Record<string, { stars?: number; primar
 <article class="project-card" id={`project-${project.slug}`}>
   <div class="card-header">
     <div class="meta-row">
-      <span class="domain-tag font-mono">{project.domain}</span>
+      <span class="domain-tag">{project.domain}</span>
       <span class={`badge badge-status font-mono ${project.status.toLowerCase().replace(' ', '-')}`}>
         <span class={`status-dot ${project.status === 'Deployed' ? 'deployed' : project.status === 'Completed' ? 'completed' : 'progress'}`}></span>
         {project.status}
@@ -101,8 +101,16 @@ const cachedInfo = (githubCache.repos as Record<string, { stars?: number; primar
   }
 
   .project-card:hover {
-    border-color: var(--color-border-strong);
+    border-color: var(--color-accent);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  }
+
+  .project-card:focus-within {
+    border-color: var(--color-accent);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
   }
 
   .card-header {
@@ -170,7 +178,7 @@ const cachedInfo = (githubCache.repos as Record<string, { stars?: number; primar
   .m-val {
     font-size: var(--text-sm);
     font-weight: 700;
-    color: var(--color-ink-primary);
+    color: var(--color-accent);
   }
 
   .m-lbl {
@@ -223,13 +231,13 @@ const cachedInfo = (githubCache.repos as Record<string, { stars?: number; primar
     gap: 6px;
     font-size: var(--text-sm);
     font-weight: 600;
-    color: var(--color-ink-primary);
+    color: var(--color-accent);
     text-decoration: none;
     transition: color 150ms ease, transform 150ms ease;
   }
 
   .btn-read-memo:hover {
-    color: var(--color-accent);
+    color: var(--color-accent-hover);
     transform: translateX(2px);
   }
 

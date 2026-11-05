@@ -307,10 +307,25 @@ const { project } = Astro.props;
     padding-bottom: var(--space-1);
   }
 
+  .section-heading::before {
+    content: "";
+    display: block;
+    width: 32px;
+    height: 2px;
+    background: var(--color-accent);
+    margin-bottom: var(--space-2);
+  }
+
   .prose-content p {
     font-size: var(--text-base);
     line-height: 1.7;
     margin-bottom: var(--space-4);
+  }
+
+  .memo-lead {
+    border-left: 3px solid var(--color-accent);
+    padding-left: var(--space-4);
+    margin-left: 0;
   }
 
   .memo-callout {
