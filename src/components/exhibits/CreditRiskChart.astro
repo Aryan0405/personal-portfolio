@@ -26,9 +26,9 @@ const optimalCutoff = scoreData.find(d => d.score === 640)!;
       <h3 class="chart-title">Kolmogorov-Smirnov (KS) Separation Curve</h3>
     </div>
     <div class="legend-pills font-mono">
-      <span class="legend-pill good"><span class="pill-dot good"></span> Cumulative Non-Defaulters (Good)</span>
-      <span class="legend-pill bad"><span class="pill-dot bad"></span> Cumulative Defaulters (Bad)</span>
-      <span class="legend-pill ks"><span class="pill-dot ks"></span> Optimal Cutoff (KS = 52.6%)</span>
+      <span class="legend-pill good"><span class="pill-swatch good"></span> Cumulative Non-Defaulters (Good)</span>
+      <span class="legend-pill bad"><span class="pill-swatch bad"></span> Cumulative Defaulters (Bad)</span>
+      <span class="legend-pill ks"><span class="pill-swatch ks"></span> Optimal Cutoff (KS = 52.6%)</span>
     </div>
   </div>
 
@@ -247,7 +247,7 @@ const optimalCutoff = scoreData.find(d => d.score === 640)!;
 
   .chart-tag {
     font-size: var(--text-xs);
-    color: var(--color-accent);
+    color: var(--color-ink-secondary);
     font-weight: 600;
     letter-spacing: 0.05em;
   }
@@ -275,15 +275,28 @@ const optimalCutoff = scoreData.find(d => d.score === 640)!;
     color: var(--color-ink-secondary);
   }
 
-  .pill-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
+  .pill-swatch {
+    display: inline-block;
+    width: 12px;
+    height: 2px;
+    margin-right: 6px;
+    vertical-align: middle;
   }
 
-  .pill-dot.good { background-color: var(--color-ink-secondary); }
-  .pill-dot.bad { background-color: var(--color-accent); }
-  .pill-dot.ks { background-color: var(--color-accent); outline: 1px solid var(--color-accent); outline-offset: 1px; }
+  .pill-swatch.good {
+    background: var(--color-ink-secondary);
+    border: none;
+  }
+
+  .pill-swatch.bad {
+    background: var(--color-accent);
+    border: none;
+  }
+
+  .pill-swatch.ks {
+    background: none;
+    border-top: 2px dashed var(--color-accent);
+  }
 
   .canvas-container {
     width: 100%;
@@ -335,7 +348,7 @@ const optimalCutoff = scoreData.find(d => d.score === 640)!;
   }
 
   .highlight-val {
-    color: var(--color-accent);
+    color: var(--color-ink-primary);
     margin-left: var(--space-2);
   }
 
@@ -421,7 +434,7 @@ const optimalCutoff = scoreData.find(d => d.score === 640)!;
 
   .m-label {
     font-size: 10px;
-    color: var(--color-ink-muted);
+    color: var(--color-ink-secondary);
     letter-spacing: 0.05em;
   }
 
@@ -433,7 +446,7 @@ const optimalCutoff = scoreData.find(d => d.score === 640)!;
   }
 
   .m-val.alert {
-    color: var(--color-accent);
+    color: var(--color-ink-primary);
   }
 
   .m-sub {
