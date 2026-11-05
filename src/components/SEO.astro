@@ -12,7 +12,7 @@ const {
   title = 'Aryan Ashok | Data Science & AI/ML Developer',
   description = 'Personal portfolio of Aryan Ashok, a Data Science & AI/ML developer in Mumbai, India. Projects across semantic search, credit risk modeling, fraud detection, stock analytics, and unsupervised sensor clustering.',
   image = '/og-image.svg',
-  canonicalUrl = Astro.url.href,
+  canonicalUrl = new URL(Astro.url.pathname, Astro.site).href,
   type = 'website'
 } = Astro.props;
 
