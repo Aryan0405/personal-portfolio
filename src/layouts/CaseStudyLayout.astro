@@ -62,7 +62,7 @@ const { project } = Astro.props;
 
       <!-- Executive Overview -->
       <section class="memo-section overview-section">
-        <h2 class="section-heading font-mono">01 // EXECUTIVE ABSTRACT</h2>
+        <h2 class="section-heading">Executive abstract</h2>
         <div class="prose-content">
           <p>{project.caseStudy.overview}</p>
         </div>
@@ -71,7 +71,7 @@ const { project } = Astro.props;
       <!-- Interactive Analytical Exhibit (Project Specific) -->
       {project.hasInteractiveExhibit && (
         <section class="memo-section exhibit-section" aria-label="Interactive Analytical Exhibit">
-          <h2 class="section-heading font-mono">02 // EMPIRICAL EXHIBIT</h2>
+          <h2 class="section-heading">Empirical exhibit</h2>
           {project.exhibitType === 'beauty-advisor' && <BeautyAdvisorExhibit />}
           {project.exhibitType === 'ks-scorecard' && <CreditRiskChart />}
           {project.exhibitType === 'fraud-metrics' && <FraudDetectionExhibit />}
@@ -83,8 +83,8 @@ const { project } = Astro.props;
       <!-- Detailed Case Study Narrative Sections -->
       {project.caseStudy.sections.map((sec, idx) => (
         <section class="memo-section" id={sec.id}>
-          <h2 class="section-heading font-mono">
-            0{idx + (project.hasInteractiveExhibit ? 3 : 2)} // {sec.title.toUpperCase()}
+          <h2 class="section-heading">
+            {sec.title}
           </h2>
           <div class="prose-content">
             <p>{sec.content}</p>
@@ -100,9 +100,9 @@ const { project } = Astro.props;
 
       <!-- Critical Retrospective (What I Would Do Differently) -->
       <section class="memo-section retrospective-section">
-        <h2 class="section-heading font-mono">
-          0{project.caseStudy.sections.length + (project.hasInteractiveExhibit ? 3 : 2)} // WHAT I WOULD DO DIFFERENTLY
-        </h2>
+          <h2 class="section-heading">
+            What I would do differently
+          </h2>
         <div class="prose-content">
           <p>{project.caseStudy.whatWouldDoDifferently}</p>
         </div>
@@ -110,9 +110,9 @@ const { project } = Astro.props;
 
       <!-- Technology Stack Index -->
       <section class="memo-section stack-section">
-        <h2 class="section-heading font-mono">
-          0{project.caseStudy.sections.length + (project.hasInteractiveExhibit ? 4 : 3)} // TECHNICAL IMPLEMENTATION STACK
-        </h2>
+          <h2 class="section-heading">
+            Technical implementation stack
+          </h2>
         <div class="tech-pills-row font-mono">
           {project.technologies.map(t => (
             <span class="tech-tag">{t}</span>
