@@ -273,7 +273,9 @@ import { contactDetails } from '../data/projects';
   /* Mobile navigation overlay */
   .mobile-nav {
     position: fixed;
-    inset: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
     z-index: 2000;
     display: none;
     flex-direction: column;
@@ -330,6 +332,7 @@ import { contactDetails } from '../data/projects';
     gap: 0;
     padding: 0;
     margin: 0;
+    flex: 1;
   }
 
   .mobile-nav-link {
