@@ -44,8 +44,6 @@ coverage/
 .npm/
 .eslintcache
 .stylelintcache
-.parcel-cache/
-.vite/
 .pnpm-store/
 .grunt/
 .fusebox/
@@ -53,7 +51,6 @@ coverage/
 .dynamodb/
 .serverless/
 .docusaurus/
-.turbo/
 
 # TypeScript
 *.tsbuildinfo
@@ -81,4 +78,15 @@ Thumbs.db
 lib-cov/
 build/Release/
 .tern-port
-.cache/
+
+# AI coding agent skill installations
+.agent/skills/
+.agents/skills/
+.claude/agents/
+.claude/skills/
+.codex/
+.opencode/skills/
+
+# Impeccable local configuration and generated command
+.impeccable/config.local.json
+.opencode/commands/impeccable.md
