@@ -299,5 +299,5 @@ export const contactDetails = {
   email: 'aryan.ashok0405@gmail.com',
   github: 'https://github.com/Aryan0405/',
   linkedin: 'https://www.linkedin.com/in/aryan-ashok/',
-  status: 'Open for Summer 2026 Data Science, AI/ML & Software Engineering Opportunities'
+  status: 'Open for Summer 2027 Data Science, AI/ML & Software Engineering Opportunities'
 };
