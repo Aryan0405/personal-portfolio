@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 
 export const GET: APIRoute = ({ site }) => {
-  const sitemapUrl = new URL('sitemap.xml', site || 'https://aryan.dev').href;
+  const sitemapUrl = new URL('sitemap.xml', site || 'https://aryan-ashok-portfolio.vercel.app').href;
   const content = `User-agent: *
 Allow: /
 

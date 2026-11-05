@@ -2,7 +2,7 @@ import type { APIRoute } from 'astro';
 import { projects } from '../data/projects';
 
 export const GET: APIRoute = ({ site }) => {
-  const baseUrl = site ? site.href.replace(/\/$/, '') : 'https://aryan.dev';
+  const baseUrl = site ? site.href.replace(/\/$/, '') : 'https://aryan-ashok-portfolio.vercel.app';
   const lastmod = new Date().toISOString().split('T')[0];
 
   const urls = [

@@ -1,16 +1,11 @@
 ---
 import type { Project } from '../data/projects';
-import githubCache from '../data/github-cache.json';
 
 interface Props {
   project: Project;
 }
 
 const { project } = Astro.props;
-
-// Get cached GitHub metadata if available
-const repoKey = project.slug;
-const cachedInfo = (githubCache.repos as Record<string, { stars?: number; primaryLanguage?: string }>)[repoKey];
 ---
 
 <article class="project-card" id={`project-${project.slug}`}>
@@ -30,6 +25,10 @@ const cachedInfo = (githubCache.repos as Record<string, { stars?: number; primar
     <p class="card-oneliner">
       {project.oneLiner}
     </p>
+
+    <p class="card-problem">
+      {project.problemStatement}
+    </p>
   </div>
 
   <div class="card-metrics-block">
@@ -47,11 +46,6 @@ const cachedInfo = (githubCache.repos as Record<string, { stars?: number; primar
     {project.technologies.map(tech => (
       <span class="tech-pill">{tech}</span>
     ))}
-    {cachedInfo?.stars && (
-      <span class="tech-pill star-pill" title={`${cachedInfo.stars} GitHub stars`}>
-        ★ {cachedInfo.stars}
-      </span>
-    )}
   </div>
 
   <div class="card-actions">
@@ -183,6 +177,15 @@ const cachedInfo = (githubCache.repos as Record<string, { stars?: number; primar
     margin-bottom: var(--space-4);
   }
 
+  .card-problem {
+    font-size: var(--text-sm);
+    color: var(--color-ink-muted);
+    line-height: 1.55;
+    margin-top: var(--space-2);
+    margin-bottom: var(--space-4);
+    font-style: italic;
+  }
+
   .card-metrics-block {
     margin: 0;
     border-top: 1px solid var(--color-border);
@@ -231,18 +234,6 @@ const cachedInfo = (githubCache.repos as Record<string, { stars?: number; primar
     border: 1px solid var(--color-border);
     border-radius: 0;
     color: var(--color-ink-secondary);
-  }
-
-  .star-pill {
-    color: #9E6A03;
-    border-color: #E6C875;
-    background: #FFFDF5;
-  }
-
-  :global([data-theme="dark"]) .star-pill {
-    background: #242010;
-    color: #F0C040;
-    border-color: #5C4E15;
   }
 
   .card-actions {

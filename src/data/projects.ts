@@ -19,6 +19,7 @@ export interface Project {
   featured: boolean;
   order: number;
   oneLiner: string;
+  problemStatement: string;
   summary: string;
   technologies: string[];
   metrics: Metric[];
@@ -40,8 +41,9 @@ export const projects: Project[] = [
     domain: 'Semantic Search & Skincare AI',
     status: 'Completed',
     featured: true,
-    order: 1,
+    order: 3,
     oneLiner: 'Semantic-search skincare recommendation engine combining FAISS vector similarity, hybrid ranking, and Gemini structured explanations.',
+    problemStatement: 'Matching skincare products to symptom-based queries when customers don\'t know ingredient names.',
     summary: 'A complete end-to-end recommendation system built on a 1,472-item cosmetics dataset. Users describe skin concerns in plain language; the FastAPI backend embeds queries, performs cosine search in FAISS IndexFlatIP, applies hybrid re-ranking, looks up pre-mined Apriori routine bundles, and generates grounded per-product explanations using Gemini 2.5 Flash Lite in a single structured call.',
     technologies: ['FastAPI', 'React', 'FAISS', 'Gemini', 'Apriori', 'Redis', 'SQLite', 'Docker'],
     metrics: [
@@ -85,6 +87,7 @@ export const projects: Project[] = [
     featured: true,
     order: 2,
     oneLiner: 'Regulatory-compliant credit scoring engine built on Home Credit data, evaluating a Logistic Regression scorecard against XGBoost challengers.',
+    problemStatement: 'Choosing between an explainable WoE scorecard and opaque XGBoost challengers for regulated lending decisions.',
     summary: 'A production credit risk analysis evaluating regulatory trade-offs between an explainable Weight of Evidence (WoE) Logistic Regression scorecard and non-linear XGBoost challengers. Demonstrates why marginal AUC lifts (+0.0106) do not justify secondary pipeline complexity in regulated banking, and uncovers the WoE risk ceiling for high-risk applicants using SHAP.',
     technologies: ['Python', 'WoE', 'Logistic Regression', 'XGBoost', 'SHAP', 'OptBinning', 'Scikit-learn'],
     metrics: [
@@ -126,8 +129,9 @@ export const projects: Project[] = [
     domain: 'Imbalanced Classification & Failure Analysis',
     status: 'Deployed',
     featured: true,
-    order: 3,
+    order: 1,
     oneLiner: 'End-to-end fraud detection MVP on 284,807 transactions with XGBoost, SHAP explainability, and failure mode analysis.',
+    problemStatement: 'Detecting fraudulent transactions amid extreme class imbalance (0.17% fraud rate) without generating synthetic data artifacts.',
     summary: 'A fraud detection system addressing extreme class imbalance (0.17% fraud) on the Kaggle ULB dataset. Uses scale_pos_weight class weighting instead of synthetic SMOTE sampling, benchmarks against FLAML AutoML, explains individual predictions with SHAP TreeExplainer, and categorizes false predictions into threshold-sensitive versus unseparable cases in an interactive Streamlit app.',
     technologies: ['Python', 'XGBoost', 'Logistic Regression', 'SHAP', 'Streamlit', 'FLAML', 'Scikit-learn'],
     metrics: [
@@ -172,6 +176,7 @@ export const projects: Project[] = [
     featured: true,
     order: 4,
     oneLiner: 'Interactive market dashboard analyzing six calendar years of daily data across 10 NSE blue-chip stocks to evaluate tail risk and drawdowns.',
+    problemStatement: 'Evaluating tail risk and drawdowns beyond simple cumulative returns for equity allocation.',
     summary: 'A deployed Streamlit application evaluating 1,480 trading days (2019-2024) of daily OHLCV data for 10 diversified National Stock Exchange equities against the NIFTY50 benchmark. Generates log returns distributions, rolling 21-day annualized volatility, peak-to-trough drawdowns, 63-day rolling Sharpe ratios, and stock correlation matrices.',
     technologies: ['Python', 'Streamlit', 'Pandas', 'YFinance', 'Plotly'],
     metrics: [
@@ -216,6 +221,7 @@ export const projects: Project[] = [
     featured: true,
     order: 5,
     oneLiner: 'Unsupervised sensor clustering on 1.5M readings from urban train air compressors, mapping 99.3% of failure events to a single operating state.',
+    problemStatement: 'Identifying where compressor failures occur when supervised prediction is statistically impossible with only four failures.',
     summary: 'An unsupervised investigation into where air compressor failures occur on a Metro do Porto train. Evaluates 1.5 million readings from 15 sensors across 7 months (February to August 2020), slicing data into 50,513 five-minute feature windows. Unsupervised K-Means clustering (K=3, Silhouette 0.43) proved that 985 of 992 failure windows (99.3%) concentrate into a single "Sustained High Load" operating mode.',
     technologies: ['Python', 'K-Means', 'Unsupervised Learning', 'PCA', 'Power BI', 'Streamlit'],
     metrics: [
@@ -302,4 +308,11 @@ export const contactDetails = {
   github: 'https://github.com/Aryan0405/',
   linkedin: 'https://www.linkedin.com/in/aryan-ashok/',
   status: availabilityText
+};
+
+export const aboutMe = {
+  who: 'An SDBI undergraduate in Data Science & Business Analytics (Class of 2028), seeking internships to apply my academic foundation in practical settings. I am passionate about building robust data solutions.',
+  what: 'I build practical machine learning applications, like credit risk scorecards and fraud detection models, with a strong focus on model interpretability (SHAP, Streamlit) and rigorous testing.',
+  lookingFor: 'An internship where I can contribute to real-world projects, deepen my understanding of data science pipelines, and learn from experienced professionals.',
+  philosophy: 'I believe in the synergy of practical projects, a solid grasp of the underlying mathematics, and clear communication to bridge the gap between technical analysis and business impact. I am always eager to learn and explore beyond the classroom.'
 };
