@@ -62,26 +62,26 @@
 }
 
 [data-theme="dark"] {
-  --color-bg: #000000;
-  --color-surface: #050505;
-  --color-surface-subtle: #0E0E0E;
-  --color-surface-hover: #141414;
+  --color-bg: #0A0A2E;
+  --color-surface: #121236;
+  --color-surface-subtle: #1A1A40;
+  --color-surface-hover: #22224A;
   
-  --color-ink-primary: #4B0082;
-  --color-ink-secondary: #98FF98;
-  --color-ink-muted: #B0D9E8;
+  --color-ink-primary: #E0F7FF;
+  --color-ink-secondary: #00E5FF;
+  --color-ink-muted: #9CC3E6;
   
-  --color-border: #1A1A1A;
-  --color-border-strong: #333333;
+  --color-border: #1A1A3A;
+  --color-border-strong: #333355;
   
-  --color-accent: #ADD8E6;
-  --color-accent-subtle: #0A0A1A;
-  --color-accent-hover: #B8E0F0;
-  --color-slider-track: #4B0082;
+  --color-accent: #7FFF00;
+  --color-accent-subtle: #0A0A2E;
+  --color-accent-hover: #99FF22;
+  --color-slider-track: #1A1A3A;
 
-  --color-status-deployed: #4B0082;
-  --color-status-complete: #98FF98;
-  --color-status-progress: #ADD8E6;
+  --color-status-deployed: #00E5FF;
+  --color-status-complete: #7FFF00;
+  --color-status-progress: #E0F7FF;
 }
 
 /* CSS Reset & Base Rules */
