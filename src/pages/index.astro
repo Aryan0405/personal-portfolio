@@ -769,5 +769,19 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
     font-weight: 600;
     color: var(--color-ink-primary);
     text-align: right;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    min-width: 0;
+  }
+
+  @media (max-width: 767px) {
+    .profile-field {
+      flex-wrap: wrap;
+      align-items: baseline;
+    }
+    .profile-val {
+      text-align: left;
+      margin-top: 2px;
+    }
   }
 </style>
