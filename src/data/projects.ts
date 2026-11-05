@@ -45,7 +45,7 @@ export const projects: Project[] = [
     summary: 'A complete end-to-end recommendation system built on a 1,472-item cosmetics dataset. Users describe skin concerns in plain language; the FastAPI backend embeds queries, performs cosine search in FAISS IndexFlatIP, applies hybrid re-ranking, looks up pre-mined Apriori routine bundles, and generates grounded per-product explanations using Gemini 2.5 Flash Lite in a single structured call.',
     technologies: ['FastAPI', 'React', 'FAISS', 'Gemini', 'Apriori', 'Redis', 'SQLite', 'Docker'],
     metrics: [
-      { label: 'Retrieval Latency', value: '13.0 ms P95', context: 'P50 of 9.5 ms vs 150 ms spec budget on warm cache' },
+      { label: 'Retrieval Latency', value: '13.0 ms P95', context: 'P50 of 9.5 ms against a P95 target of 150 ms (retrieval only, warm cache)' },
       { label: 'Precision@5', value: '66.0%', context: 'Category and skin-type intersection across 20 curated test queries' },
       { label: 'Catalog Size', value: '1,472 Items', context: 'Indexed skincare formulations with pre-computed embeddings' }
     ],
@@ -171,11 +171,11 @@ export const projects: Project[] = [
     status: 'Deployed',
     featured: true,
     order: 4,
-    oneLiner: 'Interactive market dashboard analyzing 5 years of daily data across 10 NSE blue-chip stocks to evaluate tail risk and drawdowns.',
-    summary: 'A deployed Streamlit application evaluating 1,480 trading days (2019-2024) of daily OHLCV data for 10 diversified National Stock Exchange equities against the NIFTY50 benchmark. Generates log returns distributions, rolling 21-day annualized volatility, peak-to-trough drawdowns, 63-day rolling Sharpe ratios, and sectoral correlation matrices.',
+    oneLiner: 'Interactive market dashboard analyzing six calendar years of daily data across 10 NSE blue-chip stocks to evaluate tail risk and drawdowns.',
+    summary: 'A deployed Streamlit application evaluating 1,480 trading days (2019-2024) of daily OHLCV data for 10 diversified National Stock Exchange equities against the NIFTY50 benchmark. Generates log returns distributions, rolling 21-day annualized volatility, peak-to-trough drawdowns, 63-day rolling Sharpe ratios, and stock correlation matrices.',
     technologies: ['Python', 'Streamlit', 'Pandas', 'YFinance', 'Plotly'],
     metrics: [
-      { label: 'Historical Horizon', value: '1,480 Days', context: '5 full years (2019-2024) across 10 sectors + NIFTY50 benchmark' },
+      { label: 'Historical Horizon', value: '1,480 Days', context: '6 calendar years (2019 to 2024) across 10 stocks + NIFTY50 benchmark' },
       { label: 'Tail Risk Peak', value: 'Kurtosis 20.29', context: 'ADANIENT exhibited extreme negative skew (-1.14) and -77% drawdown' },
       { label: 'Top Risk-Adjusted', value: 'SUNPHARMA', context: 'Most consistent Sharpe ratio, shallowest drawdown in the basket' }
     ],
@@ -195,7 +195,7 @@ export const projects: Project[] = [
         {
           id: 'tail-risk-findings',
           title: 'Empirical Findings: Tail Risk vs. Consistency',
-          content: 'ADANIENT generated ~15x cumulative growth over the 5-year period but exhibited a kurtosis of 20.29 and skewness of -1.14 with a -77% maximum drawdown. Conversely, SUNPHARMA emerged as the strongest risk-adjusted candidate with low volatility, shallow drawdowns, and weak correlation with the rest of the basket.',
+          content: 'ADANIENT generated ~15x cumulative growth over the 2019–2024 period but exhibited a kurtosis of 20.29 and skewness of -1.14 with a -77% maximum drawdown. Conversely, SUNPHARMA emerged as the strongest risk-adjusted candidate with low volatility, shallow drawdowns, and weak correlation with the rest of the basket.',
           highlight: 'Empirical lesson: Outstanding long-term cumulative returns often mask catastrophic interim drawdown risk.'
         },
         {
@@ -234,7 +234,7 @@ export const projects: Project[] = [
           id: 'windowing-methodology',
           title: '5-Minute Feature Windowing & Cleaning',
           content: 'Telemetry from 15 sensors, about 1.5 million readings at roughly 10-second intervals, was segmented into 5-minute windows described by 36 summary features: mean, standard deviation, minimum and maximum for 7 continuous sensors, plus the mean of 8 binary signals. Windows with fewer than half the expected readings were dropped, leaving 50,513.',
-          highlight: 'Feature engineering: 1.5 million raw timestamps condensed into 50,513 multivariate statistical windows.'
+          highlight: 'Feature engineering: 1.5 million raw readings condensed into 50,513 multivariate statistical windows.'
         },
         {
           id: 'unsupervised-clustering',
