@@ -62,27 +62,27 @@
 }
 
 [data-theme="dark"] {
-  /* Charcoal Black + Forest Green + Crimson Red */
+  /* Obsidian Black + Chrome Silver + Laser Crimson Red */
   --color-bg: #121212;
   --color-surface: #1A1A1A;
   --color-surface-subtle: #252525;
   --color-surface-hover: #303030;
   
-  --color-ink-primary: #F0F0F0;
-  --color-ink-secondary: #B0B0B0;
+  --color-ink-primary: #C0C0C0;
+  --color-ink-secondary: #A0A0A0;
   --color-ink-muted: #808080;
   
   --color-border: #2A2A2A;
   --color-border-strong: #404040;
   
-  --color-accent: #228B22;
-  --color-accent-subtle: #1A1A1A;
-  --color-accent-hover: #32CD32;
+  --color-accent: #DC143C;
+  --color-accent-subtle: #2A1A1E;
+  --color-accent-hover: #FF1E4C;
   --color-slider-track: #404040;
 
-  --color-status-deployed: #228B22;
-  --color-status-complete: #DC143C;
-  --color-status-progress: #B22222;
+  --color-status-deployed: #DC143C;
+  --color-status-complete: #C0C0C0;
+  --color-status-progress: #DC143C;
 }
 
 /* CSS Reset & Base Rules */
