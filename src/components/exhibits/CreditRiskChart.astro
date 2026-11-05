@@ -22,10 +22,10 @@ const optimalCutoff = scoreData.find(d => d.score === 640)!;
 <div class="ks-chart-wrapper" id="ks-chart-component">
   <div class="chart-header">
     <div>
-      <span class="chart-tag font-mono">EXHIBIT 1.1: MODEL DISCRIMINATION</span>
+      <span class="chart-tag">Exhibit 1.1: Model discrimination</span>
       <h3 class="chart-title">Kolmogorov-Smirnov (KS) Separation Curve</h3>
     </div>
-    <div class="legend-pills font-mono">
+    <div class="legend-pills">
       <span class="legend-pill good"><span class="pill-swatch good"></span> Cumulative Non-Defaulters (Good)</span>
       <span class="legend-pill bad"><span class="pill-swatch bad"></span> Cumulative Defaulters (Bad)</span>
       <span class="legend-pill ks"><span class="pill-swatch ks"></span> Optimal Cutoff (KS = 52.6%)</span>
@@ -84,7 +84,7 @@ const optimalCutoff = scoreData.find(d => d.score === 640)!;
       <circle cx="404" cy="208" r="5" fill="var(--color-ink-secondary)" />
       
       <!-- Label at KS point -->
-      <text x="404" y="22" class="divergence-label font-mono" fill="var(--color-accent)" font-weight="600"
+      <text x="404" y="22" class="divergence-label" fill="var(--color-accent)" font-weight="600"
             text-anchor="middle" paint-order="stroke" stroke="var(--color-bg)" stroke-width="3">
         Max KS: 52.6% (Cutoff 640)
       </text>
@@ -103,8 +103,8 @@ const optimalCutoff = scoreData.find(d => d.score === 640)!;
   <!-- Interactive Inspector Panel -->
   <div class="interactive-inspector">
     <div class="inspector-controls">
-      <label for="score-slider" class="font-mono inspector-label">
-        SIMULATE DECISION THRESHOLD:
+        <label for="score-slider" class="inspector-label">
+          Simulate decision threshold:
         <span id="score-display" class="highlight-val">640 Points</span>
       </label>
     <div class="slider-wrapper">
@@ -121,20 +121,20 @@ const optimalCutoff = scoreData.find(d => d.score === 640)!;
     </div>
     </div>
 
-    <div class="metrics-grid font-mono">
+    <div class="metrics-grid">
       <div class="metric-box">
-        <span class="m-label">APPROVAL RATE</span>
-        <span class="m-val" id="val-approval">26.0%</span>
+        <span class="m-label">Approval rate</span>
+        <span class="m-val font-mono" id="val-approval">26.0%</span>
         <span class="m-sub">Portfolio Volume</span>
       </div>
       <div class="metric-box">
-        <span class="m-label">CUMULATIVE DEFAULT</span>
-        <span class="m-val alert" id="val-default">20.2%</span>
+        <span class="m-label">Cumulative default</span>
+        <span class="m-val alert font-mono" id="val-default">20.2%</span>
         <span class="m-sub">Bad Rate at Cutoff</span>
       </div>
       <div class="metric-box">
-        <span class="m-label">KS SEPARATION</span>
-        <span class="m-val" id="val-ks">52.6%</span>
+        <span class="m-label">KS separation</span>
+        <span class="m-val font-mono" id="val-ks">52.6%</span>
         <span class="m-sub">Good vs Bad Divergence</span>
       </div>
     </div>
@@ -144,7 +144,7 @@ const optimalCutoff = scoreData.find(d => d.score === 640)!;
   <details class="accessible-data-details">
     <summary class="font-mono">View raw scorecard calibration table</summary>
     <div class="table-scroll-wrapper">
-      <table class="data-table font-mono">
+      <table class="data-table">
         <thead>
           <tr>
             <th scope="col">Score Band</th>
@@ -158,7 +158,7 @@ const optimalCutoff = scoreData.find(d => d.score === 640)!;
         <tbody>
           {scoreData.map(row => (
             <tr class={row.score === 640 ? 'highlight-row' : ''}>
-              <td>{row.score}{row.score === 640 ? ' (Optimal)' : ''}</td>
+              <td><span class="font-mono">{row.score}</span>{row.score === 640 ? ' (Optimal)' : ''}</td>
               <td>{row.pctPop}%</td>
               <td>{row.cumGood}%</td>
               <td>{row.cumBad}%</td>
@@ -315,7 +315,6 @@ const optimalCutoff = scoreData.find(d => d.score === 640)!;
   }
 
   .axis-title {
-    font-family: var(--font-mono);
     font-size: 12px;
     fill: var(--color-ink-secondary);
     font-weight: 500;

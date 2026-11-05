@@ -5,10 +5,10 @@
 <div class="exhibit-wrapper" id="beauty-advisor-exhibit">
   <div class="exhibit-header">
     <div>
-      <span class="exhibit-tag font-mono">EXHIBIT 1.1: RETRIEVAL &amp; RE-RANKING PIPELINE</span>
+      <span class="exhibit-tag">Exhibit 1.1: Retrieval and re-ranking pipeline</span>
       <h3 class="exhibit-title">FAISS Cosine Similarity + Hybrid Linear Scoring</h3>
     </div>
-    <div class="font-mono text-xs status-note">
+    <div class="text-xs status-note">
       <span class="status-dot completed"></span> Sub-15ms In-Memory Vector Search
     </div>
   </div>
@@ -18,54 +18,54 @@
   </div>
 
   <!-- Pipeline Architecture Graphic -->
-  <div class="pipeline-flow font-mono">
+  <div class="pipeline-flow">
     <div class="pipe-step">
-      <span class="step-num">01</span>
+      <span class="step-num font-mono">01</span>
       <span class="step-title">Query Embedding</span>
       <span class="step-desc">all-MiniLM-L6-v2 vector</span>
     </div>
     <div class="pipe-arrow" aria-hidden="true">→</div>
     <div class="pipe-step">
-      <span class="step-num">02</span>
+      <span class="step-num font-mono">02</span>
       <span class="step-title">FAISS IndexFlatIP</span>
       <span class="step-desc">1,472 items, Cosine top-K</span>
     </div>
     <div class="pipe-arrow" aria-hidden="true">→</div>
     <div class="pipe-step highlight-step">
-      <span class="step-num">03</span>
+      <span class="step-num font-mono">03</span>
       <span class="step-title">Hybrid Re-Ranking</span>
       <span class="step-desc">0.90*Sim + 0.075*KW + 0.025*F</span>
     </div>
     <div class="pipe-arrow" aria-hidden="true">→</div>
     <div class="pipe-step">
-      <span class="step-num">04</span>
+      <span class="step-num font-mono">04</span>
       <span class="step-title">Gemini 2.5 Flash</span>
       <span class="step-desc">Single structured JSON call</span>
     </div>
   </div>
 
   <!-- Real Measured Evaluation Metrics -->
-  <div class="eval-metrics-grid font-mono">
+  <div class="eval-metrics-grid">
     <div class="eval-box">
-      <span class="e-label">P50 RETRIEVAL LATENCY</span>
-      <span class="e-val">9.5 ms</span>
+      <span class="e-label">P50 retrieval latency</span>
+      <span class="e-val font-mono">9.5 ms</span>
       <span class="e-ctx">Measured over 20 test queries</span>
     </div>
     <div class="eval-box">
-      <span class="e-label">P95 RETRIEVAL LATENCY</span>
-      <span class="e-val alert">13.0 ms</span>
+      <span class="e-label">P95 retrieval latency</span>
+      <span class="e-val alert font-mono">13.0 ms</span>
       <span class="e-ctx">Well within 150 ms SLA budget</span>
     </div>
     <div class="eval-box">
-      <span class="e-label">PRECISION@5 RELEVANCE</span>
-      <span class="e-val">66.0%</span>
+      <span class="e-label">Precision@5 relevance</span>
+      <span class="e-val font-mono">66.0%</span>
       <span class="e-ctx">Category + skin-type intersection</span>
     </div>
   </div>
 
   <!-- Apriori Routine Bundle Simulation -->
-  <div class="apriori-preview font-mono">
-    <span class="apriori-title">PRE-MINED APRIORI ROUTINE PAIRINGS (LIFT &gt; 1.2):</span>
+  <div class="apriori-preview">
+    <span class="apriori-title">Pre-mined Apriori routine pairings (lift &gt; 1.2):</span>
     <div class="rule-pairs">
       <div class="rule-pair">
         <span class="cat-source">Primary: Cleanser</span>
@@ -97,18 +97,23 @@
 
   .exhibit-header {
     display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-4);
     margin-bottom: var(--space-4);
     border-bottom: 1px solid var(--color-border);
     padding-bottom: var(--space-4);
   }
 
-  @media (min-width: 768px) {
+  .exhibit-header > *:first-child {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  @media (max-width: 640px) {
     .exhibit-header {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: flex-end;
+      flex-direction: column;
+      align-items: flex-start;
     }
   }
 
@@ -124,9 +129,10 @@
   }
 
   .status-note {
+    flex: 0 0 auto;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     color: var(--color-ink-muted);
   }
 

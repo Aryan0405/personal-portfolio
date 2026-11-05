@@ -22,7 +22,7 @@ const { project } = Astro.props;
   <div class="case-study-page">
     <div class="container memo-container">
       <!-- Breadcrumb Navigation -->
-      <nav class="breadcrumb-nav font-mono" aria-label="Breadcrumb">
+      <nav class="breadcrumb-nav" aria-label="Breadcrumb">
         <a href="/#projects" class="back-link">
           <span aria-hidden="true">←</span> Return to Selected Work
         </a>
@@ -32,7 +32,7 @@ const { project } = Astro.props;
 
       <!-- Memo Header Block -->
       <header class="memo-header">
-        <div class="header-meta font-mono">
+        <div class="header-meta">
           <span class="meta-domain">{project.domain}</span>
           <span class={`badge badge-status ${project.status.toLowerCase().replace(' ', '-')}`}>
             <span class={`status-dot ${project.status === 'Deployed' ? 'deployed' : project.status === 'Completed' ? 'completed' : 'progress'}`}></span>
@@ -49,10 +49,10 @@ const { project } = Astro.props;
       <!-- Quantitative Benchmark Highlights -->
       <section class="metrics-summary-section" aria-label="Key Performance Metrics">
         <h2 class="sr-only">Key Performance Metrics</h2>
-        <div class="metrics-cards-grid font-mono">
+        <div class="metrics-cards-grid">
           {project.metrics.map(m => (
             <div class="summary-metric-card">
-              <span class="metric-big-val">{m.value}</span>
+              <span class="metric-big-val font-mono">{m.value}</span>
               <span class="metric-big-lbl">{m.label}</span>
               <span class="metric-big-ctx">{m.context}</span>
             </div>
@@ -89,8 +89,8 @@ const { project } = Astro.props;
           <div class="prose-content">
             <p>{sec.content}</p>
             {sec.highlight && (
-              <aside class="memo-callout font-mono">
-                <span class="callout-label">KEY TAKEAWAY:</span>
+              <aside class="memo-callout">
+                <span class="callout-label">Key takeaway</span>
                 <span class="callout-text">{sec.highlight}</span>
               </aside>
             )}
@@ -113,7 +113,7 @@ const { project } = Astro.props;
           <h2 class="section-heading">
             Technical implementation stack
           </h2>
-        <div class="tech-pills-row font-mono">
+        <div class="tech-pills-row">
           {project.technologies.map(t => (
             <span class="tech-tag">{t}</span>
           ))}
@@ -122,15 +122,15 @@ const { project } = Astro.props;
 
       <!-- Case Study Footer Actions -->
       <div class="memo-footer-actions">
-        <a href={project.repoUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary font-mono">
+        <a href={project.repoUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary">
           View Repository on GitHub ↗
         </a>
         {project.liveUrl && (
-          <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" class="btn btn-secondary font-mono">
+          <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
             Launch Live Deployment ↗
           </a>
         )}
-        <a href="/#projects" class="btn btn-ghost font-mono">
+        <a href="/#projects" class="btn btn-ghost">
           Return to All Projects
         </a>
       </div>

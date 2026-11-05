@@ -233,7 +233,6 @@ code, pre, .font-mono {
   align-items: center;
   gap: var(--space-1);
   padding: 2px 8px;
-  font-family: var(--font-mono);
   font-size: var(--text-xs);
   font-weight: 500;
   border-radius: var(--radius-sm);

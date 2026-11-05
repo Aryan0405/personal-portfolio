@@ -10,10 +10,10 @@ const clusterModes = [
 <div class="exhibit-wrapper" id="metro-clustering-exhibit">
   <div class="exhibit-header">
     <div>
-      <span class="exhibit-tag font-mono">EXHIBIT 5.1: CLUSTER SEPARATION &amp; ANOMALY OVERLAP</span>
+      <span class="exhibit-tag">Exhibit 5.1: Cluster separation and anomaly overlap</span>
       <h3 class="exhibit-title">K-Means Sensor Mode Partitioning (50,513 5-Minute Windows)</h3>
     </div>
-    <div class="font-mono text-xs status-note">
+    <div class="text-xs status-note">
       <a href="https://metropt3-clustering.streamlit.app/" target="_blank" rel="noopener noreferrer" class="live-pill">
         <span class="status-dot deployed"></span> View Live Streamlit App ↗
       </a>
@@ -25,24 +25,24 @@ const clusterModes = [
   </div>
 
   <!-- Cluster Mode Distribution Bars -->
-  <div class="clusters-grid font-mono">
+  <div class="clusters-grid">
     {clusterModes.map(c => (
       <div class={`cluster-card ${c.share === 6.05 ? 'highlight-cluster' : ''}`}>
         <div class="cluster-top">
           <span class="c-name">{c.name}</span>
-          <span class="c-share">{c.share}% of Time</span>
+          <span class="c-share"><span class="font-mono">{c.share}%</span> of time</span>
         </div>
         
         <p class="c-desc">{c.desc}</p>
 
         <div class="cluster-stat-row">
           <span class="c-lbl">Total Windows:</span>
-          <span class="c-val">{c.totalWindows.toLocaleString()}</span>
+          <span class="c-val font-mono">{c.totalWindows.toLocaleString()}</span>
         </div>
 
         <div class="cluster-stat-row">
           <span class="c-lbl">Failure Windows:</span>
-          <span class={`c-val ${c.failureWindows > 0 ? 'alert' : ''}`}>{c.failureWindows} ({c.failShare}%)</span>
+          <span class={`c-val font-mono ${c.failureWindows > 0 ? 'alert' : ''}`}>{c.failureWindows} ({c.failShare}%)</span>
         </div>
 
         <div class="bar-track">
@@ -56,8 +56,8 @@ const clusterModes = [
   </div>
 
   <!-- Analytical Takeaway Box -->
-  <div class="insight-box font-mono">
-    <span class="insight-title">KEY METHODOLOGICAL TAKEAWAY &amp; HONEST LIMITATION:</span>
+  <div class="insight-box">
+    <span class="insight-title">Key methodological takeaway and honest limitation</span>
     <p class="insight-body">
       Although <strong>99.3% of all failure windows</strong> concentrate inside the "Sustained High Load" mode (a 16x concentration over baseline), 
       only <strong>32.2% of windows in that mode</strong> represent active failures. Therefore, unsupervised clustering successfully identifies 
@@ -77,18 +77,23 @@ const clusterModes = [
 
   .exhibit-header {
     display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-4);
     margin-bottom: var(--space-4);
     border-bottom: 1px solid var(--color-border);
     padding-bottom: var(--space-4);
   }
 
-  @media (min-width: 768px) {
+  .exhibit-header > *:first-child {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  @media (max-width: 640px) {
     .exhibit-header {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: flex-end;
+      flex-direction: column;
+      align-items: flex-start;
     }
   }
 
@@ -104,19 +109,30 @@ const clusterModes = [
   }
 
   .status-note {
+    flex: 0 0 auto;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     color: var(--color-ink-muted);
   }
 
   .live-pill {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    color: var(--color-status-deployed);
-    text-decoration: underline;
-    font-weight: 600;
+    gap: 8px;
+    white-space: nowrap;
+    padding: 6px 12px;
+    border: 1px solid var(--color-border);
+    border-radius: 0;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--color-ink-primary);
+  }
+
+  .live-pill:hover {
+    border-color: var(--color-status-deployed);
+    text-decoration: none;
   }
 
   .clusters-grid {

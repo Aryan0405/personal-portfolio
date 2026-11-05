@@ -25,7 +25,7 @@ import { projects, contactDetails } from '../data/projects';
 
     <div class="cmd-results" id="cmd-results" role="listbox">
       <!-- Section: Navigation -->
-      <div class="cmd-group-label font-mono">SECTIONS</div>
+      <div class="cmd-group-label">Sections</div>
       <a href="/#projects" class="cmd-item" role="option">
         <span class="cmd-item-title">Selected Projects</span>
       </a>
@@ -40,27 +40,27 @@ import { projects, contactDetails } from '../data/projects';
       </a>
 
       <!-- Section: Case Studies -->
-      <div class="cmd-group-label font-mono">CASE STUDIES</div>
+      <div class="cmd-group-label">Case studies</div>
       {projects.map(p => (
         <a href={`/work/${p.slug}`} class="cmd-item" role="option">
           <span class="cmd-item-title">{p.title}</span>
-          <span class="cmd-item-tag font-mono">{p.domain}</span>
+          <span class="cmd-item-tag">{p.domain}</span>
         </a>
       ))}
 
       <!-- Section: Actions -->
-      <div class="cmd-group-label font-mono">QUICK ACTIONS</div>
+      <div class="cmd-group-label">Quick actions</div>
       <button type="button" class="cmd-item cmd-action-btn" id="cmd-copy-email" role="option">
         <span class="cmd-item-title">Copy Email Address</span>
-        <span class="cmd-item-tag font-mono">{contactDetails.email}</span>
+        <span class="cmd-item-tag">{contactDetails.email}</span>
       </button>
       <a href={contactDetails.github} target="_blank" rel="noopener noreferrer" class="cmd-item" role="option">
         <span class="cmd-item-title">Open GitHub Profile</span>
-        <span class="cmd-item-tag font-mono">github.com/Aryan0405</span>
+        <span class="cmd-item-tag">github.com/Aryan0405</span>
       </a>
       <a href={contactDetails.linkedin} target="_blank" rel="noopener noreferrer" class="cmd-item" role="option">
         <span class="cmd-item-title">Open LinkedIn Profile</span>
-        <span class="cmd-item-tag font-mono">linkedin.com/in/aryan-ashok</span>
+        <span class="cmd-item-tag">linkedin.com/in/aryan-ashok</span>
       </a>
     </div>
   </div>

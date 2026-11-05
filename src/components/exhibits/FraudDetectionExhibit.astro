@@ -5,10 +5,10 @@
 <div class="exhibit-wrapper" id="fraud-detection-exhibit">
   <div class="exhibit-header">
     <div>
-      <span class="exhibit-tag font-mono">EXHIBIT 3.1: MODEL EVALUATION &amp; BENCHMARK</span>
+      <span class="exhibit-tag">Exhibit 3.1: Model evaluation and benchmark</span>
       <h3 class="exhibit-title">PR-AUC &amp; Precision-Recall Benchmark on 56,746 Test Transactions</h3>
     </div>
-    <div class="font-mono text-xs status-note">
+    <div class="text-xs status-note">
       <a href="https://credit-card-fraud-detection-aryan0405.streamlit.app/" target="_blank" rel="noopener noreferrer" class="live-pill">
         <span class="status-dot deployed"></span> View Live Streamlit App ↗
       </a>
@@ -20,7 +20,7 @@
   </div>
 
   <!-- Real Measured Benchmark Table -->
-  <div class="table-container font-mono">
+  <div class="table-container">
     <table class="benchmark-table">
       <thead>
         <tr>
@@ -35,27 +35,27 @@
       <tbody>
         <tr>
           <td>Logistic Regression (Baseline)</td>
-          <td>0.50</td>
-          <td>0.85</td>
-          <td>0.59</td>
-          <td>0.70</td>
-          <td>0.69</td>
+          <td class="font-mono">0.50</td>
+          <td class="font-mono">0.85</td>
+          <td class="font-mono">0.59</td>
+          <td class="font-mono">0.70</td>
+          <td class="font-mono">0.69</td>
         </tr>
         <tr class="main-row">
           <td><strong>XGBoost (Main Model with Scale Weight)</strong></td>
-          <td>0.50</td>
-          <td>0.80</td>
-          <td>0.76</td>
-          <td>0.78</td>
-          <td><strong>0.79</strong></td>
+          <td class="font-mono">0.50</td>
+          <td class="font-mono">0.80</td>
+          <td class="font-mono">0.76</td>
+          <td class="font-mono">0.78</td>
+          <td class="font-mono"><strong>0.79</strong></td>
         </tr>
         <tr>
           <td>FLAML-Tuned XGBoost (AutoML Ceiling)</td>
-          <td>0.2222*</td>
-          <td>0.96</td>
-          <td>0.77</td>
-          <td>0.85</td>
-          <td>0.82</td>
+          <td class="font-mono">0.2222*</td>
+          <td class="font-mono">0.96</td>
+          <td class="font-mono">0.77</td>
+          <td class="font-mono">0.85</td>
+          <td class="font-mono">0.82</td>
         </tr>
       </tbody>
     </table>
@@ -63,12 +63,12 @@
   </div>
 
   <!-- Failure Analysis Taxonomy Breakdown -->
-  <div class="failure-analysis-box font-mono">
-    <span class="fa-title">SHAP-BASED FAILURE ANALYSIS TAXONOMY (41 TOTAL ERRORS ACROSS 56,746 SAMPLES):</span>
+  <div class="failure-analysis-box">
+    <span class="fa-title">SHAP-based failure analysis taxonomy (41 total errors across 56,746 samples):</span>
     <div class="failure-grid">
       <div class="failure-card">
         <div class="fc-head">
-          <span class="fc-type">TYPE 1: BORDERLINE CASES</span>
+          <span class="fc-type">Type 1: Borderline cases</span>
           <span class="fc-fix">[Addressable via Threshold Slider]</span>
         </div>
         <p class="fc-desc">
@@ -78,7 +78,7 @@
       </div>
       <div class="failure-card alert-card">
         <div class="fc-head">
-          <span class="fc-type alert-text">TYPE 2: CONFIDENT MISSES</span>
+          <span class="fc-type alert-text">Type 2: Confident misses</span>
           <span class="fc-fix alert-text">[Feature Blindness / Anonymized PCA Overlap]</span>
         </div>
         <p class="fc-desc">
@@ -101,18 +101,23 @@
 
   .exhibit-header {
     display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-4);
     margin-bottom: var(--space-4);
     border-bottom: 1px solid var(--color-border);
     padding-bottom: var(--space-4);
   }
 
-  @media (min-width: 768px) {
+  .exhibit-header > *:first-child {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  @media (max-width: 640px) {
     .exhibit-header {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: flex-end;
+      flex-direction: column;
+      align-items: flex-start;
     }
   }
 
@@ -130,10 +135,20 @@
   .live-pill {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    color: var(--color-status-deployed);
-    text-decoration: underline;
-    font-weight: 600;
+    gap: 8px;
+    white-space: nowrap;
+    padding: 6px 12px;
+    border: 1px solid var(--color-border);
+    border-radius: 0;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--color-ink-primary);
+  }
+
+  .live-pill:hover {
+    border-color: var(--color-status-deployed);
+    text-decoration: none;
   }
 
   .table-container {

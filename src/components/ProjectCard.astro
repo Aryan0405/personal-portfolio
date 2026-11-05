@@ -17,16 +17,14 @@ const cachedInfo = (githubCache.repos as Record<string, { stars?: number; primar
   <div class="card-header">
     <div class="meta-row">
       <span class="domain-tag">{project.domain}</span>
-      <span class={`badge badge-status font-mono ${project.status.toLowerCase().replace(' ', '-')}`}>
+      <span class={`badge badge-status ${project.status.toLowerCase().replace(' ', '-')}`}>
         <span class={`status-dot ${project.status === 'Deployed' ? 'deployed' : project.status === 'Completed' ? 'completed' : 'progress'}`}></span>
         {project.status}
       </span>
     </div>
     
     <h3 class="card-title">
-      <a href={`/work/${project.slug}`} class="title-link">
-        {project.title}
-      </a>
+      {project.title}
     </h3>
     
     <p class="card-oneliner">
@@ -34,11 +32,11 @@ const cachedInfo = (githubCache.repos as Record<string, { stars?: number; primar
     </p>
   </div>
 
-  <div class="card-metrics-block font-mono">
+  <div class="card-metrics-block">
     <div class="metrics-row">
       {project.metrics.map(m => (
         <div class="metric-item">
-          <span class="m-val">{m.value}</span>
+          <span class="m-val font-mono">{m.value}</span>
           <span class="m-lbl">{m.label}</span>
         </div>
       ))}
@@ -47,17 +45,17 @@ const cachedInfo = (githubCache.repos as Record<string, { stars?: number; primar
 
   <div class="card-tech-list">
     {project.technologies.map(tech => (
-      <span class="tech-pill font-mono">{tech}</span>
+      <span class="tech-pill">{tech}</span>
     ))}
     {cachedInfo?.stars && (
-      <span class="tech-pill font-mono star-pill" title={`${cachedInfo.stars} GitHub stars`}>
+      <span class="tech-pill star-pill" title={`${cachedInfo.stars} GitHub stars`}>
         ★ {cachedInfo.stars}
       </span>
     )}
   </div>
 
   <div class="card-actions">
-    <a href={`/work/${project.slug}`} class="btn-read-memo font-mono">
+    <a href={`/work/${project.slug}`} class="btn-read-memo">
       <span>Read Case Study</span>
       <span aria-hidden="true">→</span>
     </a>
@@ -68,7 +66,7 @@ const cachedInfo = (githubCache.repos as Record<string, { stars?: number; primar
           href={project.liveUrl} 
           target="_blank" 
           rel="noopener noreferrer" 
-          class="btn-live font-mono"
+          class="btn-live"
           aria-label={`Open live deployment for ${project.title}`}
         >
           <span>Live Demo ↗</span>
@@ -79,7 +77,7 @@ const cachedInfo = (githubCache.repos as Record<string, { stars?: number; primar
         href={project.repoUrl} 
         target="_blank" 
         rel="noopener noreferrer" 
-        class="btn-repo font-mono"
+          class="btn-repo"
         aria-label={`View GitHub repository for ${project.title}`}
       >
         <span>GitHub ↗</span>
@@ -90,14 +88,32 @@ const cachedInfo = (githubCache.repos as Record<string, { stars?: number; primar
 
 <style>
   .project-card {
+    position: relative;
+    cursor: pointer;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-sm);
     padding: var(--space-6);
-    transition: border-color 150ms ease, box-shadow 150ms ease;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .project-card {
+      transition: border-color 150ms ease, box-shadow 150ms ease;
+    }
+
+    .card-title {
+      transition: color 150ms ease;
+    }
+
+    .btn-read-memo {
+      transition: color 150ms ease;
+    }
+
+    .btn-live, .btn-repo {
+      transition: color 150ms ease;
+    }
   }
 
   .project-card:hover {
@@ -105,12 +121,24 @@ const cachedInfo = (githubCache.repos as Record<string, { stars?: number; primar
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
   }
 
+  .project-card:hover .card-title {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
+  }
+
+  .project-card:hover .btn-read-memo span[aria-hidden="true"] {
+    transform: translateX(2px);
+  }
+
   .project-card:focus-within {
     border-color: var(--color-accent);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-    outline: 2px solid var(--color-accent);
-    outline-offset: 2px;
-    border-radius: var(--radius-sm);
+  }
+
+  .btn-read-memo:focus-visible span[aria-hidden="true"] {
+    transform: translateX(2px);
   }
 
   .card-header {
@@ -152,14 +180,14 @@ const cachedInfo = (githubCache.repos as Record<string, { stars?: number; primar
     color: var(--color-ink-secondary);
     line-height: 1.55;
     margin-top: var(--space-1);
+    margin-bottom: var(--space-4);
   }
 
   .card-metrics-block {
-    margin: var(--space-4) 0;
-    background: var(--color-surface-subtle);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm);
-    padding: var(--space-3);
+    margin: 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--space-3) 0;
   }
 
   .metrics-row {
@@ -191,15 +219,17 @@ const cachedInfo = (githubCache.repos as Record<string, { stars?: number; primar
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
-    margin-bottom: var(--space-6);
+    margin-top: var(--space-3);
+    margin-bottom: 0;
+    padding-bottom: var(--space-3);
   }
 
   .tech-pill {
     font-size: 11px;
-    padding: 2px 7px;
-    background: var(--color-surface-subtle);
+    padding: 3px 8px;
+    line-height: 1.4;
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm);
+    border-radius: 0;
     color: var(--color-ink-secondary);
   }
 
@@ -221,8 +251,9 @@ const cachedInfo = (githubCache.repos as Record<string, { stars?: number; primar
     align-items: center;
     justify-content: space-between;
     gap: var(--space-3);
-    padding-top: var(--space-4);
+    margin-top: auto;
     border-top: 1px solid var(--color-border);
+    padding-top: var(--space-4);
   }
 
   .btn-read-memo {
@@ -233,25 +264,35 @@ const cachedInfo = (githubCache.repos as Record<string, { stars?: number; primar
     font-weight: 600;
     color: var(--color-accent);
     text-decoration: none;
-    transition: color 150ms ease, transform 150ms ease;
   }
 
   .btn-read-memo:hover {
     color: var(--color-accent-hover);
-    transform: translateX(2px);
+  }
+
+  .btn-read-memo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
   }
 
   .external-links {
+    position: relative;
+    z-index: 1;
+    cursor: pointer;
     display: flex;
     align-items: center;
     gap: var(--space-3);
+  }
+
+  .external-links a {
+    cursor: pointer;
   }
 
   .btn-live, .btn-repo {
     font-size: var(--text-xs);
     color: var(--color-ink-secondary);
     text-decoration: none;
-    transition: color 150ms ease;
   }
 
   .btn-live {

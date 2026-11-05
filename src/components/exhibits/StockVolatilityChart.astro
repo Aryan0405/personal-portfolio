@@ -13,10 +13,10 @@ const sectorData = [
 <div class="market-chart-wrapper" id="market-chart-component">
   <div class="chart-header">
     <div>
-      <span class="chart-tag font-mono">EXHIBIT 2.1: SECTORAL RISK SPECTRUM</span>
+      <span class="chart-tag">Exhibit 2.1: Sectoral risk spectrum</span>
       <h3 class="chart-title">Volatility vs Return Dispersion (NIFTY Sectors)</h3>
     </div>
-    <div class="font-mono text-xs status-note">
+    <div class="text-xs status-note">
       <span class="status-dot deployed"></span> Live NSE Daily Bars (Adjusted)
     </div>
   </div>
@@ -26,7 +26,7 @@ const sectorData = [
   </div>
 
   <!-- Interactive visual bars -->
-  <div class="sectors-grid font-mono">
+  <div class="sectors-grid">
     {sectorData.map(item => (
       <div class="sector-card">
         <div class="sector-top">
@@ -39,7 +39,7 @@ const sectorData = [
           <div class="bar-track">
             <div class="bar-fill vol" style={`width: ${(item.vol / 25) * 100}%`}></div>
           </div>
-          <span class="num">{item.vol}%</span>
+          <span class="num font-mono">{item.vol}%</span>
         </div>
 
         <div class="metric-row">
@@ -47,7 +47,7 @@ const sectorData = [
           <div class="bar-track">
             <div class="bar-fill ret" style={`width: ${(item.return1Y / 40) * 100}%`}></div>
           </div>
-          <span class="num">{item.return1Y}%</span>
+          <span class="num font-mono">{item.return1Y}%</span>
         </div>
 
         <div class="metric-row">
@@ -55,7 +55,7 @@ const sectorData = [
           <div class="bar-track">
             <div class="bar-fill dd" style={`width: ${(Math.abs(item.maxDd) / 30) * 100}%`}></div>
           </div>
-          <span class="num alert">{item.maxDd}%</span>
+          <span class="num alert font-mono">{item.maxDd}%</span>
         </div>
       </div>
     ))}
@@ -64,7 +64,7 @@ const sectorData = [
   <details class="accessible-data-details">
     <summary class="font-mono">View tabular sector risk summary</summary>
     <div class="table-scroll-wrapper">
-      <table class="data-table font-mono">
+      <table class="data-table">
         <thead>
           <tr>
             <th scope="col">Sector</th>
@@ -78,10 +78,10 @@ const sectorData = [
           {sectorData.map(row => (
             <tr>
               <td>{row.sector}</td>
-              <td>{row.vol}%</td>
-              <td>+{row.return1Y}%</td>
-              <td>{row.sharpe}</td>
-              <td class="alert-text">{row.maxDd}%</td>
+              <td class="font-mono">{row.vol}%</td>
+              <td class="font-mono">+{row.return1Y}%</td>
+              <td class="font-mono">{row.sharpe}</td>
+              <td class="font-mono alert-text">{row.maxDd}%</td>
             </tr>
           ))}
         </tbody>

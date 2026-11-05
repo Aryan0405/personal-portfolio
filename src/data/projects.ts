@@ -258,7 +258,7 @@ export const technicalSkills = [
   {
     category: 'Machine Learning & Statistical Modeling',
     description: 'Developing predictive algorithms, feature transformations, and rigorous validation frameworks.',
-    skills: ['Scikit-learn', 'XGBoost', 'LightGBM', 'Logistic Regression', 'Weight of Evidence (WoE)', 'SHAP Explainability', 'K-Means Clustering', 'OptBinning']
+    skills: ['Scikit-learn', 'XGBoost', 'Logistic Regression', 'Weight of Evidence (WoE)', 'SHAP Explainability', 'K-Means Clustering', 'OptBinning']
   },
   {
     category: 'Data Engineering & Vector Systems',

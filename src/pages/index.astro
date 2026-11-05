@@ -28,20 +28,20 @@ import { projects, technicalSkills, academicRecord, contactDetails } from '../da
         </p>
 
         <div class="hero-actions">
-          <a href="#projects" class="btn btn-primary font-mono">
+          <a href="#projects" class="btn btn-primary">
             Explore Selected Work ↓
           </a>
-          <a href={contactDetails.github} target="_blank" rel="noopener noreferrer" class="btn btn-secondary font-mono">
+          <a href={contactDetails.github} target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
             GitHub Profile ↗
           </a>
-          <a href={contactDetails.linkedin} target="_blank" rel="noopener noreferrer" class="btn btn-secondary font-mono">
+          <a href={contactDetails.linkedin} target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
             LinkedIn Profile ↗
           </a>
 
         </div>
 
         <!-- Quick Status Ledger -->
-        <div class="quick-ledger font-mono">
+        <div class="quick-ledger">
           <div class="ledger-cell">
             <span class="cell-label">Location</span>
             <span class="cell-val">Mumbai, India</span>
@@ -99,11 +99,10 @@ import { projects, technicalSkills, academicRecord, contactDetails } from '../da
         {technicalSkills.map((cat, idx) => (
           <div class="skill-category-card">
             <div class="cat-header">
-              <span class="cat-number font-mono">0{idx + 1}</span>
               <h3 class="cat-title">{cat.category}</h3>
             </div>
             <p class="cat-desc">{cat.description}</p>
-            <div class="cat-skills font-mono">
+            <div class="cat-skills">
               {cat.skills.map(s => (
                 <span class="skill-tag">{s}</span>
               ))}
@@ -130,9 +129,9 @@ import { projects, technicalSkills, academicRecord, contactDetails } from '../da
         <div class="academic-header">
           <div>
             <h3 class="academic-inst">{academicRecord.institution}</h3>
-            <span class="academic-degree font-mono">{academicRecord.degree}</span>
+            <span class="academic-degree">{academicRecord.degree}</span>
           </div>
-          <span class="academic-period font-mono">{academicRecord.period}</span>
+          <span class="academic-period">{academicRecord.period}</span>
         </div>
 
         <p class="academic-focus">
@@ -140,8 +139,8 @@ import { projects, technicalSkills, academicRecord, contactDetails } from '../da
         </p>
 
         <div class="coursework-block">
-          <span class="cw-title font-mono">KEY COURSEWORK &amp; FOUNDATIONS:</span>
-          <div class="cw-grid font-mono">
+          <span class="cw-title">Key coursework and foundations</span>
+          <div class="cw-grid">
             {academicRecord.coursework.map(c => (
               <div class="cw-item">
                 <span class="bullet" aria-hidden="true">•</span>
@@ -166,9 +165,9 @@ import { projects, technicalSkills, academicRecord, contactDetails } from '../da
           </p>
         </div>
 
-        <div class="contact-links-grid font-mono">
+        <div class="contact-links-grid">
           <div class="contact-link-box">
-            <span class="c-label">DIRECT EMAIL</span>
+            <span class="c-label">Email</span>
             <span class="c-val">{contactDetails.email}</span>
             <button type="button" class="btn-copy-email copy-email-action" data-email={contactDetails.email}>
               Copy Email to Clipboard
@@ -176,7 +175,7 @@ import { projects, technicalSkills, academicRecord, contactDetails } from '../da
           </div>
 
           <div class="contact-link-box">
-            <span class="c-label">SOURCE REPOSITORIES</span>
+            <span class="c-label">Source repositories</span>
             <span class="c-val">github.com/Aryan0405</span>
             <a href={contactDetails.github} target="_blank" rel="noopener noreferrer" class="c-action-link">
               Explore Repositories ↗
@@ -184,7 +183,7 @@ import { projects, technicalSkills, academicRecord, contactDetails } from '../da
           </div>
 
           <div class="contact-link-box">
-            <span class="c-label">PROFESSIONAL NETWORK</span>
+            <span class="c-label">Professional network</span>
             <span class="c-val">linkedin.com/in/aryan-ashok</span>
             <a href={contactDetails.linkedin} target="_blank" rel="noopener noreferrer" class="c-action-link">
               Connect on LinkedIn ↗
