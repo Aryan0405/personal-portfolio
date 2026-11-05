@@ -43,35 +43,7 @@ const { project } = Astro.props;
         <h1 class="memo-title">{project.title}</h1>
         <p class="memo-lead">{project.oneLiner}</p>
 
-        <!-- Executive Meta Ledger -->
-        <div class="executive-ledger font-mono">
-          <div class="ledger-item">
-            <span class="ledger-label">CORE DOMAIN</span>
-            <span class="ledger-val">{project.domain}</span>
-          </div>
-          <div class="ledger-item">
-            <span class="ledger-label">DEVELOPMENT STATUS</span>
-            <span class="ledger-val">{project.status}</span>
-          </div>
-          <div class="ledger-item">
-            <span class="ledger-label">SOURCE REPOSITORY</span>
-            <span class="ledger-val">
-              <a href={project.repoUrl} target="_blank" rel="noopener noreferrer" class="repo-link">
-                GitHub Repository ↗
-              </a>
-            </span>
-          </div>
-          {project.liveUrl && (
-            <div class="ledger-item">
-              <span class="ledger-label">LIVE DEPLOYMENT</span>
-              <span class="ledger-val">
-                <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" class="live-link">
-                  Active Web Demo ↗
-                </a>
-              </span>
-            </div>
-          )}
-        </div>
+        <!-- Executive Meta Ledger removed: domain, status, and repo link already shown in header-meta -->
       </header>
 
       <!-- Quantitative Benchmark Highlights -->

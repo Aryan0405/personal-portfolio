@@ -23,7 +23,7 @@
   --color-accent-hover: #962B18;
 
   /* Interactive track / slider (visible on both themes) */
-  --color-slider-track: #BCB4A6;
+  --color-slider-track: #8F887B;
 
   /* Functional Status Indicators */
   --color-status-deployed: #1E6B38;
@@ -77,7 +77,7 @@
   --color-accent: #E05A42;
   --color-accent-subtle: #2E1B17;
   --color-accent-hover: #F0705A;
-  --color-slider-track: #5C574F;
+  --color-slider-track: #7A746A;
 
   --color-status-deployed: #3EA662;
   --color-status-complete: #568ECE;

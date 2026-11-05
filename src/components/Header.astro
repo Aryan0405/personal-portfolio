@@ -25,14 +25,14 @@ import { contactDetails } from '../data/projects';
       <button 
         type="button" 
         class="cmd-trigger-btn font-mono" 
-        aria-label="Open command menu palette (Cmd+K)"
-        title="Open command palette (Cmd+K)"
+        aria-label="Open command menu palette"
+        title="Open command palette"
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
-        <span class="cmd-text">Cmd+K</span>
+        <span class="cmd-text" data-cmd-key>Cmd+K</span>
       </button>
 
       <a 
@@ -193,3 +193,12 @@ import { contactDetails } from '../data/projects';
     color: #FFFFFF;
   }
 </style>
+
+<script>
+  (function setPlatformKeyLabel() {
+    const el = document.querySelector('[data-cmd-key]');
+    if (!el) return;
+    const isMac = /Mac|iPod|iPhone|iPad/.test(navigator.platform);
+    el.textContent = isMac ? '⌘K' : 'Ctrl+K';
+  })();
+</script>

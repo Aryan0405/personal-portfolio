@@ -44,8 +44,8 @@ const optimalCutoff = scoreData.find(d => d.score === 640)!;
     <svg viewBox="0 0 700 360" width="100%" height="auto" class="ks-svg" id="ks-svg-elem">
       <defs>
         <linearGradient id="badGradient" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#B93822" stop-opacity="0.25" />
-          <stop offset="100%" stop-color="#B93822" stop-opacity="0.0" />
+          <stop offset="0%" stop-color="var(--color-accent)" stop-opacity="0.25" />
+          <stop offset="100%" stop-color="var(--color-accent)" stop-opacity="0.0" />
         </linearGradient>
       </defs>
 
@@ -72,19 +72,20 @@ const optimalCutoff = scoreData.find(d => d.score === 640)!;
 
       <!-- Bad Curve (Defaulters) -->
       <path d="M 50,279 L 111,252 L 172,219 L 233,180 L 294,139 L 355,102 L 404,71 L 477,54 L 538,45 L 599,41 L 660,40" 
-        fill="none" stroke="#B93822" stroke-width="2.5" />
+        fill="none" stroke="var(--color-accent)" stroke-width="2.5" />
 
       <!-- Good Curve (Non-Defaulters) -->
       <path d="M 50,299 L 111,295 L 172,289 L 233,278 L 294,261 L 355,236 L 404,208 L 477,148 L 538,92 L 599,53 L 660,40" 
-        fill="none" stroke="#4A463F" stroke-width="2.5" />
+        fill="none" stroke="var(--color-ink-secondary)" stroke-width="2.5" />
 
       <!-- KS Max Divergence Line at score 640 (x = 404) -->
-      <line x1="404" y1="71" x2="404" y2="208" stroke="#B93822" stroke-width="2" stroke-dasharray="4,2" />
-      <circle cx="404" cy="71" r="5" fill="#B93822" />
-      <circle cx="404" cy="208" r="5" fill="#4A463F" />
+      <line x1="404" y1="71" x2="404" y2="208" stroke="var(--color-accent)" stroke-width="2" stroke-dasharray="4,2" />
+      <circle cx="404" cy="71" r="5" fill="var(--color-accent)" />
+      <circle cx="404" cy="208" r="5" fill="var(--color-ink-secondary)" />
       
       <!-- Label at KS point -->
-      <text x="412" y="145" class="divergence-label font-mono" fill="#B93822" font-weight="600">
+      <text x="404" y="22" class="divergence-label font-mono" fill="var(--color-accent)" font-weight="600"
+            text-anchor="middle" paint-order="stroke" stroke="var(--color-bg)" stroke-width="3">
         Max KS: 52.6% (Cutoff 640)
       </text>
 
@@ -92,7 +93,7 @@ const optimalCutoff = scoreData.find(d => d.score === 640)!;
       <text x="50" y="325" class="axis-label" text-anchor="middle">350</text>
       <text x="172" y="325" class="axis-label" text-anchor="middle">450</text>
       <text x="294" y="325" class="axis-label" text-anchor="middle">550</text>
-      <text x="404" y="325" class="axis-label" text-anchor="middle" font-weight="700" fill="#B93822">640*</text>
+      <text x="404" y="325" class="axis-label" text-anchor="middle" font-weight="700" fill="var(--color-accent)">640*</text>
       <text x="538" y="325" class="axis-label" text-anchor="middle">750</text>
       <text x="660" y="325" class="axis-label" text-anchor="middle">850</text>
       <text x="355" y="350" class="axis-title" text-anchor="middle">Credit Score Band (Points)</text>
@@ -106,6 +107,7 @@ const optimalCutoff = scoreData.find(d => d.score === 640)!;
         SIMULATE DECISION THRESHOLD:
         <span id="score-display" class="highlight-val">640 Points</span>
       </label>
+    <div class="slider-wrapper">
       <input 
         type="range" 
         id="score-slider" 
@@ -116,6 +118,7 @@ const optimalCutoff = scoreData.find(d => d.score === 640)!;
         class="custom-slider"
         aria-label="Select Credit Score Cutoff to evaluate metrics"
       />
+    </div>
     </div>
 
     <div class="metrics-grid font-mono">
@@ -278,9 +281,9 @@ const optimalCutoff = scoreData.find(d => d.score === 640)!;
     border-radius: 50%;
   }
 
-  .pill-dot.good { background-color: #4A463F; }
-  .pill-dot.bad { background-color: #B93822; }
-  .pill-dot.ks { background-color: #B93822; outline: 1px solid #B93822; outline-offset: 1px; }
+  .pill-dot.good { background-color: var(--color-ink-secondary); }
+  .pill-dot.bad { background-color: var(--color-accent); }
+  .pill-dot.ks { background-color: var(--color-accent); outline: 1px solid var(--color-accent); outline-offset: 1px; }
 
   .canvas-container {
     width: 100%;
@@ -336,13 +339,63 @@ const optimalCutoff = scoreData.find(d => d.score === 640)!;
     margin-left: var(--space-2);
   }
 
+  .slider-wrapper {
+    min-height: 24px;
+    display: flex;
+    align-items: center;
+  }
+
   .custom-slider {
+    appearance: none;
     width: 100%;
     height: 6px;
     background: var(--color-slider-track);
     border-radius: 3px;
     outline: none;
     accent-color: var(--color-accent);
+    cursor: pointer;
+  }
+
+  .custom-slider::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 6px;
+    background: var(--color-slider-track);
+    border-radius: 3px;
+    border: none;
+  }
+
+  .custom-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    background: var(--color-accent);
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    margin-top: -4px;
+  }
+
+  .custom-slider::-moz-range-track {
+    width: 100%;
+    height: 6px;
+    background: var(--color-slider-track);
+    border-radius: 3px;
+    border: none;
+  }
+
+  .custom-slider::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    background: var(--color-accent);
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+  }
+
+  .custom-slider:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 4px;
   }
 
   .metrics-grid {
