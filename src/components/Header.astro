@@ -115,6 +115,7 @@ import { contactDetails } from '../data/projects';
     gap: var(--space-2);
     text-decoration: none;
     color: var(--color-ink-primary);
+    white-space: nowrap;
   }
 
   .brand-name {
@@ -122,12 +123,14 @@ import { contactDetails } from '../data/projects';
     font-size: var(--text-lg);
     font-weight: 700;
     letter-spacing: -0.01em;
+    white-space: nowrap;
   }
 
   .brand-role {
     font-size: 11px;
     color: var(--color-ink-muted);
     display: none;
+    white-space: nowrap;
   }
 
   @media (min-width: 640px) {
@@ -170,6 +173,19 @@ import { contactDetails } from '../data/projects';
     display: flex;
     align-items: center;
     gap: var(--space-2);
+  }
+
+  @media (max-width: 639px) {
+    .header-actions {
+      gap: var(--space-1);
+    }
+    .cmd-trigger-btn {
+      padding: 0 var(--space-2);
+    }
+    .header-github-link {
+      padding: 0 var(--space-2);
+      font-size: 10px;
+    }
   }
 
   .cmd-trigger-btn {
