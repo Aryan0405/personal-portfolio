@@ -384,32 +384,32 @@ code, pre, .font-mono {
   bottom: 0;
   left: 0;
   width: 200%;
-  height: 120px;
-  opacity: 0.15;
-  animation: wave-animation infinite linear;
+  height: 140px;
+  opacity: 0.2;
+  animation: wave-scroll infinite ease-in-out;
 }
 
 .ocean-wave-1 {
-  animation-duration: 25s;
-  opacity: 0.18;
+  animation-duration: 16s;
+  opacity: 0.22;
 }
 
 .ocean-wave-2 {
-  animation-duration: 20s;
-  animation-delay: -5s;
-  opacity: 0.12;
-  height: 100px;
+  animation-duration: 12s;
+  animation-delay: -4s;
+  opacity: 0.14;
+  height: 110px;
 }
 
 .ocean-wave-3 {
-  animation-duration: 18s;
-  animation-delay: -2s;
-  opacity: 0.08;
-  height: 80px;
+  animation-duration: 9s;
+  animation-delay: -6s;
+  opacity: 0.09;
+  height: 90px;
   transform: scaleY(-1);
 }
 
-@keyframes wave-animation {
+@keyframes wave-scroll {
   0% {
     transform: translateX(0);
   }
