@@ -329,13 +329,68 @@ code, pre, .font-mono {
   z-index: -1;
   overflow: hidden;
   background: linear-gradient(180deg, #050b14 0%, #0a192f 100%);
-  background-image: url('/ocean-bg.jpg'), linear-gradient(180deg, #050b14 0%, #0a192f 100%);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 }
 
-/* Glassmorphism utilities */
+/* Animated mesh gradient blobs */
+.mesh-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.45;
+  animation: mesh-drift infinite alternate ease-in-out;
+}
+
+.mesh-blob-1 {
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle, rgba(130, 149, 255, 0.55) 0%, transparent 70%);
+  top: -100px;
+  left: -100px;
+  animation-duration: 24s;
+}
+
+.mesh-blob-2 {
+  width: 460px;
+  height: 460px;
+  background: radial-gradient(circle, rgba(0, 229, 255, 0.4) 0%, transparent 70%);
+  bottom: -80px;
+  right: -60px;
+  animation-duration: 20s;
+  animation-delay: -6s;
+}
+
+.mesh-blob-3 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(127, 255, 0, 0.3) 0%, transparent 70%);
+  top: 30%;
+  left: 55%;
+  animation-duration: 28s;
+  animation-delay: -10s;
+}
+
+@keyframes mesh-drift {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(120px, -80px) scale(1.15);
+  }
+}
+
+/* Reduced Motion Killswitch (Antislop R-39 / WCAG 2.2) */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .mesh-blob {
+    animation: none !important;
+  }
+}
+
 .glass {
   background: rgba(10, 25, 47, 0.75);
   backdrop-filter: blur(12px);
