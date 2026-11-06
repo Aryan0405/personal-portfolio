@@ -40,8 +40,7 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
           </div>
           <div class="panel__body">
             <div class="status-line">
-              <span class="cursor" aria-hidden="true">&#9608;</span>
-              <span class="status-text">// STATUS: {availabilityText}</span>
+              <span class="status-text">{availabilityText}</span>
             </div>
 
             <h1 id="hero-title" class="hero-headline text-display">
@@ -293,7 +292,7 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
   <style>
     /* ── Hero ─────────────────────────────────────────────────────────── */
     .hero-section {
-      padding: 0;
+      padding: 0 0 var(--space-16);
     }
 
     .hero-grid {
@@ -389,31 +388,11 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
       display: flex;
       align-items: center;
       gap: var(--space-2);
-      margin: var(--space-4) 0 var(--space-6);
+      margin: var(--space-4) 0 var(--space-8);
       font-family: var(--font-label);
       font-size: var(--text-sm);
       letter-spacing: 0.12em;
       color: var(--accent-coral);
-    }
-
-    .cursor {
-      font-family: var(--font-label);
-      font-weight: 700;
-      color: var(--color-accent);
-      line-height: 1;
-      animation: blink var(--blink-duration) var(--ease-step) infinite;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .cursor {
-        animation: none;
-        opacity: 1;
-      }
-    }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
     }
 
     .hero-headline {
@@ -770,6 +749,19 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
       font-size: 11px;
       font-weight: 700;
       margin-top: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      line-height: 1;
+      vertical-align: middle;
+    }
+
+    .btn-copy-email {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      line-height: 1;
+      vertical-align: middle;
     }
   </style>
 </BaseLayout>

@@ -6,7 +6,7 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const fileName = `${project.slug.toUpperCase().replace(/-/g, '_')}.PRJ`;
+const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' ');
 ---
 
 <article class="project-card panel" id={`project-${project.slug}`} aria-label="Case study: {project.title}">
@@ -82,7 +82,6 @@ const fileName = `${project.slug.toUpperCase().replace(/-/g, '_')}.PRJ`;
   }
 
   .card-titlebar .window-title {
-    max-width: 55%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -196,6 +195,15 @@ const fileName = `${project.slug.toUpperCase().replace(/-/g, '_')}.PRJ`;
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
+  }
+
+  .external-links a,
+  .c-action-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    line-height: 1;
+    vertical-align: middle;
   }
 
   /* Stepped hover on the whole card */
