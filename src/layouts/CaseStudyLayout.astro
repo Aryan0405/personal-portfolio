@@ -52,13 +52,26 @@ const workPath = `C:\\WORK\\${project.slug.toUpperCase().replace(/-/g, '_')}`;
       <section class="metrics-summary-section" aria-label="Key Performance Metrics">
         <h2 class="sr-only">Key Performance Metrics</h2>
         <div class="metrics-readout">
-          {project.metrics.map(m => (
-            <div class="readout-cell">
-              <span class="metric-big-val">{m.value}</span>
-              <span class="metric-big-lbl">{m.label}</span>
-              <span class="metric-big-ctx">{m.context}</span>
-            </div>
-          ))}
+          {project.metrics.map((m) => {
+            const parts = /^([±+\-]?[\d.,]+)\s*(.*)$/.exec(m.value.trim());
+            const numeric = Boolean(parts);
+            const number = parts ? parts[1] + (parts[2].startsWith('%') ? '%' : '') : null;
+            const unit = parts && parts[2].trim() && !parts[2].startsWith('%') ? parts[2].trim() : null;
+            return (
+              <div class="readout-cell">
+                {numeric ? (
+                  <div class="metric-value">
+                    <span class="metric-num">{number}</span>
+                    {unit ? <span class="metric-unit">{unit}</span> : null}
+                  </div>
+                ) : (
+                  <span class="metric-value metric-text">{m.value}</span>
+                )}
+                <span class="metric-big-lbl">{m.label}</span>
+                <span class="metric-big-ctx">{m.context}</span>
+              </div>
+            );
+          })}
         </div>
       </section>
 
@@ -233,29 +246,56 @@ const workPath = `C:\\WORK\\${project.slug.toUpperCase().replace(/-/g, '_')}`;
 
   .metrics-readout {
     display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: var(--space-3);
-  }
-
-  @media (min-width: 640px) {
-    .metrics-readout {
-      grid-template-columns: repeat(3, 1fr);
-    }
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
   }
 
   .readout-cell {
+    min-width: 0;
     border: 2px solid var(--color-border);
     background: var(--bg-cell);
     padding: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
   }
 
-  .metric-big-val {
+  .readout-cell .metric-value {
+    display: flex;
+    flex-direction: column;
+    min-height: 2.4em;
+  }
+
+  .metric-num {
     font-family: var(--font-display);
-    font-size: clamp(22px, 5vw, 32px);
+    font-size: 22px;
     font-weight: 700;
-    color: var(--color-accent);
+    color: var(--accent-yellow);
     letter-spacing: 0.04em;
     line-height: 1.1;
+    white-space: nowrap;
+  }
+
+  .metric-unit {
+    display: block;
+    margin-top: 3px;
+    font-family: var(--font-label);
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .metric-value.metric-text {
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent-yellow);
+    line-height: 1.25;
+    overflow-wrap: anywhere;
   }
 
   .metric-big-lbl {

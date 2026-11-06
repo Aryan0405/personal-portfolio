@@ -21,13 +21,26 @@ const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' '
     <p class="card-problem">{project.problemStatement}</p>
 
     <div class="card-metrics">
-      {project.metrics.map(m => (
-        <div class="metric-cell">
-          <span class="m-val">{m.value}</span>
-          <span class="m-lbl">{m.label}</span>
-          <span class="m-ctx">{m.context}</span>
-        </div>
-      ))}
+      {project.metrics.map((m) => {
+        const parts = /^([±+\-]?[\d.,]+)\s*(.*)$/.exec(m.value.trim());
+        const numeric = Boolean(parts);
+        const number = parts ? parts[1] + (parts[2].startsWith('%') ? '%' : '') : null;
+        const unit = parts && parts[2].trim() && !parts[2].startsWith('%') ? parts[2].trim() : null;
+        return (
+          <div class="metric-cell">
+            {numeric ? (
+              <div class="m-val">
+                <span class="m-num">{number}</span>
+                {unit ? <span class="m-unit">{unit}</span> : null}
+              </div>
+            ) : (
+              <span class="m-val m-text">{m.value}</span>
+            )}
+            <span class="m-lbl">{m.label}</span>
+            <span class="m-ctx">{m.context}</span>
+          </div>
+        );
+      })}
     </div>
 
     <div class="card-tech-list">
@@ -41,10 +54,14 @@ const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' '
         Read Case Study
       </a>
       <div class="external-links">
-        {project.liveUrl && (
-          <ExternalLinkButton href={project.liveUrl} label="Live Demo" className="btn btn--secondary" aria-label="Launch live demo for {project.title}" client:load />
+        {project.liveUrl ? (
+          <>
+            <ExternalLinkButton href={project.liveUrl} label="Live Demo" className="btn btn--secondary btn--span" aria-label="Launch live demo for {project.title}" client:load />
+            <ExternalLinkButton href={project.repoUrl} label="GitHub" className="btn btn--secondary" aria-label="View {project.title} repository on GitHub" client:load />
+          </>
+        ) : (
+          <ExternalLinkButton href={project.repoUrl} label="GitHub" className="btn btn--secondary btn--span" aria-label="View {project.title} repository on GitHub" client:load />
         )}
-        <ExternalLinkButton href={project.repoUrl} label="GitHub" className="btn btn--secondary" aria-label="View {project.title} repository on GitHub" client:load />
       </div>
     </div>
   </div>
@@ -105,7 +122,7 @@ const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' '
   .card-metrics {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-3);
+    gap: 16px;
     margin: 0 0 var(--space-6) 0;
     border-top: 2px solid var(--color-border);
     border-bottom: 2px solid var(--color-border);
@@ -122,16 +139,44 @@ const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' '
     min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 4px;
   }
 
-  .m-val {
-    font-family: var(--font-display), var(--font-body);
-    font-size: clamp(16px, 3.2vw, 22px);
+  .metric-cell .m-val {
+    display: flex;
+    flex-direction: column;
+    min-height: 2.4em;
+  }
+
+  .m-num {
+    font-family: var(--font-display);
+    font-size: 22px;
     font-weight: 700;
-    color: var(--color-accent);
+    color: var(--accent-yellow);
     letter-spacing: 0.04em;
     line-height: 1.1;
+    white-space: nowrap;
+  }
+
+  .m-unit {
+    display: block;
+    margin-top: 3px;
+    font-family: var(--font-label);
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .m-val.m-text {
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent-yellow);
+    line-height: 1.25;
     overflow-wrap: anywhere;
   }
 
@@ -173,24 +218,22 @@ const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' '
   }
 
   .external-links {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: var(--space-3);
+  }
+
+  .external-links .btn--span {
+    grid-column: 1 / -1;
   }
 
   .external-links .btn-external,
   .external-links .btn--secondary {
-    flex: 1;
     min-height: 44px;
     justify-content: center;
     width: 100%;
     min-width: 0;
     white-space: nowrap;
-  }
-
-  @media (max-width: 640px) {
-    .external-links {
-      flex-direction: column;
-    }
   }
 
   /* Stepped hover on the whole card */
