@@ -23,28 +23,16 @@ const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' '
     <div class="card-metrics">
       {project.metrics.map((m) => {
         const v = m.value.trim();
-        const wordNum = /^([A-Za-z][A-Za-z\s]*?)\s+([±+\-]?[\d.,].*)$/.exec(v);
-        if (wordNum) {
-          return (
-            <div class="metric-cell">
-              <div class="m-val">
-                <span class="m-num">{wordNum[2]}</span>
-                <span class="m-line2">{wordNum[1].toUpperCase()}</span>
-              </div>
-              <span class="m-lbl">{m.label}</span>
-              <span class="m-ctx">{m.context}</span>
-            </div>
-          );
-        }
         const num = /^([±+\-]?[\d.,]+)\s*(.*)$/.exec(v);
         if (num) {
+          const number = num[1];
           const unit = num[2].trim();
           return (
             <div class="metric-cell">
               <div class="m-val">
-                <span class="m-num">{num[1] + (unit.startsWith('%') ? '%' : '')}</span>
+                <span class="m-num">{number + (unit.startsWith('%') ? '%' : '')}</span>
                 {unit && !unit.startsWith('%') ? (
-                  <span class="m-line2">{unit.toUpperCase()}</span>
+                  <span class="m-unit">{unit}</span>
                 ) : null}
               </div>
               <span class="m-lbl">{m.label}</span>
@@ -161,6 +149,7 @@ const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' '
 
   .metric-cell {
     min-width: 0;
+    container-type: inline-size;
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -187,9 +176,11 @@ const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' '
   }
 
   .metric-cell .m-val {
-    align-self: start;
+    align-self: end;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    gap: 4px;
+    align-items: baseline;
   }
 
   .m-num {
@@ -202,22 +193,19 @@ const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' '
     white-space: nowrap;
   }
 
-  .m-line2 {
-    display: block;
-    margin-top: 3px;
-    font-family: var(--font-label);
+  .m-unit {
+    font-family: var(--font-body);
     font-size: 11px;
-    font-weight: 700;
-    line-height: 1.1;
+    font-weight: 400;
     color: var(--text-muted);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    line-height: 1.1;
     white-space: nowrap;
   }
 
   .m-val.m-text {
     font-family: var(--font-display);
-    font-size: clamp(14px, 3vw, 16px);
+    font-size: clamp(12px, calc(100cqi / 11), 16px);
     font-weight: 700;
     color: var(--accent-yellow);
     letter-spacing: 0.02em;
@@ -235,7 +223,9 @@ const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' '
     text-transform: uppercase;
     line-height: 1.4;
     min-height: 2.8em;
-    overflow-wrap: anywhere;
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: none;
   }
 
   .m-ctx {

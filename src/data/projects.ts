@@ -47,9 +47,9 @@ export const projects: Project[] = [
     summary: 'A complete end-to-end recommendation system built on a 1,472-item cosmetics dataset. Users describe skin concerns in plain language; the FastAPI backend embeds queries, performs cosine search in FAISS IndexFlatIP, applies hybrid re-ranking, looks up pre-mined Apriori routine bundles, and generates grounded per-product explanations using Gemini 2.5 Flash Lite in a single structured call.',
     technologies: ['FastAPI', 'React', 'FAISS', 'Gemini', 'Apriori', 'Redis', 'SQLite', 'Docker'],
     metrics: [
-      { label: 'Retrieval Latency', value: '13.0 ms P95', context: 'P50 of 9.5 ms against a P95 target of 150 ms (retrieval only, warm cache)' },
-      { label: 'Precision@5', value: '66.0%', context: 'Category and skin-type intersection across 20 curated test queries' },
-      { label: 'Catalog Size', value: '1,472 Items', context: 'Indexed skincare formulations with pre-computed embeddings' }
+      { label: 'Retrieval Latency', value: '13.0 ms', context: 'P50 9.5 ms vs 150 ms target' },
+      { label: 'Precision@5', value: '66.0%', context: 'Category + skin-type, 20 test queries' },
+      { label: 'Catalog Size', value: '1,472 items', context: 'Indexed formulations with embeddings' }
     ],
     repoUrl: 'https://github.com/Aryan0405/ai-beauty-advisor',
     hasInteractiveExhibit: true,
@@ -180,9 +180,9 @@ export const projects: Project[] = [
     summary: 'A deployed Streamlit application evaluating 1,480 trading days (2019-2024) of daily OHLCV data for 10 diversified National Stock Exchange equities against the NIFTY50 benchmark. Generates log returns distributions, rolling 21-day annualized volatility, peak-to-trough drawdowns, 63-day rolling Sharpe ratios, and stock correlation matrices.',
     technologies: ['Python', 'Streamlit', 'Pandas', 'YFinance', 'Plotly'],
     metrics: [
-      { label: 'Historical Horizon', value: '1,480 Days', context: '6 calendar years (2019 to 2024) across 10 stocks + NIFTY50 benchmark' },
-      { label: 'Tail Risk Peak', value: 'Kurtosis 20.29', context: 'ADANIENT exhibited extreme negative skew (-1.14) and -77% drawdown' },
-      { label: 'Top Risk-Adjusted', value: 'SUNPHARMA', context: 'Most consistent Sharpe ratio, shallowest drawdown in the basket' }
+      { label: 'Historical Horizon', value: '1,480 days', context: '2019–2024, 10 stocks + NIFTY50' },
+      { label: 'Peak Kurtosis', value: '20.29', context: 'ADANIENT skew -1.14, -77% drawdown' },
+      { label: 'Top Risk-Adjusted', value: 'SUNPHARMA', context: 'Consistent Sharpe, shallowest drawdown' }
     ],
     repoUrl: 'https://github.com/Aryan0405/nse-stock-explorer',
     liveUrl: 'https://nse-stock-explorer.streamlit.app/',
@@ -225,9 +225,9 @@ export const projects: Project[] = [
     summary: 'An unsupervised investigation into where air compressor failures occur on a Metro do Porto train. Evaluates 1.5 million readings from 15 sensors across 7 months (February to August 2020), slicing data into 50,513 five-minute feature windows. Unsupervised K-Means clustering (K=3, Silhouette 0.43) proved that 985 of 992 failure windows (99.3%) concentrate into a single "Sustained High Load" operating mode.',
     technologies: ['Python', 'K-Means', 'Unsupervised Learning', 'PCA', 'Power BI', 'Streamlit'],
     metrics: [
-      { label: 'Failure Concentration', value: '99.3%', context: '985 of 992 failure windows fall into Sustained High Load' },
-      { label: 'High Load Share', value: '6.05%', context: 'Operating mode represents only 6.05% of the 50,513 windows' },
-      { label: 'Cluster Quality', value: '0.43 Silhouette', context: 'K=3 clusters selected for interpretability (Idle, Cycling, High Load)' }
+      { label: 'Failure Share', value: '99.3%', context: '985 of 992 failures in one mode' },
+      { label: 'High Load Share', value: '6.05%', context: '6.05% of 50,513 windows' },
+      { label: 'Cluster Quality', value: '0.43 silhouette', context: 'K=3: Idle, Cycling, High Load' }
     ],
     repoUrl: 'https://github.com/Aryan0405/MetroPT3-Clustering',
     liveUrl: 'https://metropt3-clustering.streamlit.app/',
