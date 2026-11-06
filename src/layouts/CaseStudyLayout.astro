@@ -53,20 +53,39 @@ const workPath = `C:\\WORK\\${project.slug.toUpperCase().replace(/-/g, '_')}`;
         <h2 class="sr-only">Key Performance Metrics</h2>
         <div class="metrics-readout">
           {project.metrics.map((m) => {
-            const parts = /^([±+\-]?[\d.,]+)\s*(.*)$/.exec(m.value.trim());
-            const numeric = Boolean(parts);
-            const number = parts ? parts[1] + (parts[2].startsWith('%') ? '%' : '') : null;
-            const unit = parts && parts[2].trim() && !parts[2].startsWith('%') ? parts[2].trim() : null;
+            const v = m.value.trim();
+            const wordNum = /^([A-Za-z][A-Za-z\s]*?)\s+([±+\-]?[\d.,].*)$/.exec(v);
+            if (wordNum) {
+              return (
+                <div class="readout-cell">
+                  <div class="metric-value">
+                    <span class="metric-num">{wordNum[2]}</span>
+                    <span class="metric-line2">{wordNum[1].toUpperCase()}</span>
+                  </div>
+                  <span class="metric-big-lbl">{m.label}</span>
+                  <span class="metric-big-ctx">{m.context}</span>
+                </div>
+              );
+            }
+            const num = /^([±+\-]?[\d.,]+)\s*(.*)$/.exec(v);
+            if (num) {
+              const unit = num[2].trim();
+              return (
+                <div class="readout-cell">
+                  <div class="metric-value">
+                    <span class="metric-num">{num[1] + (unit.startsWith('%') ? '%' : '')}</span>
+                    {unit && !unit.startsWith('%') ? (
+                      <span class="metric-line2">{unit.toUpperCase()}</span>
+                    ) : null}
+                  </div>
+                  <span class="metric-big-lbl">{m.label}</span>
+                  <span class="metric-big-ctx">{m.context}</span>
+                </div>
+              );
+            }
             return (
               <div class="readout-cell">
-                {numeric ? (
-                  <div class="metric-value">
-                    <span class="metric-num">{number}</span>
-                    {unit ? <span class="metric-unit">{unit}</span> : null}
-                  </div>
-                ) : (
-                  <span class="metric-value metric-text">{m.value}</span>
-                )}
+                <span class="metric-value metric-text">{v}</span>
                 <span class="metric-big-lbl">{m.label}</span>
                 <span class="metric-big-ctx">{m.context}</span>
               </div>
@@ -247,7 +266,9 @@ const workPath = `C:\\WORK\\${project.slug.toUpperCase().replace(/-/g, '_')}`;
   .metrics-readout {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px;
+    grid-template-rows: repeat(3, auto);
+    column-gap: 16px;
+    row-gap: 4px;
   }
 
   .readout-cell {
@@ -260,15 +281,35 @@ const workPath = `C:\\WORK\\${project.slug.toUpperCase().replace(/-/g, '_')}`;
     gap: 4px;
   }
 
+  @supports (grid-template-rows: subgrid) {
+    .readout-cell {
+      display: grid;
+      grid-template-rows: subgrid;
+      grid-row: span 3;
+      flex-direction: unset;
+      gap: unset;
+    }
+
+    .readout-cell > :nth-child(1) {
+      grid-row: 1;
+    }
+    .readout-cell > :nth-child(2) {
+      grid-row: 2;
+    }
+    .readout-cell > :nth-child(3) {
+      grid-row: 3;
+    }
+  }
+
   .readout-cell .metric-value {
+    align-self: start;
     display: flex;
     flex-direction: column;
-    min-height: 2.4em;
   }
 
   .metric-num {
-    font-family: var(--font-display);
-    font-size: 22px;
+    font-family: var(--font-numeral);
+    font-size: 26px;
     font-weight: 700;
     color: var(--accent-yellow);
     letter-spacing: 0.04em;
@@ -276,7 +317,7 @@ const workPath = `C:\\WORK\\${project.slug.toUpperCase().replace(/-/g, '_')}`;
     white-space: nowrap;
   }
 
-  .metric-unit {
+  .metric-line2 {
     display: block;
     margin-top: 3px;
     font-family: var(--font-label);
@@ -290,12 +331,13 @@ const workPath = `C:\\WORK\\${project.slug.toUpperCase().replace(/-/g, '_')}`;
   }
 
   .metric-value.metric-text {
-    font-family: var(--font-body);
-    font-size: 15px;
+    font-family: var(--font-label);
+    font-size: 16px;
     font-weight: 700;
     color: var(--accent-yellow);
     line-height: 1.25;
     overflow-wrap: anywhere;
+    text-transform: uppercase;
   }
 
   .metric-big-lbl {

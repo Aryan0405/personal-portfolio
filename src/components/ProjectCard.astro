@@ -22,20 +22,39 @@ const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' '
 
     <div class="card-metrics">
       {project.metrics.map((m) => {
-        const parts = /^([±+\-]?[\d.,]+)\s*(.*)$/.exec(m.value.trim());
-        const numeric = Boolean(parts);
-        const number = parts ? parts[1] + (parts[2].startsWith('%') ? '%' : '') : null;
-        const unit = parts && parts[2].trim() && !parts[2].startsWith('%') ? parts[2].trim() : null;
+        const v = m.value.trim();
+        const wordNum = /^([A-Za-z][A-Za-z\s]*?)\s+([±+\-]?[\d.,].*)$/.exec(v);
+        if (wordNum) {
+          return (
+            <div class="metric-cell">
+              <div class="m-val">
+                <span class="m-num">{wordNum[2]}</span>
+                <span class="m-line2">{wordNum[1].toUpperCase()}</span>
+              </div>
+              <span class="m-lbl">{m.label}</span>
+              <span class="m-ctx">{m.context}</span>
+            </div>
+          );
+        }
+        const num = /^([±+\-]?[\d.,]+)\s*(.*)$/.exec(v);
+        if (num) {
+          const unit = num[2].trim();
+          return (
+            <div class="metric-cell">
+              <div class="m-val">
+                <span class="m-num">{num[1] + (unit.startsWith('%') ? '%' : '')}</span>
+                {unit && !unit.startsWith('%') ? (
+                  <span class="m-line2">{unit.toUpperCase()}</span>
+                ) : null}
+              </div>
+              <span class="m-lbl">{m.label}</span>
+              <span class="m-ctx">{m.context}</span>
+            </div>
+          );
+        }
         return (
           <div class="metric-cell">
-            {numeric ? (
-              <div class="m-val">
-                <span class="m-num">{number}</span>
-                {unit ? <span class="m-unit">{unit}</span> : null}
-              </div>
-            ) : (
-              <span class="m-val m-text">{m.value}</span>
-            )}
+            <span class="m-val m-text">{v}</span>
             <span class="m-lbl">{m.label}</span>
             <span class="m-ctx">{m.context}</span>
           </div>
@@ -122,7 +141,9 @@ const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' '
   .card-metrics {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px;
+    grid-template-rows: repeat(3, auto);
+    column-gap: 16px;
+    row-gap: 4px;
     margin: 0 0 var(--space-6) 0;
     border-top: 2px solid var(--color-border);
     border-bottom: 2px solid var(--color-border);
@@ -142,15 +163,35 @@ const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' '
     gap: 4px;
   }
 
+  @supports (grid-template-rows: subgrid) {
+    .metric-cell {
+      display: grid;
+      grid-template-rows: subgrid;
+      grid-row: span 3;
+      flex-direction: unset;
+      gap: unset;
+    }
+
+    .metric-cell > :nth-child(1) {
+      grid-row: 1;
+    }
+    .metric-cell > :nth-child(2) {
+      grid-row: 2;
+    }
+    .metric-cell > :nth-child(3) {
+      grid-row: 3;
+    }
+  }
+
   .metric-cell .m-val {
+    align-self: start;
     display: flex;
     flex-direction: column;
-    min-height: 2.4em;
   }
 
   .m-num {
-    font-family: var(--font-display);
-    font-size: 22px;
+    font-family: var(--font-numeral);
+    font-size: 26px;
     font-weight: 700;
     color: var(--accent-yellow);
     letter-spacing: 0.04em;
@@ -158,7 +199,7 @@ const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' '
     white-space: nowrap;
   }
 
-  .m-unit {
+  .m-line2 {
     display: block;
     margin-top: 3px;
     font-family: var(--font-label);
@@ -172,12 +213,13 @@ const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' '
   }
 
   .m-val.m-text {
-    font-family: var(--font-body);
-    font-size: 15px;
+    font-family: var(--font-label);
+    font-size: 16px;
     font-weight: 700;
     color: var(--accent-yellow);
     line-height: 1.25;
     overflow-wrap: anywhere;
+    text-transform: uppercase;
   }
 
   .m-lbl {
@@ -208,6 +250,12 @@ const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' '
     flex-direction: column;
     gap: var(--space-3);
     margin-top: auto;
+  }
+
+  @media (min-width: 768px) {
+    .project-card {
+      max-width: 400px;
+    }
   }
 
   .card-actions .btn {
