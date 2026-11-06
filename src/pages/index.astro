@@ -51,15 +51,12 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
   </section>
 
   <!-- 00 // About Section -->
-  <section id="about" class="about-section panel" aria-labelledby="about-heading">
+  <section id="about" class="about-section" aria-labelledby="about-heading">
     <div class="container">
-      <div class="section-header">
-        <h2 id="about-heading" class="section-title">About Me</h2>
-      </div>
-
-      <div class="about-grid">
-        <div class="about-content">
-          <p class="about-lead">{aboutMe.who}</p>
+      <div class="about-panel panel">
+        <div class="about-grid">
+          <div class="about-content">
+            <p class="about-lead">{aboutMe.who}</p>
 
           <div class="about-columns">
             <div class="about-column">
@@ -108,6 +105,7 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
         </div>
       </div>
     </div>
+  </div>
   </section>
 
   <!-- 01 // Selected Projects Section -->
@@ -495,6 +493,17 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
     }
 
     /* ── About ────────────────────────────────────────────────────────── */
+    .about-section {
+      padding-block: clamp(40px, 6vh, 72px);
+      padding-inline: clamp(20px, 4vw, 48px);
+      background: transparent;
+      border: none;
+    }
+
+    .about-panel {
+      padding: clamp(24px, 4vh, 48px);
+    }
+
     .about-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -531,7 +540,7 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
     }
 
     .about-column {
-      flex: 1;
+      flex: 1 1 300px;
     }
 
     .about-subhead {
