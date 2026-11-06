@@ -104,7 +104,7 @@ const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' '
 
   .card-metrics {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: var(--space-3);
     margin: 0 0 var(--space-6) 0;
     border-top: 2px solid var(--color-border);
@@ -126,15 +126,13 @@ const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' '
   }
 
   .m-val {
-    font-family: var(--font-display);
-    font-size: clamp(18px, 3.6vw, 24px);
+    font-family: var(--font-display), var(--font-body);
+    font-size: clamp(16px, 3.2vw, 22px);
     font-weight: 700;
     color: var(--color-accent);
     letter-spacing: 0.04em;
     line-height: 1.1;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    overflow-wrap: anywhere;
   }
 
   .m-lbl {
