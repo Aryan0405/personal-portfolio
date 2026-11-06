@@ -1,5 +1,6 @@
 ---
 import { contactDetails } from '../data/projects';
+import ExternalLinkButton from '../components/ExternalLinkButton.tsx';
 const currentYear = new Date().getFullYear();
 ---
 
@@ -14,12 +15,8 @@ const currentYear = new Date().getFullYear();
     </div>
 
     <div class="footer-profiles">
-      <a href={contactDetails.github} target="_blank" rel="noopener noreferrer" class="footer-profile">
-        <span class="profile-text">GITHUB</span><span class="profile-arrow">&#x2197;</span>
-      </a>
-      <a href={contactDetails.linkedin} target="_blank" rel="noopener noreferrer" class="footer-profile">
-        <span class="profile-text">LINKEDIN</span><span class="profile-arrow">&#x2197;</span>
-      </a>
+      <ExternalLinkButton href={contactDetails.github} label="GITHUB" aria-label="Visit Aryan's GitHub Profile" client:load />
+      <ExternalLinkButton href={contactDetails.linkedin} label="LINKEDIN" aria-label="Visit Aryan's LinkedIn Profile" client:load />
     </div>
   </div>
 </footer>
@@ -72,32 +69,6 @@ const currentYear = new Date().getFullYear();
   .readout-sep {
     color: var(--color-ink-secondary);
     padding: 0 2px;
-  }
-
-  .footer-profile {
-    font-family: var(--font-label);
-    font-size: var(--text-xs);
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    text-decoration: none;
-    border: 2px solid var(--color-border);
-    padding: 2px 8px;
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
-    line-height: 1;
-    vertical-align: middle;
-  }
-
-  .footer-profile .profile-text {
-    display: inline-block;
-  }
-
-  .footer-profile .profile-arrow {
-    display: inline-block;
-    vertical-align: middle;
   }
 
   .footer-profile:hover,

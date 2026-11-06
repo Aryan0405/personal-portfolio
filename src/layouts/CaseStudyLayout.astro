@@ -1,6 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import type { Project } from '../data/projects';
+import ExternalLinkButton from '../components/ExternalLinkButton.tsx';
 import BeautyAdvisorExhibit from '../components/exhibits/BeautyAdvisorExhibit.astro';
 import CreditRiskChart from '../components/exhibits/CreditRiskChart.astro';
 import FraudDetectionExhibit from '../components/exhibits/FraudDetectionExhibit.astro';
@@ -125,13 +126,9 @@ const workPath = `C:\\WORK\\${project.slug.toUpperCase().replace(/-/g, '_')}`;
       <!-- Case Study Footer Actions -->
       <div class="memo-footer-actions panel">
         <div class="panel__body">
-          <a href={project.repoUrl} target="_blank" rel="noopener noreferrer" class="btn btn--primary">
-            View Repository on GitHub &#x2197;
-          </a>
+          <ExternalLinkButton href={project.repoUrl} label="View Repository on GitHub" className="btn btn--primary" aria-label="View {project.title} repository on GitHub" client:load />
           {project.liveUrl && (
-            <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" class="btn btn--secondary">
-              Launch Live Deployment &#x2197;
-            </a>
+            <ExternalLinkButton href={project.liveUrl} label="Launch Live Deployment" className="btn btn--secondary" aria-label="Launch live deployment for {project.title}" client:load />
           )}
           <a href="/#projects" class="btn btn--secondary">
             Return to All Projects

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type JSX } from "react";
 import { createTopDockController } from "./topDockController";
+import ExternalLinkButton from "../ExternalLinkButton";
 
 export const ANIMATED_TOP_DOCK_VARIANTS = ["retro"] as const;
 export type AnimatedTopDockVariant = (typeof ANIMATED_TOP_DOCK_VARIANTS)[number];
@@ -129,16 +130,11 @@ export function AnimatedTopDock({ className = "" }: AnimatedTopDockProps) {
             </a>
           ))}
         </nav>
-        <a
+        <ExternalLinkButton
           href={GITHUB_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="atd-retro__cta"
+          label="GITHUB"
           aria-label="Visit Aryan's GitHub Profile"
-        >
-          <span aria-hidden="true">&#x2197;</span>
-          GITHUB
-        </a>
+        />
       </header>
 
       <button
@@ -177,16 +173,11 @@ export function AnimatedTopDock({ className = "" }: AnimatedTopDockProps) {
               </a>
             ))}
           </nav>
-          <a
+          <ExternalLinkButton
             href={GITHUB_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="atd-retro__menu-item atd-retro__menu-item--cta"
+            label="GITHUB"
             aria-label="Visit Aryan's GitHub Profile"
-            onClick={closeMenu}
-          >
-            GITHUB
-          </a>
+          />
         </div>
       )}
     </div>

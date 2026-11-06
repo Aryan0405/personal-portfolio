@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import Portrait from '../components/Portrait.tsx';
+import ExternalLinkButton from '../components/ExternalLinkButton.tsx';
 import { projects, technicalSkills, academicRecord, contactDetails, availabilityText, aboutMe } from '../data/projects';
 ---
 
@@ -56,12 +57,8 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
               <a href="#projects" class="btn btn--primary">
                 Explore Selected Work &#x2193;
               </a>
-              <a href={contactDetails.github} target="_blank" rel="noopener noreferrer" class="btn btn--ghost">
-                GitHub Profile &#x2197;
-              </a>
-              <a href={contactDetails.linkedin} target="_blank" rel="noopener noreferrer" class="btn btn--ghost">
-                LinkedIn Profile &#x2197;
-              </a>
+              <ExternalLinkButton href={contactDetails.github} label="GitHub Profile" className="btn btn--ghost" aria-label="Visit Aryan's GitHub Profile" client:load />
+              <ExternalLinkButton href={contactDetails.linkedin} label="LinkedIn Profile" className="btn btn--ghost" aria-label="Visit Aryan's LinkedIn Profile" client:load />
             </div>
           </div>
         </div>
@@ -235,17 +232,13 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
             <div class="contact-link-box panel">
               <span class="c-label">Source repositories</span>
               <span class="c-val">github.com/Aryan0405</span>
-              <a href={contactDetails.github} target="_blank" rel="noopener noreferrer" class="c-action-link btn btn--secondary">
-                Explore Repositories &#x2197;
-              </a>
+              <ExternalLinkButton href={contactDetails.github} label="Explore Repositories" className="c-action-link btn btn--secondary" aria-label="Visit Aryan's GitHub repositories" client:load />
             </div>
 
             <div class="contact-link-box panel">
               <span class="c-label">Professional network</span>
               <span class="c-val">linkedin.com/in/aryan-ashok</span>
-              <a href={contactDetails.linkedin} target="_blank" rel="noopener noreferrer" class="c-action-link btn btn--secondary">
-                Connect on LinkedIn &#x2197;
-              </a>
+              <ExternalLinkButton href={contactDetails.linkedin} label="Connect on LinkedIn" className="c-action-link btn btn--secondary" aria-label="Visit Aryan's LinkedIn Profile" client:load />
             </div>
           </div>
         </div>
