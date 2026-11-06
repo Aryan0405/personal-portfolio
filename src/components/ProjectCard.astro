@@ -167,31 +167,27 @@ const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' '
     margin-top: auto;
   }
 
-  @media (min-width: 640px) {
-    .card-actions {
-      flex-direction: row;
-      align-items: center;
-    }
-    .card-actions .external-links {
-      display: flex;
-      gap: var(--space-3);
-      margin-left: auto;
-    }
+  .card-actions .btn {
+    width: 100%;
+    min-height: 44px;
   }
 
   .external-links {
     display: flex;
-    flex-direction: column;
     gap: var(--space-3);
   }
 
-  .external-links a,
-  .c-action-link {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
-    line-height: 1;
-    vertical-align: middle;
+  .external-links .btn-external,
+  .external-links .btn--secondary {
+    flex: 1;
+    min-height: 44px;
+    justify-content: center;
+  }
+
+  @media (max-width: 640px) {
+    .external-links {
+      flex-direction: column;
+    }
   }
 
   /* Stepped hover on the whole card */
