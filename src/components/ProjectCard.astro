@@ -11,7 +11,6 @@ const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' '
 
 <article class="project-card panel" id={`project-${project.slug}`} aria-label="Case study: {project.title}">
   <div class="window-titlebar card-titlebar">
-    <span class="window-title">{fileName}</span>
     <span class="status-tag tag">{project.status}</span>
   </div>
 
@@ -75,10 +74,12 @@ const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' '
     display: flex;
     align-items: center;
     gap: var(--space-3);
+    padding: var(--space-2) var(--space-3);
   }
 
   .card-titlebar .status-tag {
     margin-left: auto;
+    margin-right: var(--space-2);
   }
 
   .card-titlebar .window-title {

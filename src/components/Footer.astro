@@ -1,5 +1,5 @@
 ---
-import { contactDetails, availabilityText } from '../data/projects';
+import { contactDetails } from '../data/projects';
 const currentYear = new Date().getFullYear();
 ---
 
@@ -9,23 +9,17 @@ const currentYear = new Date().getFullYear();
       <span class="readout-label">LOC</span>
       <span class="readout-val">MUMBAI</span>
       <span class="readout-sep" aria-hidden="true">&#xb7;</span>
-      <span class="readout-label">STATUS</span>
-      <span class="readout-val">{availabilityText.toUpperCase()}</span>
-      <span class="readout-sep" aria-hidden="true">&#xb7;</span>
       <span class="readout-label">&#x00a9; {currentYear}</span>
       <span class="readout-val">ARYAN ASHOK</span>
     </div>
 
-    <nav class="footer-index" aria-label="Site index">
-      <a href="/#projects">SELECTED PROJECTS</a>
-      <a href="/#skills">TECHNICAL COMPETENCIES</a>
-      <a href="/#education">ACADEMIC RECORD</a>
-      <a href="/#contact">CONTACT &amp; DISPATCH</a>
-    </nav>
-
     <div class="footer-profiles">
-      <a href={contactDetails.github} target="_blank" rel="noopener noreferrer" class="footer-profile">GITHUB &#x2197;</a>
-      <a href={contactDetails.linkedin} target="_blank" rel="noopener noreferrer" class="footer-profile">LINKEDIN &#x2197;</a>
+      <a href={contactDetails.github} target="_blank" rel="noopener noreferrer" class="footer-profile">
+        <span class="profile-text">GITHUB</span><span class="profile-arrow">&#x2197;</span>
+      </a>
+      <a href={contactDetails.linkedin} target="_blank" rel="noopener noreferrer" class="footer-profile">
+        <span class="profile-text">LINKEDIN</span><span class="profile-arrow">&#x2197;</span>
+      </a>
     </div>
   </div>
 </footer>
@@ -60,7 +54,7 @@ const currentYear = new Date().getFullYear();
 
   .status-readout {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     gap: var(--space-2);
     flex-wrap: wrap;
     font-family: var(--font-label);
@@ -80,32 +74,6 @@ const currentYear = new Date().getFullYear();
     padding: 0 2px;
   }
 
-  .footer-index {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-4);
-    list-style: none;
-  }
-
-  .footer-index a {
-    font-family: var(--font-label);
-    font-size: var(--text-xs);
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    text-decoration: none;
-    border: 2px solid transparent;
-  }
-
-  .footer-index a:hover,
-  .footer-index a:focus-visible {
-    color: var(--color-accent);
-    border-color: var(--color-accent);
-    outline: 2px solid var(--color-accent);
-    outline-offset: -2px;
-  }
-
   .footer-profile {
     font-family: var(--font-label);
     font-size: var(--text-xs);
@@ -120,6 +88,15 @@ const currentYear = new Date().getFullYear();
     align-items: center;
     gap: var(--space-2);
     line-height: 1;
+    vertical-align: middle;
+  }
+
+  .footer-profile .profile-text {
+    display: inline-block;
+  }
+
+  .footer-profile .profile-arrow {
+    display: inline-block;
     vertical-align: middle;
   }
 

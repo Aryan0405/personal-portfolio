@@ -134,7 +134,7 @@ button:disabled,
   letter-spacing: 0.14em;
   text-transform: uppercase;
   text-decoration: none;
-  z-index: 100000;
+  white-space: nowrap;
   box-shadow: var(--shadow-hard);
 }
 

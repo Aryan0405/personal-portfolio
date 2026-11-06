@@ -91,9 +91,9 @@ export const projects: Project[] = [
     summary: 'A production credit risk analysis evaluating regulatory trade-offs between an explainable Weight of Evidence (WoE) Logistic Regression scorecard and non-linear XGBoost challengers. Demonstrates why marginal AUC lifts (+0.0106) do not justify secondary pipeline complexity in regulated banking, and uncovers the WoE risk ceiling for high-risk applicants using SHAP.',
     technologies: ['Python', 'WoE', 'Logistic Regression', 'XGBoost', 'SHAP', 'OptBinning', 'Scikit-learn'],
     metrics: [
-      { label: 'Scorecard AUC', value: '0.7188', context: '5-feature WoE Logistic Regression baseline model' },
-      { label: 'Algorithmic Lift', value: '+0.0094 AUC', context: 'Pure tree algorithmic gain with identical 5 features (0.7282 AUC)' },
-      { label: 'Bureau Redundancy', value: '+0.0012 AUC', context: 'Negligible marginal gain adding 7 external bureau features' }
+      { label: 'Scorecard AUC', value: '0.72', context: '5-feature WoE Logistic Regression baseline model' },
+      { label: 'Algorithmic Lift', value: '+0.01', context: 'Pure tree algorithmic gain with identical 5 features (0.7282 AUC)' },
+      { label: 'Bureau Redundancy', value: '±0.00', context: 'Negligible marginal gain adding 7 external bureau features' }
     ],
     repoUrl: 'https://github.com/Aryan0405/credit_scorecard',
     hasInteractiveExhibit: true,
