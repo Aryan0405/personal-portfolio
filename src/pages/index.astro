@@ -266,8 +266,15 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
   <style>
     /* ── Hero ─────────────────────────────────────────────────────────── */
     .hero-section {
-      padding: 0 0 var(--space-16);
-      margin-top: var(--space-8);
+      padding: calc(var(--nav-height) + clamp(32px, 6vh, 72px)) 0 var(--space-16);
+    }
+
+    /* Keep section titles visible under the fixed nav when anchor links are clicked */
+    #projects,
+    #skills,
+    #education,
+    #contact {
+      scroll-margin-top: calc(var(--nav-height) + 24px);
     }
 
     .hero-grid {

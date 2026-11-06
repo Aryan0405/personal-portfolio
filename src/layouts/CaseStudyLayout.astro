@@ -145,7 +145,7 @@ const workPath = `C:\\WORK\\${project.slug.toUpperCase().replace(/-/g, '_')}`;
   }
 
   .case-study-page {
-    padding: 0;
+    padding: calc(var(--nav-height) + clamp(32px, 6vh, 72px)) 0 var(--space-24);
   }
 
   body.case-study .retro-background__scrim {

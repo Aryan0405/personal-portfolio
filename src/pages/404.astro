@@ -25,7 +25,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   <style>
     .not-found {
-      padding: var(--space-16) 0 var(--space-24);
+      padding: calc(var(--nav-height) + clamp(32px, 6vh, 72px)) 0 var(--space-24);
       display: flex;
       justify-content: center;
     }
