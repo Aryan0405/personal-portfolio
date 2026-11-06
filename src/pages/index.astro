@@ -281,14 +281,14 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
       display: grid;
       grid-template-columns: 1fr;
       gap: var(--space-6);
-      align-items: stretch;
+      align-items: start;
     }
 
     @media (min-width: 900px) {
       .hero-grid {
         grid-template-columns: 340px 1fr;
         gap: var(--space-8);
-        align-items: stretch;
+        align-items: start;
       }
     }
 
@@ -297,20 +297,16 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
       position: relative;
       display: flex;
       flex-direction: column;
-      height: 100%;
+      align-self: start;
+      height: fit-content;
     }
 
     .portrait-frame {
       position: relative;
-      height: 280px;
+      width: 100%;
+      aspect-ratio: 1;
       overflow: hidden;
       background: #0b0819;
-    }
-
-    @media (min-width: 600px) {
-      .portrait-frame {
-        height: 280px;
-      }
     }
 
     /* Masthead window */
