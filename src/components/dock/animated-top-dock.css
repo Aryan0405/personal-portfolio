@@ -142,6 +142,27 @@
   cursor: pointer;
 }
 
+.atd-retro__cta--flat {
+  background: #f47b5c;
+  color: #1a1030;
+  border: 0;
+  border-left: 2px solid #f4e6c8;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0 12px;
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  text-decoration: none;
+  transition: background 0.1s steps(2), color 0.1s steps(2);
+  cursor: pointer;
+}
+
+.atd-retro__cta--flat:hover {
+  background: var(--color-accent);
+}
+
 .atd-retro__cta:hover {
   background: #f9c74f;
 }

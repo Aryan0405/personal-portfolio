@@ -366,7 +366,7 @@ pre,
 .btn-external {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: 0.6em;
   height: 40px;
   min-height: 40px;
   padding: 0 var(--space-4);
@@ -395,10 +395,10 @@ pre,
   transform: translate(0, 0);
   box-shadow: 4px 4px 0 #0b0819;
 }
-.btn-external svg {
+.btn-external .btn-external-arrow {
   transition: transform var(--step-duration) var(--ease-step);
 }
-.btn-external:hover svg {
+.btn-external:hover .btn-external-arrow {
   transform: translate(2px, -2px);
 }
 
