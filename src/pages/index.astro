@@ -197,39 +197,40 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
   <!-- 04 // Contact & Dispatch Section -->
   <section id="contact" class="contact-section" aria-labelledby="contact-heading">
     <div class="container">
-      <div class="contact-wrapper">
-        <div class="section-heading-panel">
-          <h2 id="contact-heading" class="section-title">Contact & Dispatch</h2>
-          <p class="section-intro">
-            {availabilityText}. Open to data science, machine learning and quantitative analytics roles.
-          </p>
+      <div class="contact-wrap">
+        <div class="panel">
+          <div class="panel__body">
+            <h2 id="contact-heading" class="section-title">Contact & Dispatch</h2>
+            <p class="section-intro">
+              {availabilityText}. Open to data science, machine learning and quantitative analytics roles.
+            </p>
+          </div>
         </div>
 
-        <div class="contact-card panel">
+        <div class="panel">
           <div class="window-titlebar contact-header">
             <span class="window-title">~/CONTACT.DAT</span>
           </div>
-          <div class="panel__body">
-
-            <div class="contact-links-grid">
-              <div class="contact-link-box panel">
-                <span class="c-label">Email</span>
-                <span class="c-val">{contactDetails.email}</span>
+          <div class="contact-body">
+            <div class="contact-grid">
+              <div class="contact-cell">
+                <span class="contact-label">Email</span>
+                <span class="contact-value">{contactDetails.email}</span>
                 <button type="button" class="btn btn--primary btn-copy-email copy-email-action" data-email={contactDetails.email}>
                   Copy Email
                 </button>
               </div>
 
-              <div class="contact-link-box panel">
-                <span class="c-label">Source repositories</span>
-                <span class="c-val">github.com/Aryan0405</span>
-                <ExternalLinkButton href={contactDetails.github} label="GITHUB" className="c-action-link btn btn--secondary" aria-label="Visit Aryan's GitHub repositories" client:load />
+              <div class="contact-cell">
+                <span class="contact-label">Source repositories</span>
+                <span class="contact-value">github.com/Aryan0405</span>
+                <ExternalLinkButton href={contactDetails.github} label="GITHUB" className="btn btn--secondary" aria-label="Visit Aryan's GitHub repositories" client:load />
               </div>
 
-              <div class="contact-link-box panel">
-                <span class="c-label">Professional network</span>
-                <span class="c-val">linkedin.com/in/aryan-ashok</span>
-                <ExternalLinkButton href={contactDetails.linkedin} label="LINKEDIN" className="c-action-link btn btn--secondary" aria-label="Visit Aryan's LinkedIn Profile" client:load />
+              <div class="contact-cell">
+                <span class="contact-label">Professional network</span>
+                <span class="contact-value">linkedin.com/in/aryan-ashok</span>
+                <ExternalLinkButton href={contactDetails.linkedin} label="LINKEDIN" className="btn btn--secondary" aria-label="Visit Aryan's LinkedIn Profile" client:load />
               </div>
             </div>
           </div>
@@ -734,89 +735,81 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
       padding-bottom: var(--space-24);
     }
 
-    .contact-desc {
-      margin: 0 0 var(--space-8) 0;
-      font-size: var(--text-base);
-      color: var(--color-ink-secondary);
-      line-height: 1.6;
-      max-width: 640px;
+    .contact-wrap {
+      width: min(1100px, 100% - 2 * var(--page-gutter));
+      margin-inline: auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-8);
     }
 
-    /* Container query on panel body so text scales with cell width, not viewport */
-    .contact-card .panel__body {
-      container-type: inline-size;
-      container-name: contact-body;
+    .contact-wrap > .panel {
+      width: 100%;
+      box-sizing: border-box;
     }
 
-    .contact-link-box {
-      container-type: inline-size;
-      container-name: contact-cell;
+    .contact-body {
+      padding: 28px;
+      box-sizing: border-box;
     }
 
-    .contact-links-grid {
+    .contact-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: clamp(12px, 1.5vw, 20px);
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .contact-cell {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 20px;
       box-sizing: border-box;
       min-width: 0;
+      border: 2px solid var(--frame);
+      background: var(--bg-panel-deep);
+      box-shadow: 6px 6px 0 rgba(6, 4, 16, 0.62);
     }
 
-    @container contact-body (max-width: 760px) {
-      .contact-links-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .c-label {
-      font-size: 10px;
-      font-weight: 700;
-      color: var(--color-accent);
+    .contact-label {
+      display: block;
+      font-size: 11px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
+      color: var(--accent-yellow);
     }
 
-    .c-val {
-      font-size: clamp(10px, 5.2cqw, 14px);
-      color: var(--color-ink-primary);
-      white-space: nowrap;
-      font-weight: 600;
-      font-family: var(--font-body);
-      min-width: 0;
+    .contact-value {
+      display: block;
+      font-size: 13px;
+      line-height: 1.4;
+      color: var(--text-cream);
+      overflow-wrap: anywhere;
     }
 
-    .c-action-link {
-      font-size: clamp(10px, 4.8cqw, 13px);
-      font-weight: 700;
+    .contact-cell .btn {
       margin-top: auto;
       width: 100%;
-      min-width: 0;
-      padding: 0 clamp(8px, 4cqw, 16px);
+      box-sizing: border-box;
+      min-height: 44px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: .6em;
-      line-height: 1;
-      vertical-align: middle;
+      gap: 0.6em;
+      padding: 0 16px;
+      font-size: 13px;
+      letter-spacing: 0.08em;
       white-space: nowrap;
-      letter-spacing: .08em;
-      min-height: 44px;
     }
 
-    .btn-copy-email {
-      font-size: clamp(10px, 4.8cqw, 13px);
-      font-weight: 700;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: .6em;
-      line-height: 1;
-      vertical-align: middle;
-      white-space: nowrap;
-      letter-spacing: .08em;
-      min-height: 44px;
-      width: 100%;
-      min-width: 0;
-      padding: 0 clamp(8px, 4cqw, 16px);
+    @media (max-width: 900px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+      .contact-body {
+        padding: 20px;
+      }
     }
   </style>
 </BaseLayout>
