@@ -129,29 +129,31 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
   <!-- 02 // Technical Index Section -->
   <section id="skills" class="skills-section" aria-labelledby="skills-heading">
     <div class="container">
-      <div class="section-heading-panel">
-        <h2 id="skills-heading" class="section-title">Technical Competencies</h2>
-        <p class="section-intro">
-          Core engineering and analytical toolkit. Organized by operational workflow rather than arbitrary percentage bars.
-        </p>
-      </div>
+      <div class="skills-wrapper">
+        <div class="section-heading-panel">
+          <h2 id="skills-heading" class="section-title">Technical Competencies</h2>
+          <p class="section-intro">
+            Core engineering and analytical toolkit. Organized by operational workflow rather than arbitrary percentage bars.
+          </p>
+        </div>
 
-      <div class="skills-grid">
-        {technicalSkills.map((cat, idx) => (
-          <div class="skill-category-card panel">
-            <div class="window-titlebar cat-header">
-              <span class="window-title">{cat.category}</span>
-            </div>
-            <div class="panel__body">
-              <p class="cat-desc">{cat.description}</p>
-              <div class="cat-skills">
-                {cat.skills.map(s => (
-                  <span class="skill-tag tag">{s}</span>
-                ))}
+        <div class="skills-grid">
+          {technicalSkills.map((cat, idx) => (
+            <div class="skill-category-card panel">
+              <div class="window-titlebar cat-header">
+                <span class="window-title">{cat.category}</span>
+              </div>
+              <div class="panel__body">
+                <p class="cat-desc">{cat.description}</p>
+                <div class="cat-skills">
+                  {cat.skills.map(s => (
+                    <span class="skill-tag tag">{s}</span>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   </section>
@@ -159,30 +161,32 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
   <!-- 03 // Education & Academic Context Section -->
   <section id="education" class="education-section" aria-labelledby="education-heading">
     <div class="container">
-      <div class="section-heading-panel">
-        <h2 id="education-heading" class="section-title">Academic Record</h2>
-        <p class="section-intro">
-          Current degree coursework and foundational training in quantitative methods and computer science.
-        </p>
-      </div>
-
-      <div class="academic-card panel">
-        <div class="window-titlebar academic-header">
-          <span class="window-title">{academicRecord.institution}</span>
-          <span class="academic-period">{academicRecord.period}</span>
+      <div class="education-wrapper">
+        <div class="section-heading-panel">
+          <h2 id="education-heading" class="section-title">Academic Record</h2>
+          <p class="section-intro">
+            Current degree coursework and foundational training in quantitative methods and computer science.
+          </p>
         </div>
-        <div class="panel__body">
-          <p class="academic-focus">{academicRecord.focus}</p>
 
-          <div class="coursework-block">
-            <span class="cw-title">Key coursework and foundations</span>
-            <div class="cw-grid">
-              {academicRecord.coursework.map(c => (
-                <div class="cw-item">
-                  <span class="bullet" aria-hidden="true">&#x25aa;</span>
-                  <span>{c}</span>
-                </div>
-              ))}
+        <div class="academic-card panel">
+          <div class="window-titlebar academic-header">
+            <span class="window-title">{academicRecord.institution}</span>
+            <span class="academic-period">{academicRecord.period}</span>
+          </div>
+          <div class="panel__body">
+            <p class="academic-focus">{academicRecord.focus}</p>
+
+            <div class="coursework-block">
+              <span class="cw-title">Key coursework and foundations</span>
+              <div class="cw-grid">
+                {academicRecord.coursework.map(c => (
+                  <div class="cw-item">
+                    <span class="bullet" aria-hidden="true">&#x25aa;</span>
+                    <span>{c}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -193,38 +197,40 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
   <!-- 04 // Contact & Dispatch Section -->
   <section id="contact" class="contact-section" aria-labelledby="contact-heading">
     <div class="container">
-      <div class="section-heading-panel">
-        <h2 id="contact-heading" class="section-title">Contact & Dispatch</h2>
-        <p class="section-intro">
-          {availabilityText}. Open to data science, machine learning and quantitative analytics roles.
-        </p>
-      </div>
-
-      <div class="contact-card panel">
-        <div class="window-titlebar contact-header">
-          <span class="window-title">~/CONTACT.DAT</span>
+      <div class="contact-wrapper">
+        <div class="section-heading-panel">
+          <h2 id="contact-heading" class="section-title">Contact & Dispatch</h2>
+          <p class="section-intro">
+            {availabilityText}. Open to data science, machine learning and quantitative analytics roles.
+          </p>
         </div>
-        <div class="panel__body">
 
-          <div class="contact-links-grid">
-            <div class="contact-link-box panel">
-              <span class="c-label">Email</span>
-              <span class="c-val">{contactDetails.email}</span>
-              <button type="button" class="btn btn--primary btn-copy-email copy-email-action" data-email={contactDetails.email}>
-                Copy Email
-              </button>
-            </div>
+        <div class="contact-card panel">
+          <div class="window-titlebar contact-header">
+            <span class="window-title">~/CONTACT.DAT</span>
+          </div>
+          <div class="panel__body">
 
-            <div class="contact-link-box panel">
-              <span class="c-label">Source repositories</span>
-              <span class="c-val">github.com/Aryan0405</span>
-              <ExternalLinkButton href={contactDetails.github} label="Explore Repositories" className="c-action-link btn btn--secondary" aria-label="Visit Aryan's GitHub repositories" client:load />
-            </div>
+            <div class="contact-links-grid">
+              <div class="contact-link-box panel">
+                <span class="c-label">Email</span>
+                <span class="c-val">{contactDetails.email}</span>
+                <button type="button" class="btn btn--primary btn-copy-email copy-email-action" data-email={contactDetails.email}>
+                  Copy Email
+                </button>
+              </div>
 
-            <div class="contact-link-box panel">
-              <span class="c-label">Professional network</span>
-              <span class="c-val">linkedin.com/in/aryan-ashok</span>
-              <ExternalLinkButton href={contactDetails.linkedin} label="Connect on LinkedIn" className="c-action-link btn btn--secondary" aria-label="Visit Aryan's LinkedIn Profile" client:load />
+              <div class="contact-link-box panel">
+                <span class="c-label">Source repositories</span>
+                <span class="c-val">github.com/Aryan0405</span>
+                <ExternalLinkButton href={contactDetails.github} label="Explore Repositories" className="c-action-link btn btn--secondary" aria-label="Visit Aryan's GitHub repositories" client:load />
+              </div>
+
+              <div class="contact-link-box panel">
+                <span class="c-label">Professional network</span>
+                <span class="c-val">linkedin.com/in/aryan-ashok</span>
+                <ExternalLinkButton href={contactDetails.linkedin} label="Connect on LinkedIn" className="c-action-link btn btn--secondary" aria-label="Visit Aryan's LinkedIn Profile" client:load />
+              </div>
             </div>
           </div>
         </div>
@@ -472,6 +478,31 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
       max-width: none;
     }
 
+    /* Section wrapper: heading panel and content panel share the same width */
+    .skills-wrapper,
+    .education-wrapper,
+    .contact-wrapper {
+      width: min(1100px, 100% - 2 * var(--page-gutter));
+      margin-left: auto;
+      margin-right: auto;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-8);
+    }
+
+    .skills-wrapper .skills-grid,
+    .education-wrapper .academic-card {
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .skills-wrapper .skills-grid .panel__body,
+    .education-wrapper .academic-card .panel__body,
+    .contact-card .panel__body {
+      padding: clamp(16px, 2vw, 28px);
+      box-sizing: border-box;
+    }
+
     .section-header {
       display: flex;
       flex-direction: column;
@@ -713,11 +744,14 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
 
     .contact-links-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(max-content, 1fr));
-      gap: var(--space-4);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(12px, 1.5vw, 20px);
+      box-sizing: border-box;
+      min-width: 0;
+      overflow: hidden;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 1000px) {
       .contact-links-grid {
         grid-template-columns: 1fr;
       }
@@ -729,6 +763,7 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
       gap: var(--space-2);
       padding: clamp(12px, 1.4vw, 20px);
       height: 100%;
+      min-width: 0;
     }
 
     .c-label {
@@ -740,20 +775,22 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
     }
 
     .c-val {
-      font-size: clamp(11px, 1.2vw, 13px);
+      font-size: clamp(11px, 1.05vw, 14px);
       color: var(--color-ink-primary);
       white-space: nowrap;
       font-weight: 600;
       font-family: var(--font-body);
+      min-width: 0;
+      overflow: hidden;
     }
 
     .c-action-link {
-      font-size: clamp(11px, 1vw, 14px);
+      font-size: clamp(11px, 0.95vw, 13px);
       font-weight: 700;
       margin-top: auto;
       width: 100%;
       min-width: 0;
-      padding: 0 clamp(10px, 1.2vw, 16px);
+      padding: 0 clamp(10px, 1.1vw, 16px);
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -767,7 +804,7 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
     }
 
     .btn-copy-email {
-      font-size: clamp(11px, 1vw, 14px);
+      font-size: clamp(11px, 0.95vw, 13px);
       font-weight: 700;
       display: inline-flex;
       align-items: center;
@@ -781,7 +818,7 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
       min-height: 44px;
       width: 100%;
       min-width: 0;
-      padding: 0 clamp(10px, 1.2vw, 16px);
+      padding: 0 clamp(10px, 1.1vw, 16px);
     }
   </style>
 </BaseLayout>
