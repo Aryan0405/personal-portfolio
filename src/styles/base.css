@@ -381,6 +381,8 @@ pre,
   text-transform: uppercase;
   text-decoration: none;
   white-space: nowrap;
+  min-width: 0;
+  overflow: hidden;
   box-shadow: 4px 4px 0 #0b0819;
   transition: background-color var(--step-duration) var(--ease-step), color var(--step-duration) var(--ease-step), border-color var(--step-duration) var(--ease-step), transform var(--step-duration) var(--ease-step);
 }

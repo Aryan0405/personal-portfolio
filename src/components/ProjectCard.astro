@@ -168,6 +168,9 @@ const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' '
   .card-actions .btn {
     width: 100%;
     min-height: 44px;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
   }
 
   .external-links {
@@ -180,6 +183,10 @@ const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' '
     flex: 1;
     min-height: 44px;
     justify-content: center;
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
   }
 
   @media (max-width: 640px) {
