@@ -45,13 +45,6 @@
   font-display: swap;
   size-adjust: 93%;
 }
-@font-face {
-  font-family: "Pixelify Sans";
-  src: url("/fonts/pixelify-sans-700.woff2") format("woff2");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
 
 /* ── Reset ────────────────────────────────────────────────────────────── */
 *,
