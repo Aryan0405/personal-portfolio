@@ -129,9 +129,9 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
   </section>
 
   <!-- 02 // Technical Index Section -->
-  <section id="skills" class="skills-section panel" aria-labelledby="skills-heading">
+  <section id="skills" class="skills-section" aria-labelledby="skills-heading">
     <div class="container">
-      <div class="section-header">
+      <div class="section-heading-panel">
         <h2 id="skills-heading" class="section-title">Technical Competencies</h2>
         <p class="section-intro">
           Core engineering and analytical toolkit. Organized by operational workflow rather than arbitrary percentage bars.
@@ -159,9 +159,9 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
   </section>
 
   <!-- 03 // Education & Academic Context Section -->
-  <section id="education" class="education-section panel" aria-labelledby="education-heading">
+  <section id="education" class="education-section" aria-labelledby="education-heading">
     <div class="container">
-      <div class="section-header">
+      <div class="section-heading-panel">
         <h2 id="education-heading" class="section-title">Academic Record</h2>
         <p class="section-intro">
           Current degree coursework and foundational training in quantitative methods and computer science.
@@ -193,16 +193,20 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
   </section>
 
   <!-- 04 // Contact & Dispatch Section -->
-  <section id="contact" class="contact-section panel" aria-labelledby="contact-heading">
+  <section id="contact" class="contact-section" aria-labelledby="contact-heading">
     <div class="container">
+      <div class="section-heading-panel">
+        <h2 id="contact-heading" class="section-title">Contact & Dispatch</h2>
+        <p class="section-intro">
+          {availabilityText}. Open to data science, machine learning and quantitative analytics roles.
+        </p>
+      </div>
+
       <div class="contact-card panel">
         <div class="window-titlebar contact-header">
           <span class="window-title">~/CONTACT.DAT</span>
         </div>
         <div class="panel__body">
-          <p class="contact-desc">
-            {availabilityText}. Open to data science, machine learning and quantitative analytics roles.
-          </p>
 
           <div class="contact-links-grid">
             <div class="contact-link-box panel">
@@ -434,16 +438,40 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
     }
 
     /* ── Sections ─────────────────────────────────────────────────────── */
-    .about-section,
     .skills-section,
     .education-section,
     .contact-section {
-      padding: var(--space-16) 0 var(--space-16);
-      border-bottom: 2px solid var(--color-border);
+      padding-block: clamp(56px, 10vh, 120px);
+      background: transparent;
+      border: none;
     }
 
     .projects-section {
-      padding: var(--space-16) 0 var(--space-16);
+      padding-block: clamp(56px, 10vh, 120px);
+    }
+
+    .section-heading-panel {
+      display: inline-flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      padding: var(--space-4) var(--space-6);
+      background: var(--bg-panel-deep);
+      border: 2px solid var(--rule);
+      box-shadow: var(--shadow-hard);
+      margin-bottom: var(--space-8);
+      max-width: fit-content;
+    }
+
+    .section-heading-panel .section-title {
+      margin: 0;
+      font-size: var(--text-2xl);
+    }
+
+    .section-heading-panel .section-intro {
+      margin: 0;
+      font-size: var(--text-sm);
+      color: var(--color-ink-secondary);
+      max-width: none;
     }
 
     .section-header {

@@ -21,13 +21,13 @@ export default function ExternalLinkButton({
       className={`btn btn-external ${className || ''}`.trim()}
       aria-label={ariaLabel || `${label}, opens in a new tab`}
     >
-      <span class="btn-external-label">{label}</span>
+      <span className="btn-external-label">{label}</span>
       <svg
         viewBox="0 0 7 7"
         fill="currentColor"
         shape-rendering="crispEdges"
         aria-hidden="true"
-        class="btn-external-arrow"
+        className="btn-external-arrow"
         style={{ width: '1.1em', height: '1.1em', minWidth: '12px', minHeight: '12px', display: 'inline-block', verticalAlign: 'middle', flexShrink: 0 }}
       >
         <rect x="2" y="0" width="5" height="1" />
