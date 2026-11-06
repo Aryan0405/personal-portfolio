@@ -72,8 +72,20 @@ const fileName = `${project.slug.toUpperCase().replace(/-/g, '_')}.PRJ`;
   }
 
   .card-titlebar {
-    justify-content: space-between;
+    display: flex;
     align-items: center;
+    gap: var(--space-3);
+  }
+
+  .card-titlebar .status-tag {
+    margin-left: auto;
+  }
+
+  .card-titlebar .window-title {
+    max-width: 55%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .status-tag {
@@ -120,6 +132,7 @@ const fileName = `${project.slug.toUpperCase().replace(/-/g, '_')}.PRJ`;
   }
 
   .metric-cell {
+    min-width: 0;
     display: flex;
     flex-direction: column;
     gap: 2px;
@@ -127,10 +140,14 @@ const fileName = `${project.slug.toUpperCase().replace(/-/g, '_')}.PRJ`;
 
   .m-val {
     font-family: var(--font-display);
-    font-size: clamp(20px, 4vw, 28px);
+    font-size: clamp(18px, 3.6vw, 24px);
     font-weight: 700;
     color: var(--color-accent);
     letter-spacing: 0.04em;
+    line-height: 1.1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .m-lbl {

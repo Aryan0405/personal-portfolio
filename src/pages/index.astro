@@ -300,19 +300,23 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
       display: grid;
       grid-template-columns: 1fr;
       gap: var(--space-6);
+      align-items: stretch;
     }
 
     @media (min-width: 900px) {
       .hero-grid {
         grid-template-columns: 340px 1fr;
         gap: var(--space-8);
-        align-items: start;
+        align-items: stretch;
       }
     }
 
     /* Portrait window */
     .portrait-window {
       position: relative;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
     }
 
     .portrait-frame {
@@ -332,6 +336,14 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
     .masthead {
       display: flex;
       flex-direction: column;
+      height: 100%;
+    }
+
+    .masthead .panel__body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
     .window-titlebar {
