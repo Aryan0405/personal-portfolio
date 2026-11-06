@@ -106,13 +106,7 @@ export function AnimatedTopDock({ className = "" }: AnimatedTopDockProps) {
     <div className={['animated-top-dock-component', 'atd-retro', className].filter(Boolean).join(' ')}>
       <header className="atd-retro__bar">
         <a href="/" className="atd-retro__brand" aria-label="Aryan Ashok Portfolio Homepage">
-          <span className="atd-retro__badge" aria-hidden="true">
-            <svg viewBox="0 0 7 7">
-              <rect x="0" y="2" width="7" height="3" />
-              <rect x="2" y="0" width="3" height="7" />
-            </svg>
-          </span>
-          ARYAN//ASHOK
+          ARYAN ASHOK
         </a>
         <nav ref={rootRef} className="atd-retro__dock" aria-label="Primary navigation">
           {ITEMS.map((item) => (

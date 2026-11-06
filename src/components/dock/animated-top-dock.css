@@ -49,20 +49,12 @@
   text-decoration: none;
 }
 
-.atd-retro__badge {
-  display: inline-flex;
-  width: 14px;
-  height: 14px;
-}
-
-.atd-retro__badge svg,
 .atd-retro__icon svg,
 .atd-retro__menu-toggle {
   display: block;
   shape-rendering: crispEdges;
 }
 
-.atd-retro__badge svg,
 .atd-retro__icon svg {
   width: 100%;
   height: 100%;

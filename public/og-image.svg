@@ -13,7 +13,7 @@
 
   <!-- header strip -->
   <line x1="80" y1="130" x2="1120" y2="130" stroke="#4b2f7e" stroke-width="2" />
-  <text x="80" y="104" font-family="monospace" font-size="20" font-weight="700" fill="#f9c74f" letter-spacing="2">ARYAN//ASHOK</text>
+  <text x="80" y="104" font-family="monospace" font-size="20" font-weight="700" fill="#f9c74f" letter-spacing="2">ARYAN ASHOK</text>
   <text x="820" y="104" font-family="monospace" font-size="16" fill="#a08fd4" letter-spacing="1">SDBI MUMBAI // B.SC. DATA SCIENCE</text>
   <circle cx="1125" cy="98" r="5" fill="#f47b5c" />
 
