@@ -223,13 +223,13 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
               <div class="contact-link-box panel">
                 <span class="c-label">Source repositories</span>
                 <span class="c-val">github.com/Aryan0405</span>
-                <ExternalLinkButton href={contactDetails.github} label="Explore Repositories" className="c-action-link btn btn--secondary" aria-label="Visit Aryan's GitHub repositories" client:load />
+                <ExternalLinkButton href={contactDetails.github} label="GITHUB" className="c-action-link btn btn--secondary" aria-label="Visit Aryan's GitHub repositories" client:load />
               </div>
 
               <div class="contact-link-box panel">
                 <span class="c-label">Professional network</span>
                 <span class="c-val">linkedin.com/in/aryan-ashok</span>
-                <ExternalLinkButton href={contactDetails.linkedin} label="Connect on LinkedIn" className="c-action-link btn btn--secondary" aria-label="Visit Aryan's LinkedIn Profile" client:load />
+                <ExternalLinkButton href={contactDetails.linkedin} label="LINKEDIN" className="c-action-link btn btn--secondary" aria-label="Visit Aryan's LinkedIn Profile" client:load />
               </div>
             </div>
           </div>
@@ -742,28 +742,29 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
       max-width: 640px;
     }
 
+    /* Container query on panel body so text scales with cell width, not viewport */
+    .contact-card .panel__body {
+      container-type: inline-size;
+      container-name: contact-body;
+    }
+
+    .contact-link-box {
+      container-type: inline-size;
+      container-name: contact-cell;
+    }
+
     .contact-links-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: clamp(12px, 1.5vw, 20px);
       box-sizing: border-box;
       min-width: 0;
-      overflow: hidden;
     }
 
-    @media (max-width: 1000px) {
+    @container contact-body (max-width: 760px) {
       .contact-links-grid {
         grid-template-columns: 1fr;
       }
-    }
-
-    .contact-link-box {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-2);
-      padding: clamp(12px, 1.4vw, 20px);
-      height: 100%;
-      min-width: 0;
     }
 
     .c-label {
@@ -775,22 +776,21 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
     }
 
     .c-val {
-      font-size: clamp(11px, 1.05vw, 14px);
+      font-size: clamp(10px, 5.2cqw, 14px);
       color: var(--color-ink-primary);
       white-space: nowrap;
       font-weight: 600;
       font-family: var(--font-body);
       min-width: 0;
-      overflow: hidden;
     }
 
     .c-action-link {
-      font-size: clamp(11px, 0.95vw, 13px);
+      font-size: clamp(10px, 4.8cqw, 13px);
       font-weight: 700;
       margin-top: auto;
       width: 100%;
       min-width: 0;
-      padding: 0 clamp(10px, 1.1vw, 16px);
+      padding: 0 clamp(8px, 4cqw, 16px);
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -798,13 +798,12 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
       line-height: 1;
       vertical-align: middle;
       white-space: nowrap;
-      overflow: hidden;
       letter-spacing: .08em;
       min-height: 44px;
     }
 
     .btn-copy-email {
-      font-size: clamp(11px, 0.95vw, 13px);
+      font-size: clamp(10px, 4.8cqw, 13px);
       font-weight: 700;
       display: inline-flex;
       align-items: center;
@@ -813,12 +812,11 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
       line-height: 1;
       vertical-align: middle;
       white-space: nowrap;
-      overflow: hidden;
       letter-spacing: .08em;
       min-height: 44px;
       width: 100%;
       min-width: 0;
-      padding: 0 clamp(10px, 1.1vw, 16px);
+      padding: 0 clamp(8px, 4cqw, 16px);
     }
   </style>
 </BaseLayout>
