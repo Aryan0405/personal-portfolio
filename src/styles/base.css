@@ -349,6 +349,19 @@ pre,
   color: #0b0819;
 }
 
+.btn--ghost {
+  background: transparent;
+  border-color: #e8e8e8;
+  color: #e8e8e8;
+  box-shadow: 4px 4px 0 #0b0819;
+}
+.btn--ghost:hover {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #0b0819;
+  box-shadow: 4px 4px 0 rgba(6, 4, 16, 0.62);
+}
+
 /* ── Tags / chips (square) ────────────────────────────────────────────── */
 .tag {
   display: inline-flex;

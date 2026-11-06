@@ -56,10 +56,10 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
               <a href="#projects" class="btn btn--primary">
                 Explore Selected Work &#x2193;
               </a>
-              <a href={contactDetails.github} target="_blank" rel="noopener noreferrer" class="btn btn--secondary">
+              <a href={contactDetails.github} target="_blank" rel="noopener noreferrer" class="btn btn--ghost">
                 GitHub Profile &#x2197;
               </a>
-              <a href={contactDetails.linkedin} target="_blank" rel="noopener noreferrer" class="btn btn--secondary">
+              <a href={contactDetails.linkedin} target="_blank" rel="noopener noreferrer" class="btn btn--ghost">
                 LinkedIn Profile &#x2197;
               </a>
             </div>
@@ -274,6 +274,7 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
     /* ── Hero ─────────────────────────────────────────────────────────── */
     .hero-section {
       padding: 0 0 var(--space-16);
+      margin-top: var(--space-8);
     }
 
     .hero-grid {
@@ -301,14 +302,14 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
 
     .portrait-frame {
       position: relative;
-      height: 340px;
+      height: 280px;
       overflow: hidden;
       background: #0b0819;
     }
 
     @media (min-width: 600px) {
       .portrait-frame {
-        height: 340px;
+        height: 280px;
       }
     }
 
