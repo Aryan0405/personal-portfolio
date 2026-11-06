@@ -16,14 +16,6 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
       <div class="hero-grid">
         <!-- Portrait window -->
         <div class="portrait-window panel" role="img" aria-label="Portrait of Aryan Ashok">
-          <div class="window-titlebar">
-            <div class="window-controls">
-              <button class="win-control" aria-label="Minimize"></button>
-              <button class="win-control" aria-label="Maximize"></button>
-              <button class="win-control" aria-label="Close"></button>
-            </div>
-            <span class="window-title">~/PORTRAIT.IMG</span>
-          </div>
           <div class="portrait-frame">
             <Portrait client:visible />
           </div>
@@ -31,14 +23,6 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
 
         <!-- Masthead window -->
         <div class="masthead panel">
-          <div class="window-titlebar">
-            <span class="window-title">~/ABOUT.EXE</span>
-          <div class="window-controls">
-              <button class="win-control" aria-label="Minimize"></button>
-              <button class="win-control" aria-label="Maximize"></button>
-              <button class="win-control" aria-label="Close"></button>
-          </div>
-          </div>
           <div class="panel__body">
             <div class="status-line">
               <span class="status-text">{availabilityText}</span>
@@ -299,6 +283,7 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
       flex-direction: column;
       align-self: start;
       height: fit-content;
+      padding: var(--space-4);
     }
 
     .portrait-frame {
@@ -321,6 +306,7 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      padding: var(--space-6);
     }
 
     .window-titlebar {
