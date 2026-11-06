@@ -184,7 +184,7 @@ const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' '
   }
 
   .metric-cell .m-val {
-    align-self: start;
+    align-self: end;
     display: flex;
     flex-direction: column;
   }
@@ -213,11 +213,12 @@ const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' '
   }
 
   .m-val.m-text {
-    font-family: var(--font-label);
+    font-family: var(--font-display);
     font-size: 16px;
     font-weight: 700;
     color: var(--accent-yellow);
-    line-height: 1.25;
+    letter-spacing: 0.02em;
+    line-height: 1.1;
     overflow-wrap: anywhere;
     text-transform: uppercase;
   }
