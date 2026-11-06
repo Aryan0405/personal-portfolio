@@ -93,7 +93,7 @@ export const projects: Project[] = [
     metrics: [
       { label: 'Scorecard AUC', value: '0.72', context: '5-feature WoE Logistic Regression baseline model' },
       { label: 'Algorithmic Lift', value: '+0.01', context: 'Pure tree algorithmic gain with identical 5 features (0.7282 AUC)' },
-      { label: 'Bureau Redundancy', value: '±0.00', context: 'Negligible marginal gain adding 7 external bureau features' }
+      { label: 'Bureau Redundancy', value: '±0.001', context: 'Negligible marginal gain adding 7 external bureau features' }
     ],
     repoUrl: 'https://github.com/Aryan0405/credit_scorecard',
     hasInteractiveExhibit: true,
