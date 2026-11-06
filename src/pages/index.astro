@@ -458,8 +458,10 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
     .section-heading-panel {
       display: flex;
       flex-direction: column;
-      gap: var(--space-2);
-      padding: var(--space-4) var(--space-6);
+      align-items: center;
+      text-align: center;
+      padding-block: clamp(28px, 4vh, 44px);
+      padding-inline: clamp(20px, 4vw, 48px);
       width: 100%;
       background: var(--bg-panel-deep);
       border: 2px solid var(--rule);
@@ -468,15 +470,30 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
     }
 
     .section-heading-panel .section-title {
-      margin: 0;
+      margin: 0 0 14px 0;
       font-size: var(--text-2xl);
+      text-align: center;
     }
 
     .section-heading-panel .section-intro {
       margin: 0;
       font-size: var(--text-sm);
       color: var(--color-ink-secondary);
-      max-width: none;
+      max-width: 68ch;
+      margin-inline: auto;
+      line-height: 1.6;
+      text-wrap: balance;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      .section-heading-panel {
+        padding-block: clamp(20px, 4vh, 32px);
+        padding-inline: clamp(16px, 4vw, 24px);
+      }
+      .section-heading-panel .section-intro {
+        max-width: 100%;
+      }
     }
 
     /* Section wrapper: heading panel and content panel share the same width */
@@ -747,6 +764,30 @@ import { projects, technicalSkills, academicRecord, contactDetails, availability
     .contact-wrap > .panel {
       width: 100%;
       box-sizing: border-box;
+    }
+
+    .contact-wrap > .panel:first-child .panel__body {
+      text-align: center;
+    }
+
+    .contact-wrap > .panel:first-child .panel__body .section-title {
+      margin: 0 0 14px 0;
+      text-align: center;
+    }
+
+    .contact-wrap > .panel:first-child .panel__body .section-intro {
+      margin: 0;
+      max-width: 68ch;
+      margin-inline: auto;
+      line-height: 1.6;
+      text-wrap: balance;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      .contact-wrap > .panel:first-child .panel__body .section-intro {
+        max-width: 100%;
+      }
     }
 
     .contact-body {
