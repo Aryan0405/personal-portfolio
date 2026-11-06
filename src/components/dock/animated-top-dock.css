@@ -1,0 +1,256 @@
+/* Retro pixel-terminal dock. Only the retro variant remains; sable/modern/glass
+   styles were removed with their component branches. */
+@font-face {
+  font-family: "Fragment Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/fragment-mono.woff2") format("woff2");
+}
+
+.animated-top-dock-component {
+  position: relative;
+  display: block;
+  width: 100%;
+  color: #ecece8;
+  font-family: "Fragment Mono", ui-monospace, monospace;
+  container-type: inline-size;
+  overflow: hidden;
+}
+
+.animated-top-dock-component[aria-hidden="true"] {
+  /* decorative shell: exposed to assistive tech via the header/landmarks instead */
+}
+
+.atd-retro__bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 48px;
+  padding: 0;
+  border: 2px solid #f4e6c8;
+  background: #1a1030;
+  box-shadow: 6px 6px 0 rgba(6, 4, 16, 0.62);
+}
+
+.atd-retro__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 14px;
+  height: 100%;
+  border-right: 2px solid #4b2f7e;
+  color: #f9c74f;
+  background: #150c28;
+  font: 400 14px/1 "Fragment Mono", ui-monospace, monospace;
+  letter-spacing: 0.14em;
+  text-decoration: none;
+}
+
+.atd-retro__badge {
+  display: inline-flex;
+  width: 14px;
+  height: 14px;
+}
+
+.atd-retro__badge svg,
+.atd-retro__icon svg,
+.atd-retro__menu-toggle {
+  display: block;
+  shape-rendering: crispEdges;
+}
+
+.atd-retro__badge svg,
+.atd-retro__icon svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+.atd-retro__dock {
+  display: flex;
+  flex: 1 1 0;
+  gap: 0;
+  align-items: stretch;
+  min-width: 0;
+  height: 100%;
+}
+
+.atd-retro__item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 100%;
+  min-width: 0;
+  padding: 0 10px;
+  overflow: hidden;
+  border: 0;
+  border-right: 2px solid #4b2f7e;
+  color: #b9a7e8;
+  background: #241548;
+  font: 400 13px/1 "Fragment Mono", ui-monospace, monospace;
+  letter-spacing: 0.14em;
+  text-decoration: none;
+  transition: color 0.1s steps(2), background 0.1s steps(2);
+  cursor: pointer;
+}
+
+.atd-retro__item[data-dock-near="true"],
+.atd-retro__item:focus-visible {
+  color: #fff4d6;
+  background: #3a2170;
+  outline: 2px solid #f9c74f;
+  outline-offset: -2px;
+}
+
+.atd-retro__item[aria-current="true"] {
+  color: #0b0819;
+  background: #f9c74f;
+  border-color: #f9c74f;
+}
+
+.atd-retro__item[aria-current="true"] .atd-retro__icon {
+  opacity: 1;
+}
+
+.atd-retro__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  opacity: 0.62;
+}
+
+.atd-retro__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 100%;
+  padding: 0 16px;
+  border: 0;
+  border-left: 2px solid #f4e6c8;
+  color: #0b0819;
+  background: #f47b5c;
+  font: 400 13px/1 "Fragment Mono", ui-monospace, monospace;
+  letter-spacing: 0.16em;
+  text-decoration: none;
+  transition: background 0.1s steps(2), color 0.1s steps(2);
+  cursor: pointer;
+}
+
+.atd-retro__cta:hover {
+  background: #f9c74f;
+}
+
+.atd-retro__menu-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-left: 2px solid #4b2f7e;
+  background: #241548;
+  color: #b9a7e8;
+  font: 400 13px/1 "Fragment Mono", ui-monospace, monospace;
+  letter-spacing: 0.14em;
+  cursor: pointer;
+}
+
+.atd-retro__menu-toggle:focus-visible {
+  outline: 2px solid #f9c74f;
+  outline-offset: -2px;
+}
+
+.atd-retro__menu {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid #f4e6c8;
+  border-top: 0;
+  background: #1a1030;
+  box-shadow: 6px 6px 0 rgba(6, 4, 16, 0.62);
+  color: #b9a7e8;
+  font-family: "Fragment Mono", ui-monospace, monospace;
+}
+
+.atd-retro__menu-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 2px solid #4b2f7e;
+  background: #241548;
+  color: #b9a7e8;
+  cursor: pointer;
+}
+.atd-retro__menu-close:focus-visible {
+  outline: 2px solid #f9c74f;
+  outline-offset: -2px;
+}
+
+.atd-retro__menu nav {
+  padding: 60px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.atd-retro__menu-item {
+  display: block;
+  padding: 10px 16px;
+  border: 2px solid transparent;
+  color: #b9a7e8;
+  background: #241548;
+  font: 400 15px/1 "Fragment Mono", ui-monospace, monospace;
+  letter-spacing: 0.14em;
+  text-decoration: none;
+  transition: color 0.1s steps(2), background 0.1s steps(2), border-color 0.1s steps(2);
+}
+.atd-retro__menu-item:hover,
+.atd-retro__menu-item:focus-visible,
+.atd-retro__menu-item[aria-current="true"] {
+  color: #0b0819;
+  background: #f9c74f;
+  border-color: #f9c74f;
+}
+.atd-retro__menu-item--cta {
+  margin-top: auto;
+  background: #f47b5c;
+  color: #0b0819;
+  text-align: center;
+}
+.atd-retro__menu-item--cta:hover {
+  background: #f9c74f;
+}
+
+@media (max-width: 600px) {
+  .atd-retro__dock {
+    display: none !important;
+  }
+  .atd-retro__cta {
+    display: none !important;
+  }
+  .atd-retro__menu-toggle {
+    display: flex !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .atd-retro__item,
+  .atd-retro__cta,
+  .atd-retro__menu-item {
+    transition: none !important;
+  }
+}

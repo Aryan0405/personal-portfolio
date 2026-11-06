@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="File Not Found | Aryan Ashok" description="Requested path not found.">
+  <section class="not-found" aria-label="File not found">
+    <div class="container">
+      <div class="panel not-found-window">
+        <div class="window-titlebar">
+          <span class="window-title">C:\WORK\404.NOTFOUND</span>
+        </div>
+        <div class="panel__body">
+          <h1 class="not-found-title text-display">FILE_NOT_FOUND.404</h1>
+          <p class="not-found-message">
+            The requested path could not be located on this system. Return to the selected work index or open the command index.
+          </p>
+          <div class="not-found-actions">
+            <a href="/" class="btn btn--primary">RETURN HOME</a>
+            <a href="/#projects" class="btn btn--secondary">SELECTED WORKS</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .not-found {
+      padding: var(--space-16) 0 var(--space-24);
+      display: flex;
+      justify-content: center;
+    }
+
+    .not-found-window {
+      max-width: 640px;
+      width: 100%;
+    }
+
+    .not-found-title {
+      margin: 0 0 var(--space-4) 0;
+      font-size: var(--text-hero);
+      color: var(--color-accent);
+      letter-spacing: 0.06em;
+    }
+
+    .not-found-message {
+      margin: 0 0 var(--space-8) 0;
+      color: var(--color-ink-secondary);
+      line-height: 1.65;
+      max-width: 540px;
+      font-family: var(--font-body);
+    }
+
+    .not-found-actions {
+      display: flex;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+    }
+  </style>
+</BaseLayout>

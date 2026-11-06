@@ -12,6 +12,7 @@ interface Props {
 }
 
 const { project } = Astro.props;
+const workPath = `C:\\WORK\\${project.slug.toUpperCase().replace(/-/g, '_')}`;
 ---
 
 <BaseLayout 
@@ -19,40 +20,40 @@ const { project } = Astro.props;
   description={project.summary}
   type="article"
 >
+  <script>
+    document.body.classList.add('case-study');
+  </script>
   <div class="case-study-page">
-    <div class="container memo-container">
-      <!-- Breadcrumb Navigation -->
-      <nav class="breadcrumb-nav" aria-label="Breadcrumb">
-        <a href="/#projects" class="back-link">
-          <span aria-hidden="true">←</span> Return to Selected Work
-        </a>
-        <span class="sep">/</span>
-        <span class="current-slug">{project.slug}</span>
+    <div class="container">
+      <!-- Breadcrumb header -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/#projects" class="bread-back">&#x2190; RETURN TO SELECTED WORK</a>
+        <span class="bread-sep" aria-hidden="true">&#x25ba;</span>
+        <span class="bread-path">{workPath}</span>
       </nav>
 
-      <!-- Memo Header Block -->
-      <header class="memo-header">
-        <div class="header-meta">
-          <span class="meta-domain">{project.domain}</span>
-          <span class={`badge badge-status ${project.status.toLowerCase().replace(' ', '-')}`}>
-            <span class={`status-dot ${project.status === 'Deployed' ? 'deployed' : project.status === 'Completed' ? 'completed' : 'progress'}`}></span>
-            {project.status}
-          </span>
+      <!-- Memo header block -->
+      <header class="memo-header panel">
+        <div class="window-titlebar memo-titlebar">
+          <span class="window-title">{project.slug.toUpperCase().replace(/-/g, '_')}.PRJ</span>
+          <div class="memo-meta">
+            <span class="meta-domain">{project.domain}</span>
+            <span class="badge tag status-tag">{project.status}</span>
+          </div>
         </div>
-
-        <h1 class="memo-title">{project.title}</h1>
-        <p class="memo-lead">{project.oneLiner}</p>
-
-        <!-- Executive Meta Ledger removed: domain, status, and repo link already shown in header-meta -->
+        <div class="panel__body">
+          <h1 class="memo-title">{project.title}</h1>
+          <p class="memo-lead">{project.oneLiner}</p>
+        </div>
       </header>
 
-      <!-- Quantitative Benchmark Highlights -->
+      <!-- Quantitative benchmark highlights -->
       <section class="metrics-summary-section" aria-label="Key Performance Metrics">
         <h2 class="sr-only">Key Performance Metrics</h2>
-        <div class="metrics-cards-grid">
+        <div class="metrics-readout">
           {project.metrics.map(m => (
-            <div class="summary-metric-card">
-              <span class="metric-big-val font-mono">{m.value}</span>
+            <div class="readout-cell">
+              <span class="metric-big-val">{m.value}</span>
               <span class="metric-big-lbl">{m.label}</span>
               <span class="metric-big-ctx">{m.context}</span>
             </div>
@@ -60,293 +61,292 @@ const { project } = Astro.props;
         </div>
       </section>
 
-      <!-- Executive Overview -->
-      <section class="memo-section overview-section">
-        <h2 class="section-heading">Executive abstract</h2>
-        <div class="prose-content">
-          <p>{project.caseStudy.overview}</p>
-        </div>
-      </section>
-
-      <!-- Interactive Analytical Exhibit (Project Specific) -->
-      {project.hasInteractiveExhibit && (
-        <section class="memo-section exhibit-section" aria-label="Interactive Analytical Exhibit">
-          <h2 class="section-heading">Empirical exhibit</h2>
-          {project.exhibitType === 'beauty-advisor' && <BeautyAdvisorExhibit />}
-          {project.exhibitType === 'ks-scorecard' && <CreditRiskChart />}
-          {project.exhibitType === 'fraud-metrics' && <FraudDetectionExhibit />}
-          {project.exhibitType === 'stock-explorer' && <StockVolatilityChart />}
-          {project.exhibitType === 'metro-clusters' && <MetroClusteringExhibit />}
-        </section>
-      )}
-
-      <!-- Detailed Case Study Narrative Sections -->
-      {project.caseStudy.sections.map((sec, idx) => (
-        <section class="memo-section" id={sec.id}>
-          <h2 class="section-heading">
-            {sec.title}
-          </h2>
+      <!-- Body column (readable, ~70ch) -->
+      <div class="body-column">
+        <!-- Executive Overview -->
+        <section class="memo-section overview-section" aria-label="Overview">
+          <h2 class="section-heading">Executive abstract</h2>
           <div class="prose-content">
-            <p>{sec.content}</p>
-            {sec.highlight && (
-              <aside class="memo-callout">
-                <span class="callout-label">Key takeaway</span>
-                <span class="callout-text">{sec.highlight}</span>
-              </aside>
-            )}
+            <p>{project.caseStudy.overview}</p>
           </div>
         </section>
-      ))}
 
-      <!-- Critical Retrospective (What I Would Do Differently) -->
-      <section class="memo-section retrospective-section">
-          <h2 class="section-heading">
-            What I would do differently
-          </h2>
-        <div class="prose-content">
-          <p>{project.caseStudy.whatWouldDoDifferently}</p>
-        </div>
-      </section>
+        <!-- Interactive Analytical Exhibit -->
+        {project.hasInteractiveExhibit && (
+          <section class="memo-section exhibit-section" aria-label="Interactive Analytical Exhibit">
+            <h2 class="section-heading">Empirical exhibit</h2>
+            <div class="exhibit-panel panel">
+              <div class="panel__body">
+                {project.exhibitType === 'beauty-advisor' && <BeautyAdvisorExhibit />}
+                {project.exhibitType === 'ks-scorecard' && <CreditRiskChart />}
+                {project.exhibitType === 'fraud-metrics' && <FraudDetectionExhibit />}
+                {project.exhibitType === 'stock-explorer' && <StockVolatilityChart />}
+                {project.exhibitType === 'metro-clusters' && <MetroClusteringExhibit />}
+              </div>
+            </div>
+          </section>
+        )}
 
-      <!-- Technology Stack Index -->
-      <section class="memo-section stack-section">
-          <h2 class="section-heading">
-            Technical implementation stack
-          </h2>
-        <div class="tech-pills-row">
-          {project.technologies.map(t => (
-            <span class="tech-tag">{t}</span>
-          ))}
-        </div>
-      </section>
+        <!-- Detailed Case Study Narrative Sections -->
+        {project.caseStudy.sections.map((sec, idx) => (
+          <section class="memo-section" id={sec.id}>
+            <h2 class="section-heading">{sec.title}</h2>
+            <div class="prose-content">
+              <p>{sec.content}</p>
+              {sec.highlight && (
+                <aside class="memo-callout panel">
+                  <span class="callout-label">KEY TAKEAWAY</span>
+                  <span class="callout-text">{sec.highlight}</span>
+                </aside>
+              )}
+            </div>
+          </section>
+        ))}
+
+        <!-- Critical Retrospective -->
+        <section class="memo-section retrospective-section">
+          <h2 class="section-heading">What I would do differently</h2>
+          <div class="prose-content">
+            <p>{project.caseStudy.whatWouldDoDifferently}</p>
+          </div>
+        </section>
+
+        <!-- Technology Stack Index -->
+        <section class="memo-section stack-section">
+          <h2 class="section-heading">Technical implementation stack</h2>
+          <div class="tech-pills-row">
+            {project.technologies.map(t => (
+              <span class="tech-tag tag">{t}</span>
+            ))}
+          </div>
+        </section>
+      </div>
 
       <!-- Case Study Footer Actions -->
-      <div class="memo-footer-actions">
-        <a href={project.repoUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-          View Repository on GitHub ↗
-        </a>
-        {project.liveUrl && (
-          <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
-            Launch Live Deployment ↗
+      <div class="memo-footer-actions panel">
+        <div class="panel__body">
+          <a href={project.repoUrl} target="_blank" rel="noopener noreferrer" class="btn btn--primary">
+            View Repository on GitHub &#x2197;
           </a>
-        )}
-        <a href="/#projects" class="btn btn-ghost">
-          Return to All Projects
-        </a>
+          {project.liveUrl && (
+            <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" class="btn btn--secondary">
+              Launch Live Deployment &#x2197;
+            </a>
+          )}
+          <a href="/#projects" class="btn btn--secondary">
+            Return to All Projects
+          </a>
+        </div>
       </div>
     </div>
   </div>
 </BaseLayout>
 
 <style>
+  body {
+    /* darker scrim on case-study pages for long reading comfort */
+  }
+
   .case-study-page {
-    padding: var(--space-8) 0 var(--space-16);
+    padding: 0;
   }
 
-  .memo-container {
-    max-width: 860px;
+  body.case-study .retro-background__scrim {
+    opacity: 0.72;
   }
 
-  .breadcrumb-nav {
+  /* Breadcrumb */
+  .breadcrumb {
     display: flex;
     align-items: center;
     gap: var(--space-2);
+    font-family: var(--font-label);
     font-size: var(--text-xs);
-    margin-bottom: var(--space-6);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-4);
+    color: var(--text-muted);
   }
 
-  .back-link {
-    color: var(--color-ink-secondary);
+  .bread-back {
+    color: var(--color-ink-primary);
     text-decoration: none;
-    transition: color 150ms ease;
   }
-
-  .back-link:hover {
+  .bread-back:hover {
     color: var(--color-accent);
   }
 
-  .sep {
-    color: var(--color-border-strong);
+  .bread-sep {
+    color: var(--text-dim);
   }
 
-  .current-slug {
-    color: var(--color-ink-muted);
-  }
-
-  /* Memo Header */
-  .memo-header {
-    border-bottom: 1px solid var(--color-border-strong);
-    padding-bottom: var(--space-6);
-    margin-bottom: var(--space-8);
-  }
-
-  .header-meta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: var(--space-3);
-  }
-
-  .meta-domain {
-    font-size: var(--text-xs);
-    font-weight: 600;
-    color: var(--color-ink-secondary);
-    letter-spacing: 0.05em;
-  }
-
-  .memo-title {
-    font-size: var(--text-hero);
-    line-height: 1.15;
-    margin-bottom: var(--space-3);
-  }
-
-  .memo-lead {
-    font-size: var(--text-lg);
-    color: var(--color-ink-secondary);
-    line-height: 1.5;
-    margin-bottom: var(--space-6);
-  }
-
-  .executive-ledger {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: var(--space-3);
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    padding: var(--space-4);
-    border-radius: var(--radius-sm);
-  }
-
-  @media (min-width: 640px) {
-    .executive-ledger {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  .ledger-item {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .ledger-label {
-    font-size: 10px;
-    color: var(--color-ink-secondary);
-    letter-spacing: 0.05em;
-  }
-
-  .ledger-val {
-    font-size: var(--text-xs);
-    font-weight: 600;
+  .bread-path {
     color: var(--color-ink-primary);
   }
 
-  .repo-link, .live-link {
-    color: var(--color-accent);
-    text-decoration: underline;
+  /* Memo header */
+  .memo-header {
+    margin-bottom: var(--space-6);
   }
 
-  /* Summary Metrics Cards */
+  .memo-titlebar {
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .memo-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--text-xs);
+  }
+
+  .meta-domain {
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-family: var(--font-label);
+  }
+
+  .status-tag {
+    font-size: var(--text-xs);
+  }
+
+  .memo-title {
+    margin: 0 0 var(--space-2) 0;
+    font-size: var(--text-hero);
+    letter-spacing: 0.02em;
+  }
+
+  .memo-lead {
+    margin: 0;
+    font-size: var(--text-lg);
+    color: var(--color-ink-secondary);
+    line-height: 1.5;
+    max-width: 70ch;
+    border-left: 2px solid var(--color-accent);
+    padding-left: var(--space-4);
+  }
+
+  /* Metrics readout strip */
   .metrics-summary-section {
     margin-bottom: var(--space-8);
   }
 
-  .metrics-cards-grid {
+  .metrics-readout {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
-    gap: var(--space-4);
+    gap: var(--space-3);
   }
 
   @media (min-width: 640px) {
-    .metrics-cards-grid {
+    .metrics-readout {
       grid-template-columns: repeat(3, 1fr);
     }
   }
 
-  .summary-metric-card {
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
+  .readout-cell {
+    border: 2px solid var(--color-border);
+    background: var(--bg-cell);
     padding: var(--space-4);
-    border-radius: var(--radius-sm);
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
   }
 
   .metric-big-val {
-    font-size: var(--text-xl);
+    font-family: var(--font-display);
+    font-size: clamp(22px, 5vw, 32px);
     font-weight: 700;
     color: var(--color-accent);
+    letter-spacing: 0.04em;
+    line-height: 1.1;
   }
 
   .metric-big-lbl {
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--color-ink-secondary);
-    letter-spacing: 0.04em;
+    font-family: var(--font-label);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: var(--space-1);
   }
 
   .metric-big-ctx {
-    font-size: 11px;
-    color: var(--color-ink-muted);
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    color: var(--color-ink-secondary);
     line-height: 1.4;
+    margin-top: var(--space-2);
   }
 
-  /* Memo Content Sections */
+  /* Body column */
+  .body-column {
+    max-width: 70ch;
+  }
+
+  @media (max-width: 640px) {
+    .body-column {
+      max-width: 100%;
+    }
+  }
+
+  /* Memo sections */
   .memo-section {
-    margin-bottom: var(--space-8);
+    margin-bottom: var(--space-10);
+  }
+
+  .memo-section:not(:last-child) {
+    margin-bottom: var(--space-12);
   }
 
   .section-heading {
-    font-size: var(--text-lg);
-    font-family: var(--font-display);
+    margin: 0 0 var(--space-4) 0;
+    font-size: var(--text-xl);
     color: var(--color-ink-primary);
-    font-weight: 600;
-    margin-bottom: var(--space-3);
-    border-bottom: 1px solid var(--color-border);
+    letter-spacing: 0.04em;
+    border-bottom: 2px solid var(--color-border);
     padding-bottom: var(--space-1);
   }
 
-  .section-heading::before {
-    content: "";
-    display: block;
-    width: 32px;
-    height: 2px;
-    background: var(--color-accent);
-    margin-bottom: var(--space-2);
+  .prose-content {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: 1.65;
+    color: var(--color-ink-secondary);
   }
 
   .prose-content p {
-    font-size: var(--text-base);
-    line-height: 1.7;
-    margin-bottom: var(--space-4);
-  }
-
-  .memo-lead {
-    border-left: 3px solid var(--color-accent);
-    padding-left: var(--space-4);
-    margin-left: 0;
+    margin: 0 0 var(--space-4) 0;
+    max-width: 70ch;
   }
 
   .memo-callout {
-    background: var(--color-surface-subtle);
-    border-left: 3px solid var(--color-accent);
-    padding: var(--space-3) var(--space-4);
     margin: var(--space-4) 0;
-    font-size: var(--text-xs);
-    line-height: 1.5;
   }
 
   .callout-label {
+    font-family: var(--font-label);
+    font-size: var(--text-xs);
     font-weight: 700;
-    color: var(--color-ink-secondary);
-    margin-right: var(--space-2);
+    color: var(--color-accent);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: var(--space-1);
   }
 
   .callout-text {
     color: var(--color-ink-primary);
+    font-size: var(--text-sm);
+    line-height: 1.6;
   }
 
+  /* Exhibit panel */
+  .exhibit-panel {
+    margin: var(--space-4) 0 var(--space-8);
+  }
+
+  /* Tech stack */
   .tech-pills-row {
     display: flex;
     flex-wrap: wrap;
@@ -355,20 +355,59 @@ const { project } = Astro.props;
 
   .tech-tag {
     font-size: var(--text-xs);
-    padding: var(--space-1) var(--space-3);
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-sm);
+    padding: 2px 8px;
+    border: 2px solid var(--color-border);
+    background: var(--bg-cell);
+    color: var(--color-ink-secondary);
+    font-family: var(--font-label);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  /* Footer actions */
+  .memo-footer-actions {
+    margin-top: var(--space-12);
+    border-top: 0;
+  }
+
+  .memo-footer-actions .btn {
+    margin-bottom: var(--space-3);
+  }
+
+  @media (min-width: 640px) {
+    .memo-footer-actions {
+      display: flex;
+      gap: var(--space-3);
+      align-items: center;
+    }
+    .memo-footer-actions .btn {
+      margin-bottom: 0;
+    }
+  }
+
+  /* Dark bordered boxes for tables/code inside exhibits */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+  }
+
+  th, td {
+    border: 2px solid var(--color-border);
+    padding: var(--space-2) var(--space-3);
+    text-align: left;
     color: var(--color-ink-secondary);
   }
 
-  /* Footer Actions */
-  .memo-footer-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3);
-    padding-top: var(--space-8);
-    border-top: 1px solid var(--color-border-strong);
-    margin-top: var(--space-12);
+  th {
+    background: var(--bg-cell);
+    color: var(--color-ink-primary);
+    font-family: var(--font-label);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
   }
 </style>

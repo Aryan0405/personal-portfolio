@@ -1,67 +1,70 @@
 ---
-// CommandMenu.astro - Accessible keyboard command menu (Cmd+K / Ctrl+K)
+// CommandMenu.astro - Accessible keyboard command menu (Cmd+K / Ctrl+K), retro terminal dialog
 import { projects, contactDetails } from '../data/projects';
 ---
 
-<div id="cmd-menu-modal" class="cmd-modal" role="dialog" aria-modal="true" aria-label="Navigation Command Index" aria-hidden="true">
+<div id="cmd-menu-modal" class="cmd-modal panel" role="dialog" aria-modal="true" aria-label="Navigation Command Index">
   <div class="cmd-backdrop" id="cmd-backdrop"></div>
   
   <div class="cmd-dialog">
-    <div class="cmd-search-box">
-      <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-        <circle cx="11" cy="11" r="8"></circle>
-        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-      </svg>
-      <input 
-        type="text" 
-        id="cmd-input" 
-        class="cmd-input font-mono" 
-        placeholder="Type a command or jump to project..." 
-        autocomplete="off" 
-        spellcheck="false"
-      />
-      <span class="cmd-key-hint font-mono">ESC to close</span>
+    <div class="cmd-titlebar window-titlebar">
+      <span class="window-title">CMD+K.INDEX</span>
     </div>
+    <div class="panel__body">
+      <div class="cmd-search-box">
+        <span class="prompt" aria-hidden="true">C:\&gt;</span>
+        <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input
+          type="text"
+          id="cmd-input"
+          class="cmd-input font-mono text-body"
+          placeholder="type a command or jump to a project..."
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <span class="cmd-key-hint">ESC TO CLOSE</span>
+      </div>
 
-    <div class="cmd-results" id="cmd-results" role="listbox">
-      <!-- Section: Navigation -->
-      <div class="cmd-group-label">Sections</div>
-      <a href="/#projects" class="cmd-item" role="option">
-        <span class="cmd-item-title">Selected Projects</span>
-      </a>
-      <a href="/#skills" class="cmd-item" role="option">
-        <span class="cmd-item-title">Technical Capabilities &amp; Systems</span>
-      </a>
-      <a href="/#education" class="cmd-item" role="option">
-        <span class="cmd-item-title">Education &amp; Academic Record</span>
-      </a>
-      <a href="/#contact" class="cmd-item" role="option">
-        <span class="cmd-item-title">Contact &amp; Dispatch</span>
-      </a>
-
-      <!-- Section: Case Studies -->
-      <div class="cmd-group-label">Case studies</div>
-      {projects.map(p => (
-        <a href={`/work/${p.slug}`} class="cmd-item" role="option">
-          <span class="cmd-item-title">{p.title}</span>
-          <span class="cmd-item-tag">{p.domain}</span>
+      <div class="cmd-results" id="cmd-results" role="listbox">
+        <div class="cmd-group-label">SECTIONS</div>
+        <a href="/#projects" class="cmd-item" role="option">
+          <span class="cmd-item-title">Selected Projects</span>
         </a>
-      ))}
+        <a href="/#skills" class="cmd-item" role="option">
+          <span class="cmd-item-title">Technical Competencies</span>
+        </a>
+        <a href="/#education" class="cmd-item" role="option">
+          <span class="cmd-item-title">Academic Record</span>
+        </a>
+        <a href="/#contact" class="cmd-item" role="option">
+          <span class="cmd-item-title">Contact &amp; Dispatch</span>
+        </a>
 
-      <!-- Section: Actions -->
-      <div class="cmd-group-label">Quick actions</div>
-      <button type="button" class="cmd-item cmd-action-btn" id="cmd-copy-email" role="option">
-        <span class="cmd-item-title">Copy Email Address</span>
-        <span class="cmd-item-tag">{contactDetails.email}</span>
-      </button>
-      <a href={contactDetails.github} target="_blank" rel="noopener noreferrer" class="cmd-item" role="option">
-        <span class="cmd-item-title">Open GitHub Profile</span>
-        <span class="cmd-item-tag">github.com/Aryan0405</span>
-      </a>
-      <a href={contactDetails.linkedin} target="_blank" rel="noopener noreferrer" class="cmd-item" role="option">
-        <span class="cmd-item-title">Open LinkedIn Profile</span>
-        <span class="cmd-item-tag">linkedin.com/in/aryan-ashok</span>
-      </a>
+        <div class="cmd-group-label">CASE STUDIES</div>
+        {projects.map(p => (
+          <a href={`/work/${p.slug}`} class="cmd-item" role="option">
+            <span class="cmd-item-title">{p.title}</span>
+            <span class="cmd-item-tag">{p.domain}</span>
+          </a>
+        ))}
+
+        <div class="cmd-group-label">QUICK ACTIONS</div>
+        <button type="button" class="cmd-item cmd-action-btn" id="cmd-copy-email" role="option">
+          <span class="cmd-item-title">Copy Email Address</span>
+          <span class="cmd-item-tag">{contactDetails.email}</span>
+        </button>
+        <a href={contactDetails.github} target="_blank" rel="noopener noreferrer" class="cmd-item" role="option">
+          <span class="cmd-item-title">Open GitHub Profile</span>
+          <span class="cmd-item-tag">github.com/Aryan0405</span>
+        </a>
+        <a href={contactDetails.linkedin} target="_blank" rel="noopener noreferrer" class="cmd-item" role="option">
+          <span class="cmd-item-title">Open LinkedIn Profile</span>
+          <span class="cmd-item-tag">linkedin.com/in/aryan-ashok</span>
+        </a>
+      </div>
     </div>
   </div>
 </div>
@@ -211,22 +214,19 @@ import { projects, contactDetails } from '../data/projects';
 
   .cmd-backdrop {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(24, 23, 21, 0.45);
-    backdrop-filter: blur(2px);
+    inset: 0;
+    background: rgba(6, 4, 16, 0.6);
+    z-index: 9998;
   }
 
   .cmd-dialog {
     position: relative;
     width: 100%;
     max-width: 580px;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border-strong);
-    border-radius: var(--radius-sm);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+    height: 64vh;
+    max-height: 720px;
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
     z-index: 10000;
   }
@@ -234,50 +234,66 @@ import { projects, contactDetails } from '../data/projects';
   .cmd-search-box {
     display: flex;
     align-items: center;
-    gap: var(--space-3);
+    gap: var(--space-2);
     padding: var(--space-3) var(--space-4);
-    border-bottom: 1px solid var(--color-border);
-    background: var(--color-surface);
+    border-bottom: 2px solid var(--color-border);
+    background: var(--bg-panel-deep);
+  }
+
+  .prompt {
+    color: var(--color-accent);
+    font-family: var(--font-label);
+    font-size: var(--text-sm);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
   }
 
   .search-icon {
-    color: var(--color-ink-muted);
+    color: var(--text-muted);
+    flex: 0 0 auto;
   }
 
   .cmd-input {
     flex: 1;
-    border: none;
+    border: 0;
     background: transparent;
     font-size: var(--text-sm);
     color: var(--color-ink-primary);
-    outline: none;
   }
 
   .cmd-input::placeholder {
-    color: var(--color-ink-muted);
+    color: var(--text-dim);
+  }
+
+  .cmd-input:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: -2px;
   }
 
   .cmd-key-hint {
-    font-size: 11px;
-    color: var(--color-ink-muted);
+    font-family: var(--font-label);
+    font-size: var(--text-xs);
+    color: var(--text-dim);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
     padding: 2px 6px;
-    background: var(--color-surface-subtle);
-    border: 1px solid var(--color-border);
-    border-radius: 2px;
+    border: 2px solid var(--color-border);
+    background: var(--bg-cell);
   }
 
   .cmd-results {
-    max-height: 380px;
     overflow-y: auto;
     padding: var(--space-2);
   }
 
   .cmd-group-label {
+    font-family: var(--font-label);
     font-size: 10px;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--color-accent);
     padding: var(--space-2) var(--space-3) var(--space-1);
-    letter-spacing: 0.05em;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
   }
 
   .cmd-item {
@@ -287,31 +303,30 @@ import { projects, contactDetails } from '../data/projects';
     width: 100%;
     padding: var(--space-2) var(--space-3);
     min-height: 40px;
+    border: 2px solid transparent;
     background: transparent;
-    border: none;
-    border-radius: var(--radius-sm);
-    text-decoration: none;
     color: var(--color-ink-primary);
+    font-family: var(--font-body);
     font-size: var(--text-sm);
-    text-align: left;
-    transition: background-color 100ms ease;
+    text-decoration: none;
+    transition: color 0.1s steps(2), background 0.1s steps(2), border-color 0.1s steps(2);
   }
 
-  .cmd-item:hover, .cmd-item.active {
-    background: var(--color-surface-subtle);
-    color: var(--color-accent);
+  .cmd-item:hover,
+  .cmd-item.active {
+    color: #0b0819;
+    background: var(--color-accent);
+    border-color: var(--color-accent);
   }
 
   .cmd-item-title {
-    font-weight: 500;
+    font-weight: 600;
   }
 
   .cmd-item-tag {
-    font-size: 11px;
-    color: var(--color-ink-muted);
-  }
-
-  .cmd-item:hover .cmd-item-tag, .cmd-item.active .cmd-item-tag {
-    color: var(--color-ink-secondary);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
   }
 </style>

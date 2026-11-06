@@ -1,0 +1,98 @@
+/* Retro pixel-terminal design system. Single theme: dark void, no light mode. */
+
+/* ── Palette (from the retro dock) ──────────────────────────────────────── */
+:root {
+  /* Backgrounds */
+  --bg-void: #0b0819;
+  --bg-panel: #1a1030;
+  --bg-panel-deep: #150c28;
+  --bg-cell: #241548;
+  --bg-cell-hover: #3a2170;
+
+  /* Borders & rules */
+  --rule: #4b2f7e;
+  --frame: #f4e6c8;
+
+  /* Accents */
+  --accent-yellow: #f9c74f;
+  --accent-coral: #f47b5c;
+
+  /* Text */
+  --text-cream: #fff4d6;
+  --text-body: #cfc3f2;
+  --text-muted: #a08fd4;
+  --text-dim: #7b6ab0;
+
+  /* Dusk ramp (dither field background) */
+  --dusk-0: #0b091c;
+  --dusk-1: #1b1038;
+  --dusk-2: #361753;
+  --dusk-3: #652160;
+  --dusk-4: #9c2e60;
+  --dusk-5: #d34c53;
+  --dusk-6: #f18049;
+  --dusk-7: #fcc87e;
+
+  /* Semantic aliases (dark-only) */
+  --color-bg: var(--bg-void);
+  --color-surface: var(--bg-panel);
+  --color-surface-subtle: var(--bg-panel-deep);
+  --color-surface-hover: var(--bg-cell-hover);
+  --color-ink-primary: var(--text-cream);
+  --color-ink-secondary: var(--text-body);
+  --color-ink-muted: var(--text-muted);
+  --color-border: var(--rule);
+  --color-border-strong: var(--frame);
+  --color-accent: var(--accent-yellow);
+  --color-accent-hover: var(--accent-coral);
+  --color-accent-subtle: var(--bg-cell);
+  --color-status-deployed: var(--accent-yellow);
+  --color-status-complete: var(--accent-yellow);
+  --color-status-progress: var(--accent-coral);
+
+  /* ── Typography families ────────────────────────────────────────────── */
+  --font-label: "Fragment Mono", ui-monospace, "SF Mono", Consolas, "Liberation Mono", monospace;
+  --font-display: "Silkscreen", ui-monospace, "SF Mono", Consolas, monospace;
+  --font-body: "IBM Plex Mono", ui-monospace, "SF Mono", Consolas, "Liberation Mono", monospace;
+
+  /* ── Type scale ─────────────────────────────────────────────────────── */
+  --text-xs: clamp(0.6875rem, 0.66rem + 0.1vw, 0.75rem);
+  --text-sm: clamp(0.75rem, 0.72rem + 0.15vw, 0.875rem);
+  --text-base: clamp(0.875rem, 0.84rem + 0.2vw, 1rem);
+  --text-lg: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-xl: clamp(1.125rem, 1.05rem + 0.4vw, 1.35rem);
+  --text-2xl: clamp(1.4rem, 1.25rem + 0.8vw, 1.9rem);
+  --text-hero: clamp(1.9rem, 1.6rem + 2vw, 2.8rem);
+
+  /* ── Spacing ────────────────────────────────────────────────────────── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+
+  /* ── Layout ─────────────────────────────────────────────────────────── */
+  --max-width: 900px;
+  --radius-none: 0;
+  --border-width: 2px;
+  --shadow-hard: 6px 6px 0 rgba(6, 4, 16, 0.62);
+  --shadow-hard-inset: inset 6px 6px 0 rgba(6, 4, 16, 0.4);
+
+  /* ── Motion ─────────────────────────────────────────────────────────── */
+  --ease-step: steps(2);
+  --step-duration: 100ms;
+  --blink-duration: 1s;
+}
+
+/* Case-study pages: darker scrim for long reading comfort */
+body.case-study {
+  --scrim-opacity: 0.72;
+}
+
+body:not(.case-study) {
+  --scrim-opacity: 0.55;
+}

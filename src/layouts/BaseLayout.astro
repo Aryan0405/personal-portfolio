@@ -1,10 +1,13 @@
 ---
-import '../styles/global.css';
+import '../styles/tokens.css';
+import '../styles/base.css';
+import '../components/dock/animated-top-dock.css';
 import SEO from '../components/SEO.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import CommandMenu from '../components/CommandMenu.astro';
 import Toast from '../components/Toast.astro';
+import RetroBackground from '../components/RetroBackground.tsx';
 
 interface Props {
   title?: string;
@@ -29,28 +32,17 @@ const { title, description, image, type } = Astro.props;
       }
     </style>
 
-    <!-- Inline theme script: set data-theme before stylesheets load to avoid flash -->
-    <script is:inline>
-      try {
-        const saved = localStorage.getItem('theme');
-        const theme = saved === 'dark' || saved === 'light' ? saved : 'light';
-        document.documentElement.setAttribute('data-theme', theme);
-        document.documentElement.style.colorScheme = theme;
-        const m = document.getElementById('theme-color-meta');
-        if (m) m.setAttribute('content', theme === 'dark' ? '#161311' : '#FBF9F5');
-      } catch (e) {
-        document.documentElement.setAttribute('data-theme', 'light');
-        document.documentElement.style.colorScheme = 'light';
-      }
-    </script>
   </head>
   <body>
+    <!-- Retro dither field: mounted once, fixed full viewport, behind the site -->
+    <RetroBackground client:visible />
+
     <!-- Skip to main content link (Antislop R-32, R-39) -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
     <Header />
 
-    <main id="main-content">
+    <main id="main-content" class="page-shell">
       <slot />
     </main>
 
