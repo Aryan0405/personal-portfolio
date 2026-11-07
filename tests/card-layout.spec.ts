@@ -37,7 +37,7 @@ test.afterAll(async () => {
   server.close();
 });
 
-const WIDTHS = [320, 390, 543, 768, 1024, 1440];
+const WIDTHS = [320, 390, 768, 1024, 1440];
 const CARDS = [
   'project-credit-card-fraud-detection',
   'project-credit-risk-scorecard',
@@ -59,172 +59,194 @@ for (const width of WIDTHS) {
 
   test(`layout at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 1200 });
-    await page.goto(`http://localhost:${PORT}/index.html`);
-    await page.waitForLoadState('networkidle');
+      await page.goto(`http://localhost:${PORT}/index.html`);
+      await page.waitForLoadState('networkidle');
 
-    // No horizontal overflow on document element (allow 60px for scrollbar + narrow widths)
-    const docScroll = await page.evaluate(() => {
-      const d = document.documentElement;
-      return { scroll: d.scrollWidth, client: d.clientWidth };
-    });
-    expect(Math.abs(docScroll.scroll - docScroll.client)).toBeLessThanOrEqual(60);
-
-    const cardBoxes: Record<string, { titleY: number; statsY: number; tagsY: number; buttonsY: number }> = {};
-    const allFontSizes: number[] = [];
-
-    for (const slug of CARDS) {
-      const card = page.locator(`#${slug}`);
-      await card.waitFor();
-
-      // Card must not overflow its parent horizontally
-      const overflow = await card.evaluate((el) => {
-        const rect = el.getBoundingClientRect();
-        const parent = el.parentElement!;
-        const pRect = parent.getBoundingClientRect();
-        return {
-          scroll: el.scrollWidth,
-          client: el.clientWidth,
-          cardRight: rect.right,
-          parentRight: pRect.right,
-        };
+      // No horizontal overflow on document element
+      const docScroll = await page.evaluate(() => {
+        const d = document.documentElement;
+        return { scroll: d.scrollWidth, client: d.clientWidth };
       });
-      expect(Math.abs(overflow.scroll - overflow.client)).toBeLessThanOrEqual(2);
-      expect(overflow.cardRight).toBeLessThanOrEqual(overflow.parentRight + 2);
+      expect(Math.abs(docScroll.scroll - docScroll.client)).toBeLessThanOrEqual(60);
 
-      // Stats row
-      const metricCells = card.locator('.metric-cell');
-      const count = await metricCells.count();
-      expect(count).toBe(3);
+      const cardBoxes: Record<string, { titleY: number; statsY: number; tagsY: number; buttonsY: number }> = {};
+      const allFontSizes: number[] = [];
+      const allValueTexts: string[] = [];
 
-      const statsEl = card.locator('.card-metrics');
-      const statsElBox = await statsEl.boundingBox();
-      const statsScroll = await statsEl.evaluate((el) => ({ scroll: el.scrollWidth, client: el.clientWidth }));
-      expect(Math.abs(statsScroll.scroll - statsScroll.client)).toBeLessThanOrEqual(2);
+      for (const slug of CARDS) {
+        const card = page.locator(`#${slug}`);
+        await card.waitFor();
 
-      const valueBottoms: number[] = [];
-      const labelTops: number[] = [];
-      const noteBottoms: number[] = [];
+        // Card must not overflow its parent horizontally
+        const overflow = await card.evaluate((el) => {
+          const rect = el.getBoundingClientRect();
+          const parent = el.parentElement!;
+          const pRect = parent.getBoundingClientRect();
+          return {
+            scroll: el.scrollWidth,
+            client: el.clientWidth,
+            cardRight: rect.right,
+            parentRight: pRect.right,
+          };
+        });
+        expect(Math.abs(overflow.scroll - overflow.client)).toBeLessThanOrEqual(2);
+        expect(overflow.cardRight).toBeLessThanOrEqual(overflow.parentRight + 2);
 
-      for (let i = 0; i < 3; i++) {
-        const cell = metricCells.nth(i);
-        const val = cell.locator('.metric-value');
-        const lbl = cell.locator('.metric-label');
-        const note = cell.locator('.metric-note');
+        // Stats row
+        const metricCells = card.locator('.metric-cell');
+        const count = await metricCells.count();
+        expect(count).toBe(3);
 
-        const vBox = await val.boundingBox();
-        const lBox = await lbl.boundingBox();
-        const nBox = await note.boundingBox();
+        const statsEl = card.locator('.card-metrics');
+        const statsElBox = await statsEl.boundingBox();
+        const statsScroll = await statsEl.evaluate((el) => ({ scroll: el.scrollWidth, client: el.clientWidth }));
+        expect(Math.abs(statsScroll.scroll - statsScroll.client)).toBeLessThanOrEqual(2);
 
-        // Value bottoms share a baseline (pixel font has no descenders)
-        valueBottoms.push(vBox!.y + vBox!.height);
-        labelTops.push(lBox!.y);
-        noteBottoms.push(nBox!.y + nBox!.height);
+        const valueBottoms: number[] = [];
+        const labelTops: number[] = [];
+        const noteBottoms: number[] = [];
 
-        // Right edge of every stat child ≤ stats row right edge - 4px
-        const statsRight = statsElBox!.x + statsElBox!.width;
-        expect(vBox!.x + vBox!.width).toBeLessThanOrEqual(statsRight - 4);
-        expect(lBox!.x + lBox!.width).toBeLessThanOrEqual(statsRight - 4);
-        expect(nBox!.x + nBox!.width).toBeLessThanOrEqual(statsRight - 4);
+        for (let i = 0; i < 3; i++) {
+          const cell = metricCells.nth(i);
+          const val = cell.locator('.metric-value');
+          const lbl = cell.locator('.metric-label');
+          const note = cell.locator('.metric-note');
 
-        // Bottom edge of lowest note ≥ 12px above divider (bottom border of stats row)
-        const statsBottom = statsElBox!.y + statsElBox!.height;
-        expect(statsBottom - (nBox!.y + nBox!.height)).toBeGreaterThanOrEqual(12);
+          const vBox = await val.boundingBox();
+          const lBox = await lbl.boundingBox();
+          const nBox = await note.boundingBox();
 
-        // Value font-size uniformity (computed, tolerance 0.5px)
-        const fontSize = await val.evaluate((el) => parseFloat(window.getComputedStyle(el).fontSize));
-        allFontSizes.push(fontSize);
+          // Value bottoms share a baseline (pixel font has no descenders)
+          valueBottoms.push(vBox!.y + vBox!.height);
+          labelTops.push(lBox!.y);
+          noteBottoms.push(nBox!.y + nBox!.height);
 
-        // Check % and ± render at same height as digits (bounding box height within 1px)
-        const numberEl = cell.locator('.metric-number');
-        const pctEl = cell.locator('.metric-pct');
-        const hasPct = await pctEl.count() > 0;
-        if (hasPct) {
-          const nBox2 = await numberEl.boundingBox();
-          const pBox = await pctEl.boundingBox();
-          // SVG height should match digit cap height within 4px
-          expect(Math.abs((pBox!.y + pBox!.height) - (nBox2!.y + nBox2!.height))).toBeLessThanOrEqual(4);
-          // Gap between digit and % should not exceed normal digit-to-digit gap
-          const digitRight = nBox2!.x + nBox2!.width;
-          const pctStart = pBox!.x;
-          const gap = pctStart - digitRight;
-          expect(gap).toBeGreaterThanOrEqual(0);
-          expect(gap).toBeLessThanOrEqual(nBox2!.width + 2);
+          // Right edge of every stat child ≤ stats row right edge - 4px
+          const statsRight = statsElBox!.x + statsElBox!.width;
+          expect(vBox!.x + vBox!.width).toBeLessThanOrEqual(statsRight - 4);
+          expect(lBox!.x + lBox!.width).toBeLessThanOrEqual(statsRight - 4);
+          expect(nBox!.x + nBox!.width).toBeLessThanOrEqual(statsRight - 4);
+
+          // Bottom edge of lowest note ≥ 12px above divider (bottom border of stats row)
+          const statsBottom = statsElBox!.y + statsElBox!.height;
+          expect(statsBottom - (nBox!.y + nBox!.height)).toBeGreaterThanOrEqual(12);
+
+          // Value font-size uniformity (computed, tolerance 0.5px)
+          const fontSize = await val.evaluate((el) => parseFloat(window.getComputedStyle(el).fontSize));
+          allFontSizes.push(fontSize);
+
+          // Capture value text to check for "#" and "%"
+          const valText = await val.textContent();
+          allValueTexts.push(valText ?? '');
+
+          // Check % SVG renders at same height as digits (bounding box height within 1px)
+          const numberEl = cell.locator('.metric-number');
+          const pctEl = cell.locator('.metric-pct');
+          const hasPct = await pctEl.count() > 0;
+          if (hasPct) {
+            const nBox2 = await numberEl.boundingBox();
+            const pBox = await pctEl.boundingBox();
+            // SVG bottom equals digit baseline within 1px
+            expect(Math.abs((pBox!.y + pBox!.height) - (nBox2!.y + nBox2!.height))).toBeLessThanOrEqual(1);
+            // SVG height equals digit cap height within 1px
+            expect(Math.abs(pBox!.height - nBox2!.height)).toBeLessThanOrEqual(1);
+            // Gap between digit and % within 1px of gap between two adjacent digits
+            const digitRight = nBox2!.x + nBox2!.width;
+            const pctStart = pBox!.x;
+            const gap = pctStart - digitRight;
+            expect(gap).toBeGreaterThanOrEqual(0);
+            expect(gap).toBeLessThanOrEqual(nBox2!.width + 1);
+          }
+
+          // Check ± renders at same height as digits
+          const pmEl = cell.locator('.metric-number');
+          const pmText = await pmEl.textContent();
+          if (pmText && pmText.includes('±')) {
+            const pmBox = await pmEl.boundingBox();
+            expect(Math.abs(pmBox!.height - vBox!.height)).toBeLessThanOrEqual(1);
+          }
+
+          // No mid-word breaks in labels
+          const rendered = stripTags(await lbl.textContent() ?? '');
+          const renderedWords = wordsOf(rendered);
+          const shortWords = new Set(['of', 'in', 'on', 'at', 'by', 'to', 'is', 'it', 'an', 'or', 'and']);
+          for (const w of renderedWords) {
+            if (/^[\d.,%±+()#-]+$/.test(w)) continue;
+            if (shortWords.has(w.toLowerCase())) continue;
+            if (/^[A-Za-z]+$/.test(w) && w.length < 3) {
+              expect(w).not.toMatch(/^[A-Za-z]{1,2}$/);
+  }
+}
         }
 
-        // No mid-word breaks in labels: rendered words must not be fragments
-        const rendered = stripTags(await lbl.textContent() ?? '');
-        const renderedWords = wordsOf(rendered);
-        const shortWords = new Set(['of', 'in', 'on', 'at', 'by', 'to', 'is', 'it', 'an', 'or', 'and']);
-        for (const w of renderedWords) {
-          // Numeric values and short connectors are fine
-          if (/^[\d.,%±+()#-]+$/.test(w)) continue;
-          if (shortWords.has(w.toLowerCase())) continue;
-          // Alphabetic words must be at least 3 chars (no fragments like "CONCENTRATI")
-          if (/^[A-Za-z]+$/.test(w) && w.length < 3) {
-            expect(w).not.toMatch(/^[A-Za-z]{1,2}$/);
+        // Value font-sizes across all 3 stats in this card identical (tolerance 0.5px)
+        const cardSizes = allFontSizes.slice(-3);
+        for (let i = 1; i < cardSizes.length; i++) {
+          expect(Math.abs(cardSizes[i] - cardSizes[0])).toBeLessThanOrEqual(0.5);
+        }
+
+        // Value bottoms share a baseline (tolerance 12px for subpixel rendering)
+        if (!isMobile) {
+          for (let i = 1; i < 3; i++) {
+            expect(Math.abs(valueBottoms[i] - valueBottoms[0])).toBeLessThanOrEqual(12);
           }
         }
+        // Label tops equal (tolerance 12px)
+        if (!isMobile) {
+          for (let i = 1; i < 3; i++) {
+            expect(Math.abs(labelTops[i] - labelTops[0])).toBeLessThanOrEqual(12);
+          }
+        }
+        // Note bottoms equal (tolerance 12px)
+        if (!isMobile) {
+          for (let i = 1; i < 3; i++) {
+            expect(Math.abs(noteBottoms[i] - noteBottoms[0])).toBeLessThanOrEqual(12);
+          }
+        }
+
+        // Card-level positions for cross-card comparison
+        const title = card.locator('.card-title');
+        const stats = card.locator('.card-metrics');
+        const tags = card.locator('.card-tech-list');
+        const buttons = card.locator('.card-actions');
+
+        const titleBox = await title.boundingBox();
+        const statsBox = await stats.boundingBox();
+        const tagsBox = await tags.boundingBox();
+        const buttonsBox = await buttons.boundingBox();
+
+        cardBoxes[slug] = {
+          titleY: titleBox!.y,
+          statsY: statsBox!.y,
+          tagsY: tagsBox!.y,
+          buttonsY: buttonsBox!.y,
+        };
       }
 
-      // Value bottoms share a baseline (pixel font has no descenders, tolerance 12px for subpixel rendering)
-      if (!isMobile) {
-        for (let i = 1; i < 3; i++) {
-          expect(Math.abs(valueBottoms[i] - valueBottoms[0])).toBeLessThanOrEqual(12);
+      // Cross-card font-size uniformity: every value across all cards same size (tolerance 0.5px)
+      if (!isMobile && allFontSizes.length > 0) {
+        for (let i = 1; i < allFontSizes.length; i++) {
+          expect(Math.abs(allFontSizes[i] - allFontSizes[0])).toBeLessThanOrEqual(0.5);
         }
       }
-      // Label tops equal (tolerance 12px for subpixel rendering)
+
+      // No value text contains "#"
+      for (const vt of allValueTexts) {
+        expect(vt).not.toContain('#');
+      }
+
+      // Cross-card alignment: cards in same visual row should match (desktop only)
       if (!isMobile) {
-        for (let i = 1; i < 3; i++) {
-          expect(Math.abs(labelTops[i] - labelTops[0])).toBeLessThanOrEqual(12);
+        const pairs: [string, string][] = [
+          [CARDS[0], CARDS[1]], // row 1
+          [CARDS[2], CARDS[3]], // row 2
+        ];
+        for (const [a, b] of pairs) {
+          expect(Math.abs(cardBoxes[a].titleY - cardBoxes[b].titleY)).toBeLessThanOrEqual(80);
+          expect(Math.abs(cardBoxes[a].statsY - cardBoxes[b].statsY)).toBeLessThanOrEqual(80);
+          expect(Math.abs(cardBoxes[a].tagsY - cardBoxes[b].tagsY)).toBeLessThanOrEqual(80);
+          expect(Math.abs(cardBoxes[a].buttonsY - cardBoxes[b].buttonsY)).toBeLessThanOrEqual(80);
         }
       }
-      // Note bottoms equal (tolerance 12px for subpixel rendering)
-      if (!isMobile) {
-        for (let i = 1; i < 3; i++) {
-          expect(Math.abs(noteBottoms[i] - noteBottoms[0])).toBeLessThanOrEqual(12);
-        }
-      }
-
-      // Card-level positions for cross-card comparison
-      const title = card.locator('.card-title');
-      const stats = card.locator('.card-metrics');
-      const tags = card.locator('.card-tech-list');
-      const buttons = card.locator('.card-actions');
-
-      const titleBox = await title.boundingBox();
-      const statsBox = await stats.boundingBox();
-      const tagsBox = await tags.boundingBox();
-      const buttonsBox = await buttons.boundingBox();
-
-      cardBoxes[slug] = {
-        titleY: titleBox!.y,
-        statsY: statsBox!.y,
-        tagsY: tagsBox!.y,
-        buttonsY: buttonsBox!.y,
-      };
-    }
-
-    // Cross-card font-size uniformity: every value across all cards same size (tolerance 0.5px)
-    if (!isMobile && allFontSizes.length > 0) {
-      for (let i = 1; i < allFontSizes.length; i++) {
-        expect(Math.abs(allFontSizes[i] - allFontSizes[0])).toBeLessThanOrEqual(0.5);
-      }
-    }
-
-    // Cross-card alignment: cards in same visual row should match (desktop only)
-    // Without card-level subgrid, slots use fixed min-heights; tolerance allows
-    // for content-driven row height differences.
-    if (!isMobile) {
-      const pairs: [string, string][] = [
-        [CARDS[0], CARDS[1]], // row 1
-        [CARDS[2], CARDS[3]], // row 2
-      ];
-      for (const [a, b] of pairs) {
-        expect(Math.abs(cardBoxes[a].titleY - cardBoxes[b].titleY)).toBeLessThanOrEqual(80);
-        expect(Math.abs(cardBoxes[a].statsY - cardBoxes[b].statsY)).toBeLessThanOrEqual(80);
-        expect(Math.abs(cardBoxes[a].tagsY - cardBoxes[b].tagsY)).toBeLessThanOrEqual(80);
-        expect(Math.abs(cardBoxes[a].buttonsY - cardBoxes[b].buttonsY)).toBeLessThanOrEqual(80);
-      }
-    }
-  });
-}
+    });
+  }

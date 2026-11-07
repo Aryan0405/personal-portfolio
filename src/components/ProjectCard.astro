@@ -37,12 +37,24 @@ function formatValue(value: string) {
             <span class="metric-value">
               {pct ? (
                 <>
-                  <span class="metric-number">{number}</span>
-                  <svg class="metric-pct" viewBox="0 0 7 7" width="0.8em" height="0.8em" fill="currentColor" style="vertical-align: -0.05em; display: inline-block;">
-                    <rect x="1" y="1" width="1" height="1" />
-                    <rect x="5" y="5" width="1" height="1" />
-                    <path d="M 2 3.5 L 5 3.5" stroke="currentColor" stroke-width="1" fill="none" />
-                  </svg>
+                <span class="metric-number">{number}</span>
+                <svg class="metric-pct" viewBox="0 0 5 7" width="calc(1em * 5 / 7)" height="1em" fill="currentColor" shape-rendering="crispEdges" style="display: inline-block; vertical-align: baseline;">
+                  <rect x="0" y="0" width="1" height="1" />
+                  <rect x="1" y="0" width="1" height="1" />
+                  <rect x="4" y="0" width="1" height="1" />
+                  <rect x="0" y="1" width="1" height="1" />
+                  <rect x="1" y="1" width="1" height="1" />
+                  <rect x="3" y="1" width="1" height="1" />
+                  <rect x="3" y="2" width="1" height="1" />
+                  <rect x="2" y="3" width="1" height="1" />
+                  <rect x="1" y="4" width="1" height="1" />
+                  <rect x="1" y="5" width="1" height="1" />
+                  <rect x="3" y="5" width="1" height="1" />
+                  <rect x="4" y="5" width="1" height="1" />
+                  <rect x="0" y="6" width="1" height="1" />
+                  <rect x="3" y="6" width="1" height="1" />
+                  <rect x="4" y="6" width="1" height="1" />
+                </svg>
                 </>
               ) : (
                 <span class="metric-number">{number}</span>
@@ -160,6 +172,7 @@ function formatValue(value: string) {
   .metric-cell {
     min-width: 0;
     padding-inline-end: 4px;
+    container-type: inline-size;
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -190,28 +203,28 @@ function formatValue(value: string) {
 
   .metric-value {
     align-self: baseline;
-    display: flex;
+    display: inline-flex;
     gap: 2px;
     align-items: baseline;
     white-space: nowrap;
     min-width: 0;
+    line-height: 1;
+    font-size: clamp(12px, calc(100cqi / 5), 16px);
   }
 
   .metric-number {
     font-family: var(--font-display);
-    font-size: clamp(12px, calc(100cqi / 7), 16px);
     font-weight: 700;
     color: var(--accent-yellow);
     letter-spacing: 0.04em;
-    line-height: 1.1;
+    line-height: 0.875;
     white-space: nowrap;
   }
 
   .metric-pct {
-    width: 1em;
-    height: 1em;
-    vertical-align: middle;
-    margin-left: 2px;
+    height: 0.875em;
+    width: calc(0.875em * 5 / 7);
+    vertical-align: baseline;
   }
 
   .metric-label {
