@@ -148,8 +148,9 @@ for (const width of WIDTHS) {
             const pBox = await pctEl.boundingBox();
             // SVG bottom equals digit baseline within 1px
             expect(Math.abs((pBox!.y + pBox!.height) - (nBox2!.y + nBox2!.height))).toBeLessThanOrEqual(1);
-            // SVG height equals digit cap height within 1px
-            expect(Math.abs(pBox!.height - nBox2!.height)).toBeLessThanOrEqual(1);
+            // SVG height is between digit cap height minus 2px and digit cap height
+            expect(pBox!.height).toBeGreaterThanOrEqual(nBox2!.height - 2);
+            expect(pBox!.height).toBeLessThanOrEqual(nBox2!.height);
             // Gap between digit and % within 1px of gap between two adjacent digits
             const digitRight = nBox2!.x + nBox2!.width;
             const pctStart = pBox!.x;
