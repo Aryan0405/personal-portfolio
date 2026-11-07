@@ -8,14 +8,14 @@ interface Props {
 
 const { project } = Astro.props;
 
-// Shared value formatter: splits the leading number from any trailing unit text.
-// Units are folded into the label text by the data layer; this only isolates
-// the bare number and a trailing "%" so the percent glyph can be rendered in
-// the body monospace font instead of the pixel display font.
+// Shared value formatter: isolates the bare number and a trailing "%" so the
+// percent glyph can be rendered inline in the pixel display font, same size
+// and color as the digits. No per-value sizing — every value uses one shared
+// clamp() driven by container width.
 function formatValue(value: string) {
   const m = /^([±+\-]?[\d.,]+)\s*(.*)$/.exec(value.trim());
-  if (!m) return { number: value, unit: '' };
-  return { number: m[1], unit: m[2].trim() };
+  if (!m) return { number: value, pct: false };
+  return { number: m[1], pct: m[2].trim() === '%' };
 }
 ---
 
@@ -31,15 +31,22 @@ function formatValue(value: string) {
 
     <div class="card-metrics">
       {project.metrics.map((m) => {
-        const { number, unit } = formatValue(m.value);
-        const isPct = unit === '%';
+        const { number, pct } = formatValue(m.value);
         return (
           <div class="metric-cell">
             <span class="metric-value">
-              <span class="value-container">
-                <span class="metric-number" style={{ '--chars': number.length }}>{number}</span>
-              </span>
-              {isPct ? <span class="metric-pct">%</span> : null}
+              {pct ? (
+                <>
+                  <span class="metric-number">{number}</span>
+                  <svg class="metric-pct" viewBox="0 0 7 7" width="0.8em" height="0.8em" fill="currentColor" style="vertical-align: -0.05em; display: inline-block;">
+                    <rect x="1" y="1" width="1" height="1" />
+                    <rect x="5" y="5" width="1" height="1" />
+                    <path d="M 2 3.5 L 5 3.5" stroke="currentColor" stroke-width="1" fill="none" />
+                  </svg>
+                </>
+              ) : (
+                <span class="metric-number">{number}</span>
+              )}
             </span>
             <span class="metric-label">{m.label}</span>
             <span class="metric-note">{m.context}</span>
@@ -184,21 +191,15 @@ function formatValue(value: string) {
   .metric-value {
     align-self: baseline;
     display: flex;
-    gap: 4px;
+    gap: 2px;
     align-items: baseline;
     white-space: nowrap;
     min-width: 0;
   }
 
-  .value-container {
-    container-type: inline-size;
-    width: 100%;
-    min-width: 0;
-  }
-
   .metric-number {
     font-family: var(--font-display);
-    font-size: min(24px, calc(100cqi / (var(--chars) * 1.1)));
+    font-size: clamp(12px, calc(100cqi / 7), 16px);
     font-weight: 700;
     color: var(--accent-yellow);
     letter-spacing: 0.04em;
@@ -207,13 +208,10 @@ function formatValue(value: string) {
   }
 
   .metric-pct {
-    font-family: var(--font-body);
-    font-size: 11px;
-    font-weight: 400;
-    color: var(--text-muted);
-    letter-spacing: 0.02em;
-    line-height: 1.1;
-    white-space: nowrap;
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    margin-left: 2px;
   }
 
   .metric-label {

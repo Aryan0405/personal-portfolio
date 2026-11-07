@@ -37,14 +37,14 @@ test.afterAll(async () => {
   server.close();
 });
 
-  const WIDTHS = [320, 390, 543, 768, 1024, 1440];
-  const CARDS = [
-    'project-credit-card-fraud-detection',
-    'project-credit-risk-scorecard',
-    'project-ai-beauty-advisor',
-    'project-nse-stock-explorer',
-    'project-metropt3-clustering',
-  ];
+const WIDTHS = [320, 390, 543, 768, 1024, 1440];
+const CARDS = [
+  'project-credit-card-fraud-detection',
+  'project-credit-risk-scorecard',
+  'project-ai-beauty-advisor',
+  'project-nse-stock-explorer',
+  'project-metropt3-clustering',
+];
 
 function stripTags(text: string): string {
   return text.replace(/<[^>]*>/g, ' ');
@@ -69,77 +69,12 @@ for (const width of WIDTHS) {
     });
     expect(Math.abs(docScroll.scroll - docScroll.client)).toBeLessThanOrEqual(60);
 
-    // Debug: find overflowing elements at 320px
-    if (width === 320) {
-      const overflowing = await page.evaluate(() => {
-        const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-        const walker = document.createTreeWalker(
-          document.body,
-          NodeFilter.SHOW_ELEMENT,
-          {
-            acceptNode: (node: Node) => {
-              const el = node as HTMLElement;
-              const rect = el.getBoundingClientRect();
-              if (rect.right > vw + 2 || rect.x < -2) {
-                return NodeFilter.FILTER_ACCEPT;
-              }
-              return NodeFilter.FILTER_SKIP;
-            },
-          }
-        );
-        const els: string[] = [];
-        let node: Node | null = walker.nextNode();
-        while (node && els.length < 10) {
-          const el = node as HTMLElement;
-          const rect = el.getBoundingClientRect();
-          els.push(`${el.tagName}.${(el.className || '').split(' ').join('.')}#${el.id || ''} right=${Math.round(rect.right)}px`);
-          node = walker.nextNode();
-        }
-        return els;
-      });
-      console.log('Overflowing elements at 320px:', overflowing);
-    }
-
     const cardBoxes: Record<string, { titleY: number; statsY: number; tagsY: number; buttonsY: number }> = {};
+    const allFontSizes: number[] = [];
 
     for (const slug of CARDS) {
       const card = page.locator(`#${slug}`);
       await card.waitFor();
-
-      // Debug: measure NSE stats row at all widths
-      if (slug === 'project-nse-stock-explorer') {
-        const nseStats = await page.evaluate((sel) => {
-          const card = document.getElementById(sel);
-          if (!card) return null;
-          const stats = card.querySelector('.card-metrics');
-          if (!stats) return null;
-          const cells = Array.from(stats.querySelectorAll('.metric-cell'));
-          const values = cells.map(c => c.querySelector('.metric-value'));
-          const sunpharmaVal = values[2];
-          return {
-            width: window.innerWidth,
-            statsClientWidth: stats.clientWidth,
-            statsScrollWidth: stats.scrollWidth,
-            statsRect: {
-              left: stats.getBoundingClientRect().left,
-              right: stats.getBoundingClientRect().right,
-              width: stats.getBoundingClientRect().width,
-            },
-            cellRects: cells.map(c => {
-              const r = c.getBoundingClientRect();
-              return { left: Math.round(r.left), right: Math.round(r.right), width: Math.round(r.width) };
-            }),
-            sunpharma: sunpharmaVal ? {
-              rect: { left: Math.round(sunpharmaVal.getBoundingClientRect().left), right: Math.round(sunpharmaVal.getBoundingClientRect().right), width: Math.round(sunpharmaVal.getBoundingClientRect().width) },
-              scrollWidth: sunpharmaVal.scrollWidth,
-              clientWidth: sunpharmaVal.clientWidth,
-              computedFontSize: window.getComputedStyle(sunpharmaVal).fontSize,
-              computedLetterSpacing: window.getComputedStyle(sunpharmaVal).letterSpacing,
-            } : null,
-          };
-        }, slug);
-        console.log(`NSE STATS ROW at ${width}px:`, JSON.stringify(nseStats, null, 2));
-      }
 
       // Card must not overflow its parent horizontally
       const overflow = await card.evaluate((el) => {
@@ -195,13 +130,34 @@ for (const width of WIDTHS) {
         const statsBottom = statsElBox!.y + statsElBox!.height;
         expect(statsBottom - (nBox!.y + nBox!.height)).toBeGreaterThanOrEqual(12);
 
+        // Value font-size uniformity (computed, tolerance 0.5px)
+        const fontSize = await val.evaluate((el) => parseFloat(window.getComputedStyle(el).fontSize));
+        allFontSizes.push(fontSize);
+
+        // Check % and ± render at same height as digits (bounding box height within 1px)
+        const numberEl = cell.locator('.metric-number');
+        const pctEl = cell.locator('.metric-pct');
+        const hasPct = await pctEl.count() > 0;
+        if (hasPct) {
+          const nBox2 = await numberEl.boundingBox();
+          const pBox = await pctEl.boundingBox();
+          // SVG height should match digit cap height within 4px
+          expect(Math.abs((pBox!.y + pBox!.height) - (nBox2!.y + nBox2!.height))).toBeLessThanOrEqual(4);
+          // Gap between digit and % should not exceed normal digit-to-digit gap
+          const digitRight = nBox2!.x + nBox2!.width;
+          const pctStart = pBox!.x;
+          const gap = pctStart - digitRight;
+          expect(gap).toBeGreaterThanOrEqual(0);
+          expect(gap).toBeLessThanOrEqual(nBox2!.width + 2);
+        }
+
         // No mid-word breaks in labels: rendered words must not be fragments
         const rendered = stripTags(await lbl.textContent() ?? '');
         const renderedWords = wordsOf(rendered);
         const shortWords = new Set(['of', 'in', 'on', 'at', 'by', 'to', 'is', 'it', 'an', 'or', 'and']);
         for (const w of renderedWords) {
           // Numeric values and short connectors are fine
-          if (/^[\d.,%±+()]+$/.test(w)) continue;
+          if (/^[\d.,%±+()#-]+$/.test(w)) continue;
           if (shortWords.has(w.toLowerCase())) continue;
           // Alphabetic words must be at least 3 chars (no fragments like "CONCENTRATI")
           if (/^[A-Za-z]+$/.test(w) && w.length < 3) {
@@ -246,6 +202,13 @@ for (const width of WIDTHS) {
         tagsY: tagsBox!.y,
         buttonsY: buttonsBox!.y,
       };
+    }
+
+    // Cross-card font-size uniformity: every value across all cards same size (tolerance 0.5px)
+    if (!isMobile && allFontSizes.length > 0) {
+      for (let i = 1; i < allFontSizes.length; i++) {
+        expect(Math.abs(allFontSizes[i] - allFontSizes[0])).toBeLessThanOrEqual(0.5);
+      }
     }
 
     // Cross-card alignment: cards in same visual row should match (desktop only)

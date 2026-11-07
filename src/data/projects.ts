@@ -182,7 +182,7 @@ export const projects: Project[] = [
     metrics: [
       { label: 'DAYS OF DATA', value: '1,480', context: '2019 to 2024, 10 stocks plus NIFTY50' },
       { label: 'PEAK KURTOSIS', value: '20.29', context: 'ADANIENT, skew -1.14, -77% drawdown' },
-      { label: 'TOP RISK-ADJUSTED', value: 'SUNPHARMA', context: 'Best Sharpe, shallowest drawdown' }
+      { label: 'SUNPHARMA RANK', value: '#1', context: 'Best Sharpe, shallowest drawdown' }
     ],
     repoUrl: 'https://github.com/Aryan0405/nse-stock-explorer',
     liveUrl: 'https://nse-stock-explorer.streamlit.app/',
