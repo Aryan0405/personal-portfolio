@@ -92,7 +92,7 @@ export const projects: Project[] = [
     technologies: ['Python', 'WoE', 'Logistic Regression', 'XGBoost', 'SHAP', 'OptBinning', 'Scikit-learn'],
     metrics: [
       { label: 'Scorecard AUC', value: '0.72', context: '5-feature WoE logistic regression baseline model' },
-      { label: 'Algorithmic Lift', value: '+0.01', context: 'Pure tree algorithmic gain with identical 5 features (0.7282 AUC)' },
+      { label: 'Algorithmic Lift', value: '+0.01', context: 'Tree model, same 5 features (0.7282 AUC)' },
       { label: 'Bureau Redundancy', value: '+0.001', context: 'Negligible gain from 7 external bureau features' }
     ],
     repoUrl: 'https://github.com/Aryan0405/credit_scorecard',
