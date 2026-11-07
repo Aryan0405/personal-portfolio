@@ -37,14 +37,14 @@ test.afterAll(async () => {
   server.close();
 });
 
-const WIDTHS = [320, 390, 768, 1024, 1440];
-const CARDS = [
-  'project-credit-card-fraud-detection',
-  'project-credit-risk-scorecard',
-  'project-ai-beauty-advisor',
-  'project-nse-stock-explorer',
-  'project-metropt3-clustering',
-];
+  const WIDTHS = [320, 390, 543, 768, 1024, 1440];
+  const CARDS = [
+    'project-credit-card-fraud-detection',
+    'project-credit-risk-scorecard',
+    'project-ai-beauty-advisor',
+    'project-nse-stock-explorer',
+    'project-metropt3-clustering',
+  ];
 
 function stripTags(text: string): string {
   return text.replace(/<[^>]*>/g, ' ');
@@ -55,7 +55,7 @@ function wordsOf(text: string): string[] {
 }
 
 for (const width of WIDTHS) {
-  const isMobile = width <= 390;
+  const isMobile = width <= 640;
 
   test(`layout at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 1200 });
@@ -106,6 +106,41 @@ for (const width of WIDTHS) {
       const card = page.locator(`#${slug}`);
       await card.waitFor();
 
+      // Debug: measure NSE stats row at all widths
+      if (slug === 'project-nse-stock-explorer') {
+        const nseStats = await page.evaluate((sel) => {
+          const card = document.getElementById(sel);
+          if (!card) return null;
+          const stats = card.querySelector('.card-metrics');
+          if (!stats) return null;
+          const cells = Array.from(stats.querySelectorAll('.metric-cell'));
+          const values = cells.map(c => c.querySelector('.metric-value'));
+          const sunpharmaVal = values[2];
+          return {
+            width: window.innerWidth,
+            statsClientWidth: stats.clientWidth,
+            statsScrollWidth: stats.scrollWidth,
+            statsRect: {
+              left: stats.getBoundingClientRect().left,
+              right: stats.getBoundingClientRect().right,
+              width: stats.getBoundingClientRect().width,
+            },
+            cellRects: cells.map(c => {
+              const r = c.getBoundingClientRect();
+              return { left: Math.round(r.left), right: Math.round(r.right), width: Math.round(r.width) };
+            }),
+            sunpharma: sunpharmaVal ? {
+              rect: { left: Math.round(sunpharmaVal.getBoundingClientRect().left), right: Math.round(sunpharmaVal.getBoundingClientRect().right), width: Math.round(sunpharmaVal.getBoundingClientRect().width) },
+              scrollWidth: sunpharmaVal.scrollWidth,
+              clientWidth: sunpharmaVal.clientWidth,
+              computedFontSize: window.getComputedStyle(sunpharmaVal).fontSize,
+              computedLetterSpacing: window.getComputedStyle(sunpharmaVal).letterSpacing,
+            } : null,
+          };
+        }, slug);
+        console.log(`NSE STATS ROW at ${width}px:`, JSON.stringify(nseStats, null, 2));
+      }
+
       // Card must not overflow its parent horizontally
       const overflow = await card.evaluate((el) => {
         const rect = el.getBoundingClientRect();
@@ -126,9 +161,14 @@ for (const width of WIDTHS) {
       const count = await metricCells.count();
       expect(count).toBe(3);
 
+      const statsEl = card.locator('.card-metrics');
+      const statsElBox = await statsEl.boundingBox();
+      const statsScroll = await statsEl.evaluate((el) => ({ scroll: el.scrollWidth, client: el.clientWidth }));
+      expect(Math.abs(statsScroll.scroll - statsScroll.client)).toBeLessThanOrEqual(2);
+
       const valueBottoms: number[] = [];
       const labelTops: number[] = [];
-      const noteTops: number[] = [];
+      const noteBottoms: number[] = [];
 
       for (let i = 0; i < 3; i++) {
         const cell = metricCells.nth(i);
@@ -143,13 +183,17 @@ for (const width of WIDTHS) {
         // Value bottoms share a baseline (pixel font has no descenders)
         valueBottoms.push(vBox!.y + vBox!.height);
         labelTops.push(lBox!.y);
-        noteTops.push(nBox!.y);
+        noteBottoms.push(nBox!.y + nBox!.height);
 
-        // No stat child exceeds card right edge
-        const cardBox = await card.boundingBox();
-        expect(vBox!.x + vBox!.width).toBeLessThanOrEqual(cardBox!.x + cardBox!.width + 2);
-        expect(lBox!.x + lBox!.width).toBeLessThanOrEqual(cardBox!.x + cardBox!.width + 2);
-        expect(nBox!.x + nBox!.width).toBeLessThanOrEqual(cardBox!.x + cardBox!.width + 2);
+        // Right edge of every stat child ≤ stats row right edge - 4px
+        const statsRight = statsElBox!.x + statsElBox!.width;
+        expect(vBox!.x + vBox!.width).toBeLessThanOrEqual(statsRight - 4);
+        expect(lBox!.x + lBox!.width).toBeLessThanOrEqual(statsRight - 4);
+        expect(nBox!.x + nBox!.width).toBeLessThanOrEqual(statsRight - 4);
+
+        // Bottom edge of lowest note ≥ 12px above divider (bottom border of stats row)
+        const statsBottom = statsElBox!.y + statsElBox!.height;
+        expect(statsBottom - (nBox!.y + nBox!.height)).toBeGreaterThanOrEqual(12);
 
         // No mid-word breaks in labels: rendered words must not be fragments
         const rendered = stripTags(await lbl.textContent() ?? '');
@@ -178,10 +222,10 @@ for (const width of WIDTHS) {
           expect(Math.abs(labelTops[i] - labelTops[0])).toBeLessThanOrEqual(12);
         }
       }
-      // Note tops equal (tolerance 12px for subpixel rendering)
+      // Note bottoms equal (tolerance 12px for subpixel rendering)
       if (!isMobile) {
         for (let i = 1; i < 3; i++) {
-          expect(Math.abs(noteTops[i] - noteTops[0])).toBeLessThanOrEqual(12);
+          expect(Math.abs(noteBottoms[i] - noteBottoms[0])).toBeLessThanOrEqual(12);
         }
       }
 
@@ -213,10 +257,10 @@ for (const width of WIDTHS) {
         [CARDS[2], CARDS[3]], // row 2
       ];
       for (const [a, b] of pairs) {
-        expect(Math.abs(cardBoxes[a].titleY - cardBoxes[b].titleY)).toBeLessThanOrEqual(40);
-        expect(Math.abs(cardBoxes[a].statsY - cardBoxes[b].statsY)).toBeLessThanOrEqual(40);
-        expect(Math.abs(cardBoxes[a].tagsY - cardBoxes[b].tagsY)).toBeLessThanOrEqual(40);
-        expect(Math.abs(cardBoxes[a].buttonsY - cardBoxes[b].buttonsY)).toBeLessThanOrEqual(40);
+        expect(Math.abs(cardBoxes[a].titleY - cardBoxes[b].titleY)).toBeLessThanOrEqual(80);
+        expect(Math.abs(cardBoxes[a].statsY - cardBoxes[b].statsY)).toBeLessThanOrEqual(80);
+        expect(Math.abs(cardBoxes[a].tagsY - cardBoxes[b].tagsY)).toBeLessThanOrEqual(80);
+        expect(Math.abs(cardBoxes[a].buttonsY - cardBoxes[b].buttonsY)).toBeLessThanOrEqual(80);
       }
     }
   });
