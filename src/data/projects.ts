@@ -47,9 +47,9 @@ export const projects: Project[] = [
     summary: 'A complete end-to-end recommendation system built on a 1,472-item cosmetics dataset. Users describe skin concerns in plain language; the FastAPI backend embeds queries, performs cosine search in FAISS IndexFlatIP, applies hybrid re-ranking, looks up pre-mined Apriori routine bundles, and generates grounded per-product explanations using Gemini 2.5 Flash Lite in a single structured call.',
     technologies: ['FastAPI', 'React', 'FAISS', 'Gemini', 'Apriori', 'Redis', 'SQLite', 'Docker'],
     metrics: [
-      { label: 'Retrieval Latency', value: '13.0 ms', context: 'P50 9.5 ms vs 150 ms target' },
-      { label: 'Precision@5', value: '66.0%', context: 'Category + skin-type, 20 test queries' },
-      { label: 'Catalog Size', value: '1,472 items', context: 'Indexed formulations with embeddings' }
+      { label: 'P95 LATENCY (MS)', value: '13.0', context: 'P50 9.5 ms vs 150 ms target, warm cache' },
+      { label: 'PRECISION@5', value: '66.0%', context: 'Category and skin type, 20 test queries' },
+      { label: 'CATALOG ITEMS', value: '1,472', context: 'Skincare formulations with embeddings' }
     ],
     repoUrl: 'https://github.com/Aryan0405/ai-beauty-advisor',
     hasInteractiveExhibit: true,
@@ -91,9 +91,9 @@ export const projects: Project[] = [
     summary: 'A production credit risk analysis evaluating regulatory trade-offs between an explainable Weight of Evidence (WoE) Logistic Regression scorecard and non-linear XGBoost challengers. Demonstrates why marginal AUC lifts (+0.0106) do not justify secondary pipeline complexity in regulated banking, and uncovers the WoE risk ceiling for high-risk applicants using SHAP.',
     technologies: ['Python', 'WoE', 'Logistic Regression', 'XGBoost', 'SHAP', 'OptBinning', 'Scikit-learn'],
     metrics: [
-      { label: 'Scorecard AUC', value: '0.72', context: '5-feature WoE Logistic Regression baseline model' },
-      { label: 'Algorithmic Lift', value: '+0.01', context: 'Pure tree algorithmic gain with identical 5 features (0.7282 AUC)' },
-      { label: 'Bureau Redundancy', value: '±0.001', context: 'Negligible marginal gain adding 7 external bureau features' }
+      { label: 'SCORECARD AUC', value: '0.72', context: '5-feature WoE logistic regression baseline' },
+      { label: 'ALGORITHMIC LIFT', value: '+0.01', context: 'Tree model, same 5 features (0.7282 AUC)' },
+      { label: 'BUREAU REDUNDANCY', value: '±0.001', context: 'Negligible gain from 7 external bureau features' }
     ],
     repoUrl: 'https://github.com/Aryan0405/credit_scorecard',
     hasInteractiveExhibit: true,
@@ -135,9 +135,9 @@ export const projects: Project[] = [
     summary: 'A fraud detection system addressing extreme class imbalance (0.17% fraud) on the Kaggle ULB dataset. Uses scale_pos_weight class weighting instead of synthetic SMOTE sampling, benchmarks against FLAML AutoML, explains individual predictions with SHAP TreeExplainer, and categorizes false predictions into threshold-sensitive versus unseparable cases in an interactive Streamlit app.',
     technologies: ['Python', 'XGBoost', 'Logistic Regression', 'SHAP', 'Streamlit', 'FLAML', 'Scikit-learn'],
     metrics: [
-      { label: 'Main XGBoost PR-AUC', value: '0.79', context: 'Precision 0.80, Recall 0.76 on 56,746 test transactions' },
-      { label: 'FLAML PR-AUC', value: '0.82', context: 'AutoML benchmark achieving Precision 0.96, Recall 0.77' },
-      { label: 'False Alarm Rate', value: '0.03%', context: 'Only 18 false positives out of 56,746 test evaluations' }
+      { label: 'XGBOOST PR-AUC', value: '0.79', context: 'Precision 0.80, recall 0.76 on 56,746 test rows' },
+      { label: 'FLAML PR-AUC', value: '0.82', context: 'AutoML benchmark, precision 0.96, recall 0.77' },
+      { label: 'FALSE ALARM RATE', value: '0.03%', context: '18 false positives in 56,746 tests' }
     ],
     repoUrl: 'https://github.com/Aryan0405/credit-card-fraud-detection',
     liveUrl: 'https://credit-card-fraud-detection-aryan0405.streamlit.app/',
@@ -180,9 +180,9 @@ export const projects: Project[] = [
     summary: 'A deployed Streamlit application evaluating 1,480 trading days (2019-2024) of daily OHLCV data for 10 diversified National Stock Exchange equities against the NIFTY50 benchmark. Generates log returns distributions, rolling 21-day annualized volatility, peak-to-trough drawdowns, 63-day rolling Sharpe ratios, and stock correlation matrices.',
     technologies: ['Python', 'Streamlit', 'Pandas', 'YFinance', 'Plotly'],
     metrics: [
-      { label: 'Historical Horizon', value: '1,480 days', context: '2019–2024, 10 stocks + NIFTY50' },
-      { label: 'Peak Kurtosis', value: '20.29', context: 'ADANIENT skew -1.14, -77% drawdown' },
-      { label: 'Top Risk-Adjusted', value: 'SUNPHARMA', context: 'Consistent Sharpe, shallowest drawdown' }
+      { label: 'DAYS OF DATA', value: '1,480', context: '2019 to 2024, 10 stocks plus NIFTY50' },
+      { label: 'PEAK KURTOSIS', value: '20.29', context: 'ADANIENT, skew -1.14, -77% drawdown' },
+      { label: 'TOP RISK-ADJUSTED', value: 'SUNPHARMA', context: 'Best Sharpe, shallowest drawdown' }
     ],
     repoUrl: 'https://github.com/Aryan0405/nse-stock-explorer',
     liveUrl: 'https://nse-stock-explorer.streamlit.app/',
@@ -225,9 +225,9 @@ export const projects: Project[] = [
     summary: 'An unsupervised investigation into where air compressor failures occur on a Metro do Porto train. Evaluates 1.5 million readings from 15 sensors across 7 months (February to August 2020), slicing data into 50,513 five-minute feature windows. Unsupervised K-Means clustering (K=3, Silhouette 0.43) proved that 985 of 992 failure windows (99.3%) concentrate into a single "Sustained High Load" operating mode.',
     technologies: ['Python', 'K-Means', 'Unsupervised Learning', 'PCA', 'Power BI', 'Streamlit'],
     metrics: [
-      { label: 'Failure Share', value: '99.3%', context: '985 of 992 failures in one mode' },
-      { label: 'High Load Share', value: '6.05%', context: '6.05% of 50,513 windows' },
-      { label: 'Cluster Quality', value: '0.43 silhouette', context: 'K=3: Idle, Cycling, High Load' }
+      { label: 'FAILURE SHARE', value: '99.3%', context: '985 of 992 failure windows in one mode' },
+      { label: 'HIGH LOAD SHARE', value: '6.05%', context: 'Of 50,513 total windows' },
+      { label: 'SILHOUETTE SCORE', value: '0.43', context: 'K=3: Idle, Cycling, High Load' }
     ],
     repoUrl: 'https://github.com/Aryan0405/MetroPT3-Clustering',
     liveUrl: 'https://metropt3-clustering.streamlit.app/',

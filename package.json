@@ -27,6 +27,8 @@
     "typescript": "^6.0.3"
   },
   "devDependencies": {
+    "@playwright/test": "^1.65.0",
+    "@types/node": "^26.6.6",
     "@types/three": "^0.128.0"
   }
 }

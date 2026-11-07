@@ -7,7 +7,16 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' ');
+
+// Shared value formatter: splits the leading number from any trailing unit text.
+// Units are folded into the label text by the data layer; this only isolates
+// the bare number and a trailing "%" so the percent glyph can be rendered in
+// the body monospace font instead of the pixel display font.
+function formatValue(value: string) {
+  const m = /^([±+\-]?[\d.,]+)\s*(.*)$/.exec(value.trim());
+  if (!m) return { number: value, unit: '' };
+  return { number: m[1], unit: m[2].trim() };
+}
 ---
 
 <article class="project-card panel" id={`project-${project.slug}`} aria-label="Case study: {project.title}">
@@ -22,29 +31,16 @@ const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' '
 
     <div class="card-metrics">
       {project.metrics.map((m) => {
-        const v = m.value.trim();
-        const num = /^([±+\-]?[\d.,]+)\s*(.*)$/.exec(v);
-        if (num) {
-          const number = num[1];
-          const unit = num[2].trim();
-          return (
-            <div class="metric-cell">
-              <div class="m-val">
-                <span class="m-num">{number + (unit.startsWith('%') ? '%' : '')}</span>
-                {unit && !unit.startsWith('%') ? (
-                  <span class="m-unit">{unit}</span>
-                ) : null}
-              </div>
-              <span class="m-lbl">{m.label}</span>
-              <span class="m-ctx">{m.context}</span>
-            </div>
-          );
-        }
+        const { number, unit } = formatValue(m.value);
+        const isPct = unit === '%';
         return (
           <div class="metric-cell">
-            <span class="m-val m-text">{v}</span>
-            <span class="m-lbl">{m.label}</span>
-            <span class="m-ctx">{m.context}</span>
+            <span class="metric-value">
+              <span class="metric-number" style={{ '--chars': number.length }}>{number}</span>
+              {isPct ? <span class="metric-pct">%</span> : null}
+            </span>
+            <span class="metric-label">{m.label}</span>
+            <span class="metric-note">{m.context}</span>
           </div>
         );
       })}
@@ -63,7 +59,7 @@ const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' '
       <div class="external-links">
         {project.liveUrl ? (
           <>
-            <ExternalLinkButton href={project.liveUrl} label="Live Demo" className="btn btn--secondary btn--span" aria-label="Launch live demo for {project.title}" client:load />
+            <ExternalLinkButton href={project.liveUrl} label="Live Demo" className="btn btn--secondary" aria-label="Launch live demo for {project.title}" client:load />
             <ExternalLinkButton href={project.repoUrl} label="GitHub" className="btn btn--secondary" aria-label="View {project.title} repository on GitHub" client:load />
           </>
         ) : (
@@ -119,6 +115,7 @@ const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' '
     font-size: var(--text-sm);
     color: var(--color-ink-secondary);
     line-height: 1.55;
+    min-height: 4em;
   }
 
   .card-problem {
@@ -127,6 +124,7 @@ const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' '
     color: var(--text-muted);
     line-height: 1.55;
     font-style: italic;
+    min-height: 5em;
   }
 
   .card-metrics {
@@ -156,36 +154,39 @@ const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' '
   }
 
   @supports (grid-template-rows: subgrid) {
-    .metric-cell {
-      display: grid;
-      grid-template-rows: subgrid;
-      grid-row: span 3;
-      flex-direction: unset;
-      gap: unset;
-    }
+    @media (min-width: 641px) {
+      .metric-cell {
+        display: grid;
+        grid-template-rows: subgrid;
+        grid-row: span 3;
+      }
 
-    .metric-cell > :nth-child(1) {
-      grid-row: 1;
-    }
-    .metric-cell > :nth-child(2) {
-      grid-row: 2;
-    }
-    .metric-cell > :nth-child(3) {
-      grid-row: 3;
+      .metric-value {
+        grid-row: 1;
+        align-self: baseline;
+      }
+
+      .metric-label {
+        grid-row: 2;
+      }
+
+      .metric-note {
+        grid-row: 3;
+      }
     }
   }
 
-  .metric-cell .m-val {
-    align-self: end;
+  .metric-value {
+    align-self: baseline;
     display: flex;
-    flex-direction: row;
     gap: 4px;
     align-items: baseline;
+    white-space: nowrap;
   }
 
-  .m-num {
+  .metric-number {
     font-family: var(--font-display);
-    font-size: clamp(18px, 4vw, 24px);
+    font-size: min(24px, calc(100cqi / (var(--chars) * 0.75)));
     font-weight: 700;
     color: var(--accent-yellow);
     letter-spacing: 0.04em;
@@ -193,7 +194,7 @@ const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' '
     white-space: nowrap;
   }
 
-  .m-unit {
+  .metric-pct {
     font-family: var(--font-body);
     font-size: 11px;
     font-weight: 400;
@@ -203,18 +204,8 @@ const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' '
     white-space: nowrap;
   }
 
-  .m-val.m-text {
-    font-family: var(--font-display);
-    font-size: clamp(12px, calc(100cqi / 11), 16px);
-    font-weight: 700;
-    color: var(--accent-yellow);
-    letter-spacing: 0.02em;
-    line-height: 1.1;
-    white-space: nowrap;
-    text-transform: uppercase;
-  }
-
-  .m-lbl {
+  .metric-label {
+    grid-row: 2;
     font-family: var(--font-label);
     font-size: var(--text-xs);
     font-weight: 700;
@@ -228,11 +219,14 @@ const fileName = project.slug.toUpperCase().replace(/-/g, ' ').replace(/_/g, ' '
     hyphens: none;
   }
 
-  .m-ctx {
+  .metric-note {
+    grid-row: 3;
     font-family: var(--font-body);
     font-size: var(--text-xs);
     color: var(--color-ink-secondary);
     line-height: 1.4;
+    min-height: 4.2em;
+    overflow-wrap: anywhere;
   }
 
   .card-tech-list {
