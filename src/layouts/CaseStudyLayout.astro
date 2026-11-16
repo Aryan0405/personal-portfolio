@@ -284,12 +284,24 @@ const workPath = `C:\\WORK\\${project.slug.toUpperCase().replace(/-/g, '_')}`;
 
   .readout-cell {
     min-width: 0;
+    box-sizing: border-box;
+    /* Inline-size container so the big number can scale with the card
+       width via cqi units (same pattern as ProjectCard metric cells) */
+    container-type: inline-size;
     border: 2px solid var(--color-border);
     background: var(--bg-cell);
     padding: var(--space-4);
     display: flex;
     flex-direction: column;
     gap: 4px;
+  }
+
+  /* One full-width card per row on phones so the fixed-aspect pixel
+     numbers always have room; 3 columns from 560px up */
+  @media (max-width: 559px) {
+    .metrics-readout {
+      grid-template-columns: 1fr;
+    }
   }
 
   @supports (grid-template-rows: subgrid) {
@@ -320,7 +332,10 @@ const workPath = `C:\\WORK\\${project.slug.toUpperCase().replace(/-/g, '_')}`;
 
   .metric-num {
     font-family: var(--font-display);
-    font-size: 24px;
+    /* Scales with card width; caps at the desktop size so the value
+       (digits + pixel % glyph, which is em-sized and scales along)
+       can never exceed its card */
+    font-size: clamp(16px, calc(100cqi / 5), 24px);
     font-weight: 700;
     color: var(--accent-yellow);
     letter-spacing: 0.04em;
