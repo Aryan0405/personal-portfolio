@@ -90,3 +90,6 @@ build/Release/
 # Impeccable local configuration and generated command
 .impeccable/config.local.json
 .opencode/commands/impeccable.md
+
+test-results/
+brag-output-*/
