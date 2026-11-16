@@ -415,7 +415,8 @@ const workPath = `C:\\WORK\\${project.slug.toUpperCase().replace(/-/g, '_')}`;
   }
 
   .memo-callout {
-    margin: var(--space-4) 0;
+    margin: var(--space-6) 0 var(--space-8);
+    padding: var(--space-4) 20px;
   }
 
   .callout-label {
@@ -426,13 +427,20 @@ const workPath = `C:\\WORK\\${project.slug.toUpperCase().replace(/-/g, '_')}`;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     display: block;
-    margin-bottom: var(--space-1);
+    margin-bottom: var(--space-2);
   }
 
   .callout-text {
     color: var(--color-ink-primary);
     font-size: var(--text-sm);
     line-height: 1.6;
+    overflow-wrap: anywhere;
+  }
+
+  @media (max-width: 640px) {
+    .memo-callout {
+      padding: 14px 16px;
+    }
   }
 
   /* Exhibit panel */
