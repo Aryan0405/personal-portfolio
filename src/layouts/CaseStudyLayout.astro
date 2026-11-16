@@ -2,6 +2,7 @@
 import BaseLayout from './BaseLayout.astro';
 import type { Project } from '../data/projects';
 import ExternalLinkButton from '../components/ExternalLinkButton.tsx';
+import PercentGlyph from '../components/PercentGlyph.astro';
 import BeautyAdvisorExhibit from '../components/exhibits/BeautyAdvisorExhibit.astro';
 import CreditRiskChart from '../components/exhibits/CreditRiskChart.astro';
 import FraudDetectionExhibit from '../components/exhibits/FraudDetectionExhibit.astro';
@@ -70,7 +71,7 @@ const workPath = `C:\\WORK\\${project.slug.toUpperCase().replace(/-/g, '_')}`;
               return (
                 <div class="readout-cell">
                   <div class="metric-value">
-                    <span class="metric-num">{num[1] + (unit.startsWith('%') ? '%' : '')}</span>
+                    <span class="metric-num">{num[1]}{unit.startsWith('%') && <PercentGlyph />}</span>
                     {unit && !unit.startsWith('%') ? (
                       <span class="metric-line2">{unit.toUpperCase()}</span>
                     ) : null}

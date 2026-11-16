@@ -1,6 +1,7 @@
 ---
 import type { Project } from '../data/projects';
 import ExternalLinkButton from '../components/ExternalLinkButton.tsx';
+import PercentGlyph from './PercentGlyph.astro';
 
 interface Props {
   project: Project;
@@ -36,26 +37,7 @@ function formatValue(value: string) {
           <div class="metric-cell">
             <span class="metric-value">
               {pct ? (
-                <>
-                <span class="metric-number">{number}</span>
-                <svg class="metric-pct" viewBox="0 0 5 7" width="calc(1em * 5 / 7)" height="1em" fill="currentColor" shape-rendering="crispEdges" style="display: inline-block; vertical-align: baseline;">
-                  <rect x="0" y="0" width="1" height="1" />
-                  <rect x="1" y="0" width="1" height="1" />
-                  <rect x="4" y="0" width="1" height="1" />
-                  <rect x="0" y="1" width="1" height="1" />
-                  <rect x="1" y="1" width="1" height="1" />
-                  <rect x="3" y="1" width="1" height="1" />
-                  <rect x="3" y="2" width="1" height="1" />
-                  <rect x="2" y="3" width="1" height="1" />
-                  <rect x="1" y="4" width="1" height="1" />
-                  <rect x="1" y="5" width="1" height="1" />
-                  <rect x="3" y="5" width="1" height="1" />
-                  <rect x="4" y="5" width="1" height="1" />
-                  <rect x="0" y="6" width="1" height="1" />
-                  <rect x="3" y="6" width="1" height="1" />
-                  <rect x="4" y="6" width="1" height="1" />
-                </svg>
-                </>
+                <span class="metric-number">{number}<PercentGlyph /></span>
               ) : (
                 <span class="metric-number">{number}</span>
               )}
@@ -219,12 +201,6 @@ function formatValue(value: string) {
     letter-spacing: 0.04em;
     line-height: 0.875;
     white-space: nowrap;
-  }
-
-  .metric-pct {
-    height: 0.75em;
-    width: calc(0.75em * 5 / 7);
-    vertical-align: baseline;
   }
 
   .metric-label {
